@@ -16,12 +16,12 @@ export function formatMessageTime(dateString: string): string {
 
 export function getAvatarColor(name: string): string {
   const colors = [
-    "from-blue-500 to-indigo-600",
-    "from-purple-500 to-pink-600",
-    "from-emerald-500 to-teal-600",
-    "from-amber-500 to-orange-600",
-    "from-rose-500 to-red-600",
-    "from-cyan-500 to-blue-600",
+    "from-slate-800 to-slate-900",
+    "from-indigo-600 to-slate-900",
+    "from-emerald-600 to-teal-800",
+    "from-blue-600 to-indigo-800",
+    "from-slate-700 to-zinc-900",
+    "from-teal-700 to-slate-900",
   ];
   let hash = 0;
   for (let i = 0; i < name.length; i++) {

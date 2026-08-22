@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import {
-  LayoutGrid,
+  Command,
   User,
   ArrowRight,
   ShieldCheck,
@@ -28,21 +28,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onLogin }) => {
       name: "Sarah Miller",
       role: "Product Designer",
       icon: Palette,
-      gradient: "from-purple-500 to-pink-600",
+      gradient: "from-slate-800 to-slate-900",
     },
     {
       username: "alex",
       name: "Alex Dev",
       role: "Full-stack Lead",
       icon: Code,
-      gradient: "from-blue-500 to-indigo-600",
+      gradient: "from-slate-700 to-slate-900",
     },
     {
       username: "somchai",
       name: "สมชาย ยอดรัก",
       role: "Project Manager",
       icon: Briefcase,
-      gradient: "from-emerald-500 to-teal-600",
+      gradient: "from-emerald-700 to-teal-900",
     },
   ];
 
@@ -69,32 +69,34 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onLogin }) => {
   return (
     <div
       data-testid="auth-modal"
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/20 backdrop-blur-md font-prompt overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/20 backdrop-blur-sm overflow-y-auto"
     >
-      <div className="relative w-full max-w-md my-auto max-h-[96vh] overflow-y-auto custom-scrollbar rounded-3xl border border-white/80 bg-white/95 p-6 sm:p-8 shadow-2xl backdrop-blur-2xl text-slate-800">
-        {/* App Logo & Title */}
-        <div className="flex flex-col items-center text-center mb-6 sm:mb-8">
-          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/25 mb-3 sm:mb-4">
-            <LayoutGrid className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+      <div className="relative w-full max-w-md my-auto rounded-3xl border border-slate-200 bg-white p-7 sm:p-8 shadow-2xl text-slate-900">
+        {/* App Logo & Header */}
+        <div className="flex flex-col items-center text-center mb-6">
+          <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center shadow-sm mb-3 text-white">
+            <Command className="w-6 h-6" strokeWidth={2} />
           </div>
-          <h2 className="text-2xl font-bold tracking-tight text-slate-800 flex items-center gap-2">
-            <span>Social Solution</span>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 border border-blue-100">
-              WebRTC
+          <div className="flex items-center gap-2 mb-1">
+            <h2 className="text-xl font-extrabold tracking-tight text-slate-900">
+              Ticketapp
+            </h2>
+            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#E6F4EA] text-[#0D652D] border border-[#CEEAD6]">
+              Organiser
             </span>
-          </h2>
-          <p className="text-xs text-slate-400 mt-1">
-            Real-time messaging, audio notes & HD video meetings
+          </div>
+          <p className="text-xs text-slate-500 max-w-xs">
+            Next-gen real-time workspace with LiveKit audio & video meetings
           </p>
         </div>
 
         {/* Quick Demo Accounts Selection */}
-        <div className="mb-6">
-          <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-3 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-blue-500" />
-            <span>Quick Login</span>
+        <div className="mb-5">
+          <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2.5 flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5 text-slate-900" />
+            <span>Select Workspace Profile</span>
           </label>
-          <div className="grid grid-cols-1 gap-2.5">
+          <div className="grid grid-cols-1 gap-2">
             {sampleAccounts.map((acc) => {
               const IconComponent = acc.icon;
               return (
@@ -104,64 +106,64 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onLogin }) => {
                   type="button"
                   onClick={() => handleQuickLogin(acc)}
                   disabled={isSubmitting}
-                  className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-blue-500/50 hover:bg-blue-50/50 transition-all text-left group shadow-sm"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-slate-400 hover:bg-slate-100 transition-all text-left group"
                 >
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-10 h-10 rounded-full bg-gradient-to-tr ${acc.gradient} flex items-center justify-center text-white shadow-sm`}
+                      className={`w-9 h-9 rounded-xl bg-gradient-to-tr ${acc.gradient} flex items-center justify-center text-white shadow-sm`}
                     >
-                      <IconComponent className="w-5 h-5" />
+                      <IconComponent className="w-4 h-4" />
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-slate-800 group-hover:text-blue-600 transition-colors">
+                      <p className="text-xs font-bold text-slate-900 group-hover:text-slate-950 transition-colors">
                         {acc.name}
                       </p>
-                      <p className="text-xs text-slate-400">
+                      <p className="text-[11px] text-slate-400">
                         @{acc.username} · {acc.role}
                       </p>
                     </div>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all" />
+                  <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-slate-900 group-hover:translate-x-0.5 transition-all" />
                 </button>
               );
             })}
           </div>
         </div>
 
-        <div className="relative flex py-2 items-center mb-6">
+        <div className="relative flex py-2 items-center mb-5">
           <div className="flex-grow border-t border-slate-200" />
-          <span className="flex-shrink mx-4 text-xs text-slate-400">or enter username</span>
+          <span className="flex-shrink mx-3 text-[11px] text-slate-400 uppercase font-semibold">or custom username</span>
           <div className="flex-grow border-t border-slate-200" />
         </div>
 
         {/* Custom Username Login Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-3.5">
           <div>
-            <label className="text-xs text-slate-600 font-semibold block mb-1.5">
+            <label className="text-xs text-slate-700 font-semibold block mb-1">
               Username
             </label>
             <input
               type="text"
               data-testid="username-input"
-              placeholder="e.g. somying, john_doe"
+              placeholder="e.g. alex_lead, sarah_design"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 text-xs focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:bg-white focus:border-slate-400 transition-all"
             />
           </div>
 
           <div>
-            <label className="text-xs text-slate-600 font-semibold block mb-1.5">
+            <label className="text-xs text-slate-700 font-semibold block mb-1">
               Display Name
             </label>
             <input
               type="text"
               data-testid="display-name-input"
-              placeholder="e.g. Somying Sodsai"
+              placeholder="e.g. Alex Henderson"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 text-xs focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:bg-white focus:border-slate-400 transition-all"
             />
           </div>
 
@@ -169,17 +171,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onLogin }) => {
             type="submit"
             data-testid="login-submit-btn"
             disabled={!username.trim() || isSubmitting}
-            className="w-full py-3.5 px-4 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-md shadow-blue-500/20 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs shadow-sm transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             <User className="w-4 h-4" />
-            <span>{isSubmitting ? "Logging in..." : "Get Started"}</span>
+            <span>{isSubmitting ? "Entering workspace..." : "Continue to Workspace"}</span>
           </button>
         </form>
 
         {/* Security badge */}
-        <div className="mt-6 flex items-center justify-center gap-1.5 text-xs text-slate-400">
-          <ShieldCheck className="w-4 h-4 text-emerald-500" />
-          <span>Secured with DTLS-SRTP & Supabase TLS</span>
+        <div className="mt-5 flex items-center justify-center gap-1.5 text-[11px] text-slate-400">
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+          <span>LiveKit Cloud WebRTC & Supabase Realtime Engine</span>
         </div>
       </div>
     </div>

@@ -7,8 +7,7 @@ import {
   Mic,
   AtSign,
   X,
-  Smile,
-  Image as ImageIcon,
+  Sparkles,
 } from "lucide-react";
 import { UserProfile } from "@/types/chat";
 import { ReplyContext } from "@/hooks/useSupabaseChat";
@@ -118,7 +117,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
   return (
     <div
       ref={inputContainerRef}
-      className="relative z-30 p-4 bg-white/60 border-t border-slate-200/60 font-prompt select-none"
+      className="relative z-30 p-3.5 bg-white border-t border-[#E2E8F0] select-none"
     >
       {/* Mention Picker Popover */}
       {showMentionPopover && (
@@ -131,9 +130,9 @@ export const MessageInput: React.FC<MessageInputProps> = ({
 
       {/* Reply Context Banner */}
       {replyingTo && (
-        <div data-testid="replying-banner" className="mb-2 flex items-center justify-between p-2.5 rounded-xl bg-blue-50 border border-blue-100 text-xs">
+        <div data-testid="replying-banner" className="mb-2 flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-200 text-xs">
           <div className="flex items-center gap-2 min-w-0">
-            <span className="font-semibold text-blue-600 truncate">
+            <span className="font-semibold text-slate-900 truncate">
               Replying to @{replyingTo.senderName}:
             </span>
             <span className="text-slate-500 truncate">{replyingTo.content}</span>
@@ -161,16 +160,16 @@ export const MessageInput: React.FC<MessageInputProps> = ({
       ) : (
         <div className="flex items-center gap-2">
           {/* Floating Capsule Input Bar */}
-          <div className="flex-1 flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-white border border-slate-200 shadow-sm focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100 transition-all">
+          <div className="flex-1 flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-slate-50 border border-slate-200 focus-within:bg-white focus-within:border-slate-400 focus-within:ring-2 focus-within:ring-slate-100 transition-all">
             {/* Attachment Button */}
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
               data-testid="attach-file-btn"
-              className="p-1.5 rounded-xl text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+              className="p-1.5 rounded-xl text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors"
               title="Attach File"
             >
-              <Paperclip className="w-4 h-4" />
+              <Paperclip className="w-4 h-4" strokeWidth={1.75} />
             </button>
 
             {/* Hidden File Input */}
@@ -197,10 +196,10 @@ export const MessageInput: React.FC<MessageInputProps> = ({
                   });
                 }
               }}
-              className="p-1.5 rounded-xl text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+              className="p-1.5 rounded-xl text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors"
               title="Mention member"
             >
-              <AtSign className="w-4 h-4" />
+              <AtSign className="w-4 h-4" strokeWidth={1.75} />
             </button>
 
             {/* Textarea Input */}
@@ -210,9 +209,9 @@ export const MessageInput: React.FC<MessageInputProps> = ({
               value={content}
               onChange={handleTextChange}
               onKeyDown={handleKeyDown}
-              placeholder="Type something..."
+              placeholder="Write a message, type @ to mention..."
               rows={1}
-              className="flex-1 resize-none bg-transparent text-xs text-slate-800 placeholder-slate-400 focus:outline-none max-h-24 leading-relaxed"
+              className="flex-1 resize-none bg-transparent text-xs text-slate-900 placeholder-slate-400 focus:outline-none max-h-24 leading-relaxed"
             />
 
             {/* Voice Message Mic Button */}
@@ -220,23 +219,23 @@ export const MessageInput: React.FC<MessageInputProps> = ({
               type="button"
               onClick={() => setIsRecording(true)}
               data-testid="voice-record-btn"
-              className="p-1.5 rounded-xl text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+              className="p-1.5 rounded-xl text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors"
               title="Record Voice Note"
             >
-              <Mic className="w-4 h-4" />
+              <Mic className="w-4 h-4" strokeWidth={1.75} />
             </button>
           </div>
 
-          {/* Blue Send Button */}
+          {/* Dark Slate Send Button */}
           <button
             type="button"
             onClick={handleSend}
             data-testid="send-message-btn"
             disabled={!content.trim()}
-            className="w-10 h-10 rounded-2xl bg-blue-600 hover:bg-blue-700 disabled:opacity-40 text-white flex items-center justify-center shadow-md shadow-blue-500/20 transition-all active:scale-95 shrink-0"
+            className="w-9 h-9 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:opacity-30 text-white flex items-center justify-center shadow-sm transition-all active:scale-95 shrink-0"
             title="Send Message"
           >
-            <Send className="w-4 h-4 ml-0.5" />
+            <Send className="w-4 h-4 ml-0.5" strokeWidth={2} />
           </button>
         </div>
       )}

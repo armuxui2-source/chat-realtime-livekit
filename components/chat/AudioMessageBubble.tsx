@@ -79,49 +79,66 @@ export const AudioMessageBubble: React.FC<AudioMessageBubbleProps> = ({
     return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
   };
 
-  // Mock waveform bars count for smooth visual display
   const bars = [4, 8, 14, 18, 10, 6, 12, 16, 20, 14, 8, 12, 18, 10, 6, 14, 18, 12, 6, 10, 16, 8, 4];
 
   return (
     <div
       data-testid="audio-message-bubble"
-      className="flex items-center gap-3 p-3 rounded-2xl bg-white border border-slate-200/80 shadow-sm font-prompt select-none max-w-sm"
+      className={`flex items-center gap-2.5 p-2.5 rounded-2xl border select-none max-w-xs sm:max-w-sm ${
+        isMe
+          ? "bg-slate-900 text-white border-slate-900 shadow-sm"
+          : "bg-white text-slate-900 border-slate-200 shadow-sm"
+      }`}
     >
       <audio ref={audioRef} src={audioUrl} preload="metadata" />
 
-      {/* Blue Circular Play/Pause Button */}
+      {/* Play/Pause Button */}
       <button
         type="button"
         onClick={togglePlayPause}
         data-testid="audio-play-pause-btn"
-        className="w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shrink-0 shadow-md shadow-blue-500/20 transition-transform active:scale-95"
+        className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-transform active:scale-95 ${
+          isMe
+            ? "bg-white text-slate-900 hover:bg-slate-100"
+            : "bg-slate-900 text-white hover:bg-slate-800"
+        }`}
       >
         {isPlaying ? (
-          <Pause className="w-4 h-4 fill-current" />
+          <Pause className="w-3.5 h-3.5 fill-current" />
         ) : (
-          <Play className="w-4 h-4 ml-0.5 fill-current" />
+          <Play className="w-3.5 h-3.5 ml-0.5 fill-current" />
         )}
       </button>
 
       {/* Waveform Visualizer & Scrubber */}
-      <div className="flex-1 min-w-0 flex items-center gap-1">
-        <div className="flex-1 flex items-center gap-0.5 h-6">
+      <div className="flex-1 min-w-0 flex items-center gap-1.5">
+        <div className="flex-1 flex items-center gap-0.5 h-5">
           {bars.map((height, idx) => {
             const isPlayed = (idx / bars.length) * 100 <= progress;
             return (
               <div
                 key={idx}
                 style={{ height: `${height}px` }}
-                className={`w-1 rounded-full transition-colors ${
-                  isPlayed ? "bg-blue-600" : "bg-slate-200"
+                className={`w-0.5 sm:w-1 rounded-full transition-colors ${
+                  isPlayed
+                    ? isMe
+                      ? "bg-emerald-400"
+                      : "bg-slate-900"
+                    : isMe
+                    ? "bg-slate-700"
+                    : "bg-slate-200"
                 }`}
               />
             );
           })}
         </div>
 
-        {/* Timestamp */}
-        <span className="text-[10px] text-slate-400 font-mono shrink-0 ml-1">
+        {/* Duration */}
+        <span
+          className={`text-[10px] font-mono shrink-0 ${
+            isMe ? "text-slate-400" : "text-slate-500"
+          }`}
+        >
           {formatSeconds(duration || 0)}
         </span>
       </div>
@@ -131,7 +148,11 @@ export const AudioMessageBubble: React.FC<AudioMessageBubbleProps> = ({
         type="button"
         onClick={cycleSpeed}
         data-testid="audio-speed-btn"
-        className="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 text-[10px] font-mono font-bold shrink-0 transition-colors"
+        className={`px-1.5 py-0.5 rounded-md text-[9px] font-mono font-bold shrink-0 transition-colors ${
+          isMe
+            ? "bg-slate-800 text-slate-300 hover:bg-slate-700"
+            : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+        }`}
         title="Playback Speed"
       >
         {playbackRate}x

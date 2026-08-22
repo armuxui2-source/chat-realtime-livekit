@@ -18,7 +18,6 @@ import {
   Check,
   Pin,
   PinOff,
-  Search,
   Bookmark,
   Forward,
 } from "lucide-react";
@@ -120,21 +119,21 @@ export const MessageList: React.FC<MessageListProps> = ({
   return (
     <div
       data-testid="message-list-container"
-      className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 custom-scrollbar select-none font-prompt bg-slate-50/30"
+      className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 custom-scrollbar select-none bg-[#F8F9FA]"
     >
       {/* Pinned Sticky Banner */}
       {pinnedMessages.length > 0 && (
         <div
           data-testid="pinned-message-banner"
-          className="sticky top-0 z-20 mb-3 p-3 rounded-2xl bg-white/95 border border-amber-200/80 shadow-md backdrop-blur-md flex items-center justify-between"
+          className="sticky top-0 z-20 mb-3 p-2.5 rounded-2xl bg-white border border-amber-200/80 shadow-sm flex items-center justify-between"
         >
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="p-2 rounded-xl bg-amber-50 text-amber-600 border border-amber-200 shrink-0">
-              <Pin className="w-4 h-4" />
+            <div className="p-1.5 rounded-xl bg-amber-50 text-amber-600 border border-amber-200 shrink-0">
+              <Pin className="w-3.5 h-3.5" />
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-1.5">
-                <span className="text-xs font-bold text-slate-800">
+                <span className="text-xs font-bold text-slate-900">
                   Pinned Messages
                 </span>
                 {pinnedMessages.length > 1 && (
@@ -155,7 +154,7 @@ export const MessageList: React.FC<MessageListProps> = ({
             className="p-1.5 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors shrink-0 ml-2"
             title="Unpin message"
           >
-            <PinOff className="w-4 h-4" />
+            <PinOff className="w-3.5 h-3.5" />
           </button>
         </div>
       )}
@@ -164,9 +163,9 @@ export const MessageList: React.FC<MessageListProps> = ({
       {searchQuery.trim() && (
         <div
           data-testid="search-results-banner"
-          className="p-2.5 rounded-2xl bg-blue-50 border border-blue-200 text-xs text-blue-700 font-medium flex items-center justify-between"
+          className="p-2.5 rounded-2xl bg-slate-100 border border-slate-200 text-xs text-slate-700 font-medium flex items-center justify-between"
         >
-          <span>ผลการค้นหาสำหรับ &quot;{searchQuery}&quot; ({filteredMessages.length} ข้อความ)</span>
+          <span>Search results for &quot;{searchQuery}&quot; ({filteredMessages.length} messages)</span>
         </div>
       )}
 
@@ -184,22 +183,22 @@ export const MessageList: React.FC<MessageListProps> = ({
             key={msg.id}
             id={`msg-${msg.id}`}
             data-testid={`message-item-${msg.id}`}
-            className={`group flex items-end gap-3 transition-all relative ${
+            className={`group flex items-end gap-2.5 transition-all relative ${
               isMe ? "justify-end" : "justify-start"
             }`}
           >
             {/* Avatar for Incoming Messages */}
             {!isMe && (
               <div
-                className={`w-9 h-9 rounded-full bg-gradient-to-tr ${getAvatarColor(
+                className={`w-8 h-8 rounded-xl bg-gradient-to-tr ${getAvatarColor(
                   selectedUser.username
-                )} flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm`}
+                )} flex items-center justify-center text-white text-[11px] font-bold shrink-0 shadow-sm`}
               >
                 {selectedUser.display_name.charAt(0).toUpperCase()}
               </div>
             )}
 
-            <div className={`flex flex-col max-w-[80%] md:max-w-[70%] ${isMe ? "items-end" : "items-start"}`}>
+            <div className={`flex flex-col max-w-[82%] md:max-w-[72%] ${isMe ? "items-end" : "items-start"}`}>
               {/* Sender Name in Group Chat */}
               {!isMe && (
                 <span className="text-[11px] font-semibold text-slate-500 mb-1 px-1">
@@ -209,12 +208,12 @@ export const MessageList: React.FC<MessageListProps> = ({
 
               {/* Message Bubble Body */}
               <div
-                className={`px-4 py-3 rounded-2xl text-sm leading-relaxed relative ${
+                className={`px-3.5 py-2.5 rounded-2xl text-xs leading-relaxed relative ${
                   msg.is_deleted
                     ? "bg-slate-100 text-slate-400 italic border border-slate-200"
                     : isMe
-                    ? "bg-blue-600 text-white shadow-md shadow-blue-500/10 rounded-br-sm"
-                    : "bg-white border border-slate-200/80 text-slate-800 shadow-sm rounded-bl-sm"
+                    ? "bg-slate-900 text-white shadow-sm rounded-tr-sm font-medium"
+                    : "bg-white border border-slate-200/90 text-slate-900 shadow-sm rounded-tl-sm font-medium"
                 }`}
               >
                 {/* Pinned Tag on Bubble */}
@@ -228,7 +227,7 @@ export const MessageList: React.FC<MessageListProps> = ({
                 {/* Quoted Reply */}
                 {msg.reply_to_sender && !msg.is_deleted && (
                   <div className={`mb-2 p-2 rounded-xl text-xs border-l-2 ${
-                    isMe ? "bg-blue-700/60 border-white/60 text-white" : "bg-slate-50 border-blue-500 text-slate-600"
+                    isMe ? "bg-slate-800 border-slate-400 text-slate-200" : "bg-slate-50 border-slate-400 text-slate-600"
                   }`}>
                     <span className="font-bold block">
                       @{msg.reply_to_sender}
@@ -244,7 +243,7 @@ export const MessageList: React.FC<MessageListProps> = ({
                   <div
                     onClick={() => onOpenLightbox?.(msg.file_url!, msg.file_name)}
                     data-testid="message-image-attachment"
-                    className="mb-2 overflow-hidden rounded-2xl border border-slate-200/80 shadow-sm cursor-pointer group"
+                    className="mb-2 overflow-hidden rounded-xl border border-slate-200 shadow-sm cursor-pointer group"
                     title="Click to view full image"
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -258,288 +257,110 @@ export const MessageList: React.FC<MessageListProps> = ({
 
                 {/* Attached File */}
                 {msg.file_url && msg.message_type === "file" && !msg.is_deleted && (
-                  <div className={`mb-2 flex items-center justify-between p-3 rounded-xl border ${
-                    isMe ? "bg-blue-700/40 border-white/20" : "bg-slate-50 border-slate-200"
+                  <div className={`mb-2 flex items-center justify-between p-2.5 rounded-xl border ${
+                    isMe ? "bg-slate-800 border-slate-700 text-white" : "bg-slate-50 border-slate-200 text-slate-800"
                   }`}>
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      <FileText className="w-5 h-5 text-blue-500 shrink-0" />
-                      <div className="min-w-0 truncate">
-                        <p className="font-medium text-xs truncate">
-                          {msg.file_name || "Document"}
-                        </p>
-                        <p className="text-[10px] opacity-70">Attachment</p>
-                      </div>
+                    <div className="flex items-center gap-2 min-w-0">
+                      <FileText className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <span className="text-xs font-semibold truncate max-w-[150px]">
+                        {msg.file_name || "Attachment File"}
+                      </span>
                     </div>
                     <a
                       href={msg.file_url}
+                      download={msg.file_name}
                       target="_blank"
                       rel="noreferrer"
-                      download={msg.file_name}
-                      className="p-1.5 rounded-lg bg-white/20 hover:bg-white/30 transition-colors shrink-0 ml-2"
+                      className="p-1 rounded-lg hover:bg-white/10 text-emerald-400 shrink-0 ml-2"
                     >
                       <Download className="w-3.5 h-3.5" />
                     </a>
                   </div>
                 )}
 
-                {/* Voice Note / Audio Message */}
-                {msg.file_url && (msg.message_type === "audio" || msg.file_type?.startsWith("audio/")) && !msg.is_deleted && (
-                  <div className="mb-2">
-                    <AudioMessageBubble audioUrl={msg.file_url} isMe={isMe} />
-                  </div>
+                {/* Audio Voice Message Bubble */}
+                {msg.message_type === "audio" && msg.file_url && !msg.is_deleted && (
+                  <AudioMessageBubble audioUrl={msg.file_url} isMe={isMe} />
                 )}
 
-                {/* Content or Inline Edit */}
-                {isEditing ? (
-                  <div className="flex flex-col gap-2 my-1">
-                    <input
-                      type="text"
+                {/* Message Text Content or Code Snippet */}
+                {msg.is_deleted ? (
+                  <span>ข้อความนี้ถูกลบแล้ว</span>
+                ) : isEditing ? (
+                  <div className="space-y-2 min-w-[200px]">
+                    <textarea
                       value={editContent}
                       onChange={(e) => setEditContent(e.target.value)}
-                      autoFocus
-                      className="w-full px-2.5 py-1.5 rounded-xl bg-white border border-slate-300 text-xs text-slate-800 outline-none focus:border-blue-500"
+                      className="w-full p-2 rounded-xl bg-white border border-slate-300 text-xs text-slate-800 focus:outline-none focus:border-slate-500 text-left"
+                      rows={2}
                     />
-                    <div className="flex items-center justify-end gap-1.5">
+                    <div className="flex justify-end gap-1.5">
                       <button
                         type="button"
                         onClick={() => setEditingMessageId(null)}
-                        className="px-2 py-0.5 rounded text-[11px] text-slate-500 hover:text-slate-800"
+                        className="px-2 py-1 rounded-lg text-[10px] text-slate-400 hover:text-slate-600"
                       >
                         Cancel
                       </button>
                       <button
                         type="button"
                         onClick={() => handleSaveEdit(msg.id)}
-                        className="px-2.5 py-0.5 rounded bg-emerald-600 hover:bg-emerald-500 text-[11px] text-white font-medium flex items-center gap-1"
+                        className="px-2.5 py-1 rounded-lg bg-slate-900 text-white text-[10px] font-bold shadow-sm"
                       >
-                        <Check className="w-3 h-3" />
-                        <span>บันทึก</span>
+                        Save
                       </button>
                     </div>
                   </div>
+                ) : codeBlock ? (
+                  <div>
+                    {codeBlock.before && <p className="mb-2">{codeBlock.before}</p>}
+                    <CodeSnippetBlock code={codeBlock.code} language={codeBlock.language} />
+                    {codeBlock.after && <p className="mt-2">{codeBlock.after}</p>}
+                  </div>
                 ) : (
-                  msg.content && (
-                    <div className="space-y-1.5">
-                      {codeBlock ? (
-                        <>
-                          {codeBlock.before && (
-                            <p className="whitespace-pre-wrap break-words">{codeBlock.before}</p>
-                          )}
-                          <CodeSnippetBlock
-                            code={codeBlock.code}
-                            language={codeBlock.language}
-                          />
-                          {codeBlock.after && (
-                            <p className="whitespace-pre-wrap break-words">{codeBlock.after}</p>
-                          )}
-                          {urlMatch && (
-                            <LinkPreviewCard url={urlMatch} />
-                          )}
-                        </>
-                      ) : (
-                        <>
-                          <p className="whitespace-pre-wrap break-words leading-relaxed">
-                            {msg.content.split(/(@[a-zA-Z0-9_\u0E00-\u0E7F\s]+)/g).map((part, i) =>
-                              part.startsWith("@") ? (
-                                <span
-                                  key={i}
-                                  data-testid="mention-highlight"
-                                  className={`font-semibold px-1.5 py-0.5 rounded-md ${
-                                    isMe ? "bg-white/20 text-white" : "bg-blue-50 text-blue-600"
-                                  }`}
-                                >
-                                  {part}
-                                </span>
-                              ) : (
-                                part
-                              )
-                            )}
-                          </p>
-                          {urlMatch && (
-                            <LinkPreviewCard url={urlMatch} />
-                          )}
-                        </>
-                      )}
-                    </div>
-                  )
+                  <div>
+                    <p className="whitespace-pre-wrap break-words">{msg.content}</p>
+                    {urlMatch && <LinkPreviewCard url={urlMatch} />}
+                  </div>
                 )}
 
-                {/* Footer Time & Status */}
+                {/* Bottom Meta info: Time + Read Receipts + Edited Tag */}
                 <div
-                  className={`flex items-center justify-end gap-1 mt-1 text-[10px] ${
-                    isMe ? "text-blue-100" : "text-slate-400"
+                  className={`flex items-center gap-1.5 justify-end mt-1 text-[10px] ${
+                    isMe ? "text-slate-400" : "text-slate-400"
                   }`}
                 >
-                  {msg.is_edited && <span>(แก้ไขแล้ว)</span>}
+                  {msg.is_edited && !msg.is_deleted && (
+                    <span className="italic text-[9px] opacity-75">edited</span>
+                  )}
                   <span>{formattedTime}</span>
-                  {isMe && !msg.is_deleted && <CheckCheck className="w-3.5 h-3.5" />}
+                  {isMe && !msg.is_deleted && (
+                    <CheckCheck className="w-3.5 h-3.5 text-emerald-400" />
+                  )}
                 </div>
               </div>
 
-              {/* Hover Actions Toolbar */}
-              {!msg.is_deleted && (
-                <div
-                  className={`opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-0.5 mt-1 p-1 rounded-xl bg-white border border-slate-200 shadow-sm ${
-                    isMe ? "flex-row-reverse" : "flex-row"
-                  }`}
-                >
-                  {/* Reaction Button */}
-                  <div className="relative">
-                    <button
-                      type="button"
-                      data-testid={`react-btn-${msg.id}`}
-                      onClick={() =>
-                        setActiveReactionMenuId(
-                          activeReactionMenuId === msg.id ? null : msg.id
-                        )
-                      }
-                      className="p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-amber-500 transition-colors"
-                      title="Add Reaction"
-                    >
-                      <Smile className="w-3.5 h-3.5" />
-                    </button>
-
-                    {activeReactionMenuId === msg.id && (
-                      <div className="absolute bottom-full left-0 mb-1 flex items-center gap-1 p-1.5 rounded-2xl bg-white border border-slate-200 shadow-xl z-30 animate-scale-up">
-                        {availableReactions.map((r) => {
-                          const IconComp = r.icon;
-                          return (
-                            <button
-                              key={r.name}
-                              data-testid={`reaction-option-${r.name}`}
-                              type="button"
-                              onClick={() => {
-                                onToggleReaction(msg.id, r.name);
-                                setActiveReactionMenuId(null);
-                              }}
-                              className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-600 hover:text-blue-600 transition-transform active:scale-125"
-                              title={r.label}
-                            >
-                              <IconComp className="w-4 h-4" />
-                            </button>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Reply Button */}
-                  <button
-                    type="button"
-                    data-testid={`reply-btn-${msg.id}`}
-                    onClick={() =>
-                      onSetReply({
-                        id: msg.id,
-                        senderName: isMe
-                          ? currentUser.display_name
-                          : selectedUser.display_name,
-                        content: msg.content || (msg.file_name ? `[File] ${msg.file_name}` : ""),
-                      })
-                    }
-                    className="p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-blue-600 transition-colors"
-                    title="Reply"
-                  >
-                    <Reply className="w-3.5 h-3.5" />
-                  </button>
-
-                  {/* Bookmark Button */}
-                  {onToggleBookmark && (
-                    <button
-                      type="button"
-                      data-testid={`bookmark-btn-${msg.id}`}
-                      onClick={() => onToggleBookmark(msg)}
-                      className={`p-1 rounded-lg hover:bg-slate-100 transition-colors ${
-                        isBookmarked
-                          ? "text-amber-500 bg-amber-50"
-                          : "text-slate-400 hover:text-amber-500"
-                      }`}
-                      title={isBookmarked ? "Remove Bookmark" : "Save Bookmark"}
-                    >
-                      <Bookmark className="w-3.5 h-3.5" />
-                    </button>
-                  )}
-
-                  {/* Pin Button */}
-                  {onTogglePin && (
-                    <button
-                      type="button"
-                      data-testid={`pin-btn-${msg.id}`}
-                      onClick={() => onTogglePin(msg.id)}
-                      className={`p-1 rounded-lg hover:bg-slate-100 transition-colors ${
-                        msg.is_pinned
-                          ? "text-amber-500 bg-amber-50"
-                          : "text-slate-400 hover:text-amber-500"
-                      }`}
-                      title={msg.is_pinned ? "Unpin" : "Pin"}
-                    >
-                      <Pin className="w-3.5 h-3.5" />
-                    </button>
-                  )}
-
-                  {/* Forward Button */}
-                  {onOpenForward && !msg.is_deleted && (
-                    <button
-                      type="button"
-                      data-testid={`forward-btn-${msg.id}`}
-                      onClick={() => onOpenForward(msg)}
-                      className="p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-blue-600 transition-colors"
-                      title="Forward"
-                    >
-                      <Forward className="w-3.5 h-3.5" />
-                    </button>
-                  )}
-
-                  {/* Edit Button (Sender only) */}
-                  {isMe && !msg.file_url && (
-                    <button
-                      type="button"
-                      data-testid={`edit-btn-${msg.id}`}
-                      onClick={() => handleStartEdit(msg)}
-                      className="p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-emerald-600 transition-colors"
-                      title="Edit"
-                    >
-                      <Edit2 className="w-3.5 h-3.5" />
-                    </button>
-                  )}
-
-                  {/* Delete Button (Sender only) */}
-                  {isMe && (
-                    <button
-                      type="button"
-                      data-testid={`delete-btn-${msg.id}`}
-                      onClick={() => onDeleteMessage(msg.id)}
-                      className="p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-rose-600 transition-colors"
-                      title="Delete"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
-                  )}
-                </div>
-              )}
-
-              {/* Reaction Pills */}
+              {/* Message Reactions Badges */}
               {msg.reactions && Object.keys(msg.reactions).length > 0 && !msg.is_deleted && (
-                <div className="flex items-center gap-1 mt-1 flex-wrap">
-                  {Object.entries(msg.reactions).map(([iconName, users]) => {
-                    if (users.length === 0) return null;
-                    const matchedIcon = availableReactions.find((r) => r.name === iconName);
-                    const IconComp = matchedIcon ? matchedIcon.icon : ThumbsUp;
-                    const hasReacted = users.includes(currentUser.username);
+                <div className={`flex flex-wrap gap-1 mt-1 ${isMe ? "justify-end" : "justify-start"}`}>
+                  {Object.entries(msg.reactions).map(([reactionKey, users]) => {
+                    if (!users || users.length === 0) return null;
+                    const hasMyReaction = users.includes(currentUser.username);
+                    const matchingConfig = availableReactions.find((r) => r.name === reactionKey);
+                    const IconComponent = matchingConfig?.icon || ThumbsUp;
 
                     return (
                       <button
-                        key={iconName}
+                        key={reactionKey}
                         type="button"
-                        data-testid={`reaction-pill-${msg.id}-${iconName}`}
-                        onClick={() => onToggleReaction(msg.id, iconName)}
-                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full border text-[11px] font-medium transition-all active:scale-95 ${
-                          hasReacted
-                            ? "bg-blue-50 border-blue-200 text-blue-600 shadow-sm"
-                            : "bg-white border-slate-200 text-slate-500 hover:bg-slate-50"
+                        onClick={() => onToggleReaction(msg.id, reactionKey)}
+                        className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium border transition-all ${
+                          hasMyReaction
+                            ? "bg-slate-100 border-slate-300 text-slate-900 font-bold"
+                            : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50"
                         }`}
-                        title={users.join(", ")}
                       >
-                        <IconComp className="w-3 h-3" />
+                        <IconComponent className="w-2.5 h-2.5" />
                         <span>{users.length}</span>
                       </button>
                     );
@@ -547,35 +368,155 @@ export const MessageList: React.FC<MessageListProps> = ({
                 </div>
               )}
             </div>
+
+            {/* Hover Floating Action Bar */}
+            {!msg.is_deleted && (
+              <div
+                className={`opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-0.5 p-1 rounded-full bg-white border border-slate-200 shadow-md absolute -top-3 z-10 ${
+                  isMe ? "right-4" : "left-12"
+                }`}
+              >
+                {/* Reply */}
+                <button
+                  type="button"
+                  data-testid="reply-message-btn"
+                  onClick={() =>
+                    onSetReply({
+                      id: msg.id,
+                      senderName: isMe ? currentUser.display_name : selectedUser.display_name,
+                      content: msg.content || (msg.file_name ? `[File] ${msg.file_name}` : "[Voice Note]"),
+                    })
+                  }
+                  className="p-1 rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+                  title="Reply"
+                >
+                  <Reply className="w-3 h-3" />
+                </button>
+
+                {/* Bookmark */}
+                {onToggleBookmark && (
+                  <button
+                    type="button"
+                    data-testid="bookmark-message-btn"
+                    onClick={() => onToggleBookmark(msg)}
+                    className={`p-1 rounded-full transition-colors ${
+                      isBookmarked
+                        ? "text-emerald-600 hover:bg-emerald-50"
+                        : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+                    }`}
+                    title={isBookmarked ? "Remove Bookmark" : "Bookmark"}
+                  >
+                    <Bookmark className="w-3 h-3" fill={isBookmarked ? "currentColor" : "none"} />
+                  </button>
+                )}
+
+                {/* Pin */}
+                {onTogglePin && (
+                  <button
+                    type="button"
+                    data-testid="pin-message-btn"
+                    onClick={() => onTogglePin(msg.id)}
+                    className={`p-1 rounded-full transition-colors ${
+                      msg.is_pinned
+                        ? "text-amber-600 hover:bg-amber-50"
+                        : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+                    }`}
+                    title={msg.is_pinned ? "Unpin message" : "Pin message"}
+                  >
+                    <Pin className="w-3 h-3" />
+                  </button>
+                )}
+
+                {/* Forward */}
+                {onOpenForward && (
+                  <button
+                    type="button"
+                    data-testid="forward-message-btn"
+                    onClick={() => onOpenForward(msg)}
+                    className="p-1 rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+                    title="Forward Message"
+                  >
+                    <Forward className="w-3 h-3" />
+                  </button>
+                )}
+
+                {/* Emoji Reaction Trigger */}
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setActiveReactionMenuId(activeReactionMenuId === msg.id ? null : msg.id)
+                    }
+                    className="p-1 rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+                    title="Add Reaction"
+                  >
+                    <Smile className="w-3 h-3" />
+                  </button>
+
+                  {/* Reaction Popup Menu */}
+                  {activeReactionMenuId === msg.id && (
+                    <div className="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 flex items-center gap-1 p-1 rounded-full bg-white border border-slate-200 shadow-lg z-20">
+                      {availableReactions.map((r) => {
+                        const Icon = r.icon;
+                        return (
+                          <button
+                            key={r.name}
+                            type="button"
+                            onClick={() => {
+                              onToggleReaction(msg.id, r.name);
+                              setActiveReactionMenuId(null);
+                            }}
+                            className="p-1 rounded-full hover:bg-slate-100 text-slate-700 transition-colors"
+                            title={r.label}
+                          >
+                            <Icon className="w-3.5 h-3.5" />
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+
+                {/* Edit Message (Only for Me) */}
+                {isMe && !msg.is_deleted && msg.message_type === "text" && (
+                  <button
+                    type="button"
+                    data-testid="edit-message-btn"
+                    onClick={() => handleStartEdit(msg)}
+                    className="p-1 rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+                    title="Edit"
+                  >
+                    <Edit2 className="w-3 h-3" />
+                  </button>
+                )}
+
+                {/* Delete Message (Only for Me) */}
+                {isMe && !msg.is_deleted && (
+                  <button
+                    type="button"
+                    data-testid="delete-message-btn"
+                    onClick={() => onDeleteMessage(msg.id)}
+                    className="p-1 rounded-full text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                    title="Delete"
+                  >
+                    <Trash2 className="w-3 h-3" />
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         );
       })}
 
       {/* Typing Indicator */}
       {isTyping && (
-        <div className="flex items-center gap-2 text-slate-500 text-xs animate-fade-in">
-          <div
-            className={`w-7 h-7 rounded-full bg-gradient-to-tr ${getAvatarColor(
-              selectedUser.username
-            )} flex items-center justify-center text-white text-[10px] font-bold`}
-          >
-            {selectedUser.display_name.charAt(0).toUpperCase()}
+        <div className="flex items-center gap-2 text-slate-400 text-xs pl-2 animate-fade-in">
+          <div className="flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce" style={{ animationDelay: "0ms" }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce" style={{ animationDelay: "150ms" }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce" style={{ animationDelay: "300ms" }} />
           </div>
-          <div className="px-3 py-2 rounded-2xl bg-white border border-slate-200 flex items-center gap-1 shadow-sm">
-            <span
-              className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-bounce"
-              style={{ animationDelay: "0ms" }}
-            />
-            <span
-              className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-bounce"
-              style={{ animationDelay: "150ms" }}
-            />
-            <span
-              className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-bounce"
-              style={{ animationDelay: "300ms" }}
-            />
-          </div>
-          <span className="text-[11px]">{selectedUser.display_name} is typing...</span>
+          <span className="text-[11px] font-medium">{selectedUser.display_name} is typing...</span>
         </div>
       )}
 

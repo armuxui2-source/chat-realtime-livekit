@@ -1,17 +1,24 @@
 import type { Metadata } from "next";
-import { Prompt } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "./globals.css";
 
-const prompt = Prompt({
+const plusJakarta = Plus_Jakarta_Sans({
+  weight: ["400", "500", "600", "700", "800"],
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const inter = Inter({
   weight: ["300", "400", "500", "600", "700"],
-  subsets: ["thai", "latin"],
-  variable: "--font-prompt",
+  subsets: ["latin"],
+  variable: "--font-inter",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Social Solution - Real-time Chat & WebRTC Suite",
-  description: "Web application สำหรับแชทข้อความ โทรเสียง และวิดีโอคอล 1:1 แบบ Real-time สไตล์ Modern Soft-Light Glassmorphic",
+  title: "Ticketapp & LiveKit Workspace - Next-Gen Realtime Platform",
+  description: "Next-generation professional real-time communication suite with LiveKit calling and instant messaging",
 };
 
 export default function RootLayout({
@@ -20,8 +27,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="th" className={`${prompt.variable}`}>
-      <body className="font-prompt text-slate-800 antialiased min-h-screen selection:bg-blue-500 selection:text-white">
+    <html lang="en" className={`${plusJakarta.variable} ${inter.variable}`}>
+      <body className="font-sans text-slate-900 antialiased min-h-screen bg-[#F8F9FA] selection:bg-slate-900 selection:text-white">
         {children}
       </body>
     </html>
