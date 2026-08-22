@@ -6,7 +6,7 @@ import { useSupabaseChat } from "@/hooks/useSupabaseChat";
 import { ChatHeader } from "./ChatHeader";
 import { MessageList } from "./MessageList";
 import { MessageInput } from "./MessageInput";
-import { MessageSquare, PhoneCall, Video } from "lucide-react";
+import { MessageSquare, PhoneCall, Video, Command, Sparkles } from "lucide-react";
 
 interface ChatContainerProps {
   currentUser: UserProfile;
@@ -60,37 +60,44 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
     return (
       <div
         data-testid="chat-container-empty"
-        className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-white/60 font-prompt select-none"
+        className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-[#F8F9FA] select-none"
       >
-        <div className="relative mb-6">
-          <div className="w-20 h-20 rounded-3xl bg-blue-50 border border-blue-100 flex items-center justify-center shadow-lg shadow-blue-500/10">
-            <MessageSquare className="w-10 h-10 text-blue-600" />
+        <div className="relative mb-5">
+          <div className="w-16 h-16 rounded-3xl bg-white border border-slate-200/80 flex items-center justify-center shadow-sm">
+            <Command className="w-8 h-8 text-slate-900" strokeWidth={2} />
           </div>
         </div>
 
-        <h3 className="text-xl font-bold text-slate-800 mb-2">Welcome to Social Solution Chat</h3>
-        <p className="text-xs text-slate-400 max-w-sm mb-6 leading-relaxed">
-          Select a contact or a channel from the left sidebar to start real-time messaging, audio calls, or HD video meetings.
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E6F4EA] text-[#0D652D] border border-[#CEEAD6] text-xs font-semibold mb-3">
+          <Sparkles className="w-3.5 h-3.5" />
+          <span>Ticketapp Workspace</span>
+        </div>
+
+        <h3 className="text-xl font-extrabold text-slate-900 mb-2">
+          A real-time system that works like an Organiser
+        </h3>
+        <p className="text-xs text-slate-500 max-w-sm mb-6 leading-relaxed">
+          Select a team member or a project channel from the sidebar to begin instant messaging, voice notes, and LiveKit meetings.
         </p>
 
-        <div className="grid grid-cols-2 gap-4 max-w-md w-full">
-          <div className="p-4 rounded-2xl bg-white border border-slate-100 shadow-sm text-left flex items-start gap-3">
-            <div className="p-2 rounded-xl bg-blue-50 text-blue-600">
-              <PhoneCall className="w-4 h-4" />
+        <div className="grid grid-cols-2 gap-3 max-w-sm w-full">
+          <div className="p-3.5 rounded-2xl bg-white border border-slate-200/80 shadow-sm text-left flex items-start gap-2.5">
+            <div className="p-2 rounded-xl bg-slate-50 text-slate-900 border border-slate-100">
+              <PhoneCall className="w-4 h-4" strokeWidth={1.75} />
             </div>
             <div>
-              <p className="text-xs font-bold text-slate-800">Clear Voice Calls</p>
+              <p className="text-xs font-bold text-slate-900">HD Voice Calls</p>
               <p className="text-[11px] text-slate-400">Opus Audio Codec</p>
             </div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white border border-slate-100 shadow-sm text-left flex items-start gap-3">
-            <div className="p-2 rounded-xl bg-indigo-50 text-indigo-600">
-              <Video className="w-4 h-4" />
+          <div className="p-3.5 rounded-2xl bg-white border border-slate-200/80 shadow-sm text-left flex items-start gap-2.5">
+            <div className="p-2 rounded-xl bg-slate-900 text-white shadow-sm">
+              <Video className="w-4 h-4 text-emerald-400" strokeWidth={1.75} />
             </div>
             <div>
-              <p className="text-xs font-bold text-slate-800">HD Video Meet</p>
-              <p className="text-[11px] text-slate-400">LiveKit WebRTC</p>
+              <p className="text-xs font-bold text-slate-900">LiveKit Meeting</p>
+              <p className="text-[11px] text-slate-400">WebRTC SFU Cloud</p>
             </div>
           </div>
         </div>
@@ -98,7 +105,6 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
     );
   }
 
-  // Active target (user or channel)
   const targetUser: UserProfile = selectedUser || {
     id: selectedChannel!.id,
     username: selectedChannel!.id,
@@ -109,7 +115,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
   return (
     <div
       data-testid="chat-container-active"
-      className="flex-1 flex flex-col h-full bg-white/40 overflow-hidden min-w-0 font-prompt"
+      className="flex-1 flex flex-col h-full bg-[#F8F9FA] overflow-hidden min-w-0"
     >
       <ChatHeader
         selectedUser={selectedUser}
