@@ -8,7 +8,6 @@ import {
   LogOut,
   Bookmark,
   PhoneCall,
-  Sparkles,
   Command,
 } from "lucide-react";
 import { getAvatarColor } from "@/lib/utils";
@@ -35,81 +34,30 @@ export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
   return (
     <nav
       data-testid="left-slim-navigation"
-      className="w-16 lg:w-60 shrink-0 flex flex-col h-full bg-[#FFFFFF] border-r border-[#E2E8F0] p-3 lg:p-4 select-none items-center lg:items-stretch justify-between"
+      className="w-16 shrink-0 flex flex-col h-full bg-slate-900 border-r border-slate-800 p-2.5 select-none items-center justify-between z-20"
     >
-      {/* Brand Header */}
-      <div>
-        <div className="flex items-center justify-center lg:justify-between px-1 py-2 mb-4 w-full">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-sm shrink-0">
-              <Command className="w-4 h-4" strokeWidth={2} />
-            </div>
-            <div className="hidden lg:block min-w-0">
-              <div className="flex items-center gap-1.5">
-                <span className="text-sm font-extrabold text-slate-900 tracking-tight leading-none">
-                  Ticketapp
-                </span>
-                <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-[#E6F4EA] text-[#0D652D] border border-[#CEEAD6]">
-                  PRO
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* User Profile Bento Card */}
+      {/* Brand Logo & Top Actions */}
+      <div className="flex flex-col items-center gap-4 w-full">
         <div
-          onClick={onOpenEditProfile}
-          data-testid="user-profile-button"
-          className="flex items-center gap-3 p-2 lg:p-2.5 mb-5 rounded-2xl bg-slate-50 border border-slate-200/80 cursor-pointer hover:bg-slate-100 hover:border-slate-300 transition-all group w-full"
-          title="Click to edit profile"
+          className="w-10 h-10 rounded-2xl bg-white text-slate-900 flex items-center justify-center shadow-sm cursor-pointer"
+          title="Ticketapp"
         >
-          <div className="relative shrink-0">
-            <div
-              className={`w-9 h-9 lg:w-10 lg:h-10 rounded-xl bg-gradient-to-tr ${getAvatarColor(
-                currentUser.username
-              )} flex items-center justify-center text-white text-xs lg:text-sm font-bold shadow-sm`}
-            >
-              {currentUser.display_name.charAt(0).toUpperCase()}
-            </div>
-            <span
-              className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white ${
-                currentUser.status === "busy"
-                  ? "bg-rose-500"
-                  : currentUser.status === "away"
-                  ? "bg-amber-500"
-                  : currentUser.status === "offline"
-                  ? "bg-slate-400"
-                  : "bg-emerald-500"
-              }`}
-            />
-          </div>
-          <div className="hidden lg:block min-w-0 flex-1 text-left">
-            <h2 className="text-xs font-bold text-slate-900 truncate group-hover:text-blue-600 transition-colors">
-              {currentUser.display_name}
-            </h2>
-            <p className="text-[11px] text-slate-400 truncate">
-              @{currentUser.username}
-            </p>
-          </div>
+          <Command className="w-5 h-5" strokeWidth={2.2} />
         </div>
 
-        {/* Navigation Section */}
-        <div className="space-y-1 w-full">
+        <div className="w-8 border-t border-slate-800 my-1" />
+
+        {/* Nav Items */}
+        <div className="flex flex-col items-center gap-2 w-full">
           <button
             type="button"
             data-testid="nav-messages"
-            className="w-full flex items-center justify-center lg:justify-between px-3 py-2.5 rounded-xl bg-slate-900 text-white font-medium text-xs shadow-sm transition-all relative"
+            className="w-10 h-10 rounded-xl bg-slate-800 text-white flex items-center justify-center relative transition-all group"
             title="Messages"
           >
-            <div className="flex items-center gap-2.5">
-              <MessageSquare className="w-4 h-4" strokeWidth={1.75} />
-              <span className="hidden lg:inline font-semibold">Messages</span>
-            </div>
+            <MessageSquare className="w-5 h-5" strokeWidth={2} />
             {unreadCount > 0 && (
-              <span className="lg:static absolute -top-1 -right-1 px-1.5 py-0.2 rounded-full bg-emerald-500 text-white text-[9px] font-bold">
-                {unreadCount}
-              </span>
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-slate-900" />
             )}
           </button>
 
@@ -118,11 +66,10 @@ export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
               type="button"
               data-testid="open-call-history-btn"
               onClick={onOpenCallHistory}
-              className="w-full flex items-center justify-center lg:justify-start gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 text-xs font-medium transition-all"
-              title="Call History"
+              className="w-10 h-10 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 flex items-center justify-center transition-all"
+              title="Calls & Meet"
             >
-              <PhoneCall className="w-4 h-4 text-slate-400" strokeWidth={1.75} />
-              <span className="hidden lg:inline">Calls & Meet</span>
+              <PhoneCall className="w-5 h-5" strokeWidth={1.8} />
             </button>
           )}
 
@@ -131,15 +78,12 @@ export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
               type="button"
               data-testid="open-bookmarks-btn"
               onClick={onOpenBookmarks}
-              className="w-full flex items-center justify-center lg:justify-between px-3 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 text-xs font-medium transition-all relative"
+              className="w-10 h-10 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 flex items-center justify-center transition-all relative"
               title="Saved Items"
             >
-              <div className="flex items-center gap-2.5">
-                <Bookmark className="w-4 h-4 text-slate-400" strokeWidth={1.75} />
-                <span className="hidden lg:inline">Saved Notes</span>
-              </div>
+              <Bookmark className="w-5 h-5" strokeWidth={1.8} />
               {bookmarkedCount > 0 && (
-                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-slate-900" />
               )}
             </button>
           )}
@@ -149,27 +93,41 @@ export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
               type="button"
               data-testid="open-edit-profile-btn"
               onClick={onOpenEditProfile}
-              className="w-full flex items-center justify-center lg:justify-start gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 text-xs font-medium transition-all"
+              className="w-10 h-10 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 flex items-center justify-center transition-all"
               title="Settings"
             >
-              <Settings className="w-4 h-4 text-slate-400" strokeWidth={1.75} />
-              <span className="hidden lg:inline">Settings</span>
+              <Settings className="w-5 h-5" strokeWidth={1.8} />
             </button>
           )}
         </div>
       </div>
 
-      {/* Logout Footer */}
-      <div className="pt-3 border-t border-slate-100 w-full">
+      {/* Profile & Logout at Bottom */}
+      <div className="flex flex-col items-center gap-3 w-full">
+        <button
+          onClick={onOpenEditProfile}
+          data-testid="user-profile-button"
+          className="relative group"
+          title={`Edit Profile (${currentUser.display_name})`}
+        >
+          <div
+            className={`w-9 h-9 rounded-xl bg-gradient-to-tr ${getAvatarColor(
+              currentUser.username
+            )} flex items-center justify-center text-white text-xs font-bold ring-2 ring-slate-800 group-hover:ring-slate-600 transition-all`}
+          >
+            {currentUser.display_name.charAt(0).toUpperCase()}
+          </div>
+          <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-slate-900" />
+        </button>
+
         <button
           type="button"
           data-testid="logout-button"
           onClick={onLogout}
-          className="w-full flex items-center justify-center lg:justify-start gap-2.5 px-3 py-2 rounded-xl text-slate-500 hover:text-rose-600 hover:bg-rose-50 text-xs font-medium transition-colors"
-          title="Log out"
+          className="w-9 h-9 rounded-xl text-slate-400 hover:text-rose-400 hover:bg-slate-800 flex items-center justify-center transition-colors"
+          title="Sign out"
         >
-          <LogOut className="w-4 h-4" strokeWidth={1.75} />
-          <span className="hidden lg:inline">Sign out</span>
+          <LogOut className="w-4 h-4" strokeWidth={1.8} />
         </button>
       </div>
     </nav>
