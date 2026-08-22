@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import { Prompt, Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "./globals.css";
+
+const promptFont = Prompt({
+  weight: ["300", "400", "500", "600", "700", "800"],
+  subsets: ["latin", "thai"],
+  variable: "--font-prompt",
+  display: "swap",
+});
 
 const plusJakarta = Plus_Jakarta_Sans({
   weight: ["400", "500", "600", "700", "800"],
@@ -27,8 +34,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${plusJakarta.variable} ${inter.variable}`}>
-      <body className="font-sans text-slate-900 antialiased min-h-screen bg-[#F8F9FA] selection:bg-slate-900 selection:text-white">
+    <html
+      lang="th"
+      className={`${promptFont.variable} ${plusJakarta.variable} ${inter.variable}`}
+    >
+      <body className="font-prompt text-slate-900 antialiased min-h-screen bg-[#F8F9FA] selection:bg-slate-900 selection:text-white">
         {children}
       </body>
     </html>

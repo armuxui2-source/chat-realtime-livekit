@@ -9,9 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-sans)", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        prompt: ["var(--font-prompt)", "var(--font-sans)", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        sans: ["var(--font-prompt)", "var(--font-sans)", "sans-serif"],
         inter: ["var(--font-inter)", "sans-serif"],
-        prompt: ["var(--font-sans)", "sans-serif"], // Backwards compatible with existing classes
       },
       colors: {
         background: "#F8F9FA",
