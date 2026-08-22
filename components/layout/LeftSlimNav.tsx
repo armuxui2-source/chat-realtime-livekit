@@ -9,6 +9,8 @@ import {
   Bookmark,
   PhoneCall,
   Command,
+  UserPlus,
+  Radio,
 } from "lucide-react";
 import { getAvatarColor } from "@/lib/utils";
 
@@ -19,6 +21,8 @@ interface LeftSlimNavProps {
   onOpenEditProfile?: () => void;
   onOpenBookmarks?: () => void;
   onOpenCallHistory?: () => void;
+  onOpenAddFriends?: () => void;
+  onOpenStories?: () => void;
   onLogout: () => void;
 }
 
@@ -29,6 +33,8 @@ export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
   onOpenEditProfile,
   onOpenBookmarks,
   onOpenCallHistory,
+  onOpenAddFriends,
+  onOpenStories,
   onLogout,
 }) => {
   return (
@@ -53,7 +59,7 @@ export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
             type="button"
             data-testid="nav-messages"
             className="w-10 h-10 rounded-xl bg-slate-800 text-white flex items-center justify-center relative transition-all group"
-            title="Messages"
+            title="แชทข้อความ"
           >
             <MessageSquare className="w-5 h-5" strokeWidth={2} />
             {unreadCount > 0 && (
@@ -61,13 +67,38 @@ export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
             )}
           </button>
 
+          {onOpenStories && (
+            <button
+              type="button"
+              data-testid="open-stories-btn"
+              onClick={onOpenStories}
+              className="w-10 h-10 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 flex items-center justify-center transition-all relative group"
+              title="สตอรี่ (Instagram Story)"
+            >
+              <Radio className="w-5 h-5 group-hover:text-rose-400 transition-colors" strokeWidth={1.8} />
+              <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-slate-900" />
+            </button>
+          )}
+
+          {onOpenAddFriends && (
+            <button
+              type="button"
+              data-testid="open-add-friends-btn"
+              onClick={onOpenAddFriends}
+              className="w-10 h-10 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 flex items-center justify-center transition-all"
+              title="เพิ่มเพื่อน & ค้นหา"
+            >
+              <UserPlus className="w-5 h-5" strokeWidth={1.8} />
+            </button>
+          )}
+
           {onOpenCallHistory && (
             <button
               type="button"
               data-testid="open-call-history-btn"
               onClick={onOpenCallHistory}
               className="w-10 h-10 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 flex items-center justify-center transition-all"
-              title="Calls & Meet"
+              title="ประวัติการโทร & WebRTC"
             >
               <PhoneCall className="w-5 h-5" strokeWidth={1.8} />
             </button>
@@ -79,7 +110,7 @@ export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
               data-testid="open-bookmarks-btn"
               onClick={onOpenBookmarks}
               className="w-10 h-10 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 flex items-center justify-center transition-all relative"
-              title="Saved Items"
+              title="ข้อความที่บันทึก"
             >
               <Bookmark className="w-5 h-5" strokeWidth={1.8} />
               {bookmarkedCount > 0 && (
@@ -94,7 +125,7 @@ export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
               data-testid="open-edit-profile-btn"
               onClick={onOpenEditProfile}
               className="w-10 h-10 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 flex items-center justify-center transition-all"
-              title="Settings"
+              title="ตั้งค่าโปรไฟล์"
             >
               <Settings className="w-5 h-5" strokeWidth={1.8} />
             </button>
@@ -108,7 +139,7 @@ export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
           onClick={onOpenEditProfile}
           data-testid="user-profile-button"
           className="relative group"
-          title={`Edit Profile (${currentUser.display_name})`}
+          title={`ตั้งค่าโปรไฟล์ (${currentUser.display_name})`}
         >
           <div
             className={`w-9 h-9 rounded-xl bg-gradient-to-tr ${getAvatarColor(
@@ -125,7 +156,7 @@ export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
           data-testid="logout-button"
           onClick={onLogout}
           className="w-9 h-9 rounded-xl text-slate-400 hover:text-rose-400 hover:bg-slate-800 flex items-center justify-center transition-colors"
-          title="Sign out"
+          title="ออกจากระบบ"
         >
           <LogOut className="w-4 h-4" strokeWidth={1.8} />
         </button>

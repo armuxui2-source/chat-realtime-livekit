@@ -18,6 +18,8 @@ import { BookmarksDrawer } from "@/components/chat/BookmarksDrawer";
 import { CallHistoryDrawer } from "@/components/call/CallHistoryDrawer";
 import { ForwardMessageModal } from "@/components/chat/ForwardMessageModal";
 import { MediaLightboxModal } from "@/components/chat/MediaLightboxModal";
+import { StoryViewerModal, StoryItem } from "@/components/story/StoryViewerModal";
+import { AddFriendModal } from "@/components/friends/AddFriendModal";
 import { requestNotificationPermission } from "@/lib/utils";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase/client";
 import { Video, X } from "lucide-react";
@@ -50,7 +52,40 @@ export default function Home() {
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const [isBookmarksOpen, setIsBookmarksOpen] = useState(false);
   const [isCallHistoryOpen, setIsCallHistoryOpen] = useState(false);
+  const [isAddFriendOpen, setIsAddFriendOpen] = useState(false);
+  const [isStoryViewerOpen, setIsStoryViewerOpen] = useState(false);
   const [bookmarkedMessages, setBookmarkedMessages] = useState<ChatMessage[]>([]);
+
+  // Demo Stories
+  const sampleStories: StoryItem[] = [
+    {
+      id: "s1",
+      userId: "alex",
+      userName: "Alex Dev",
+      mediaUrl: "",
+      caption: "🚀 LiveKit WebRTC Cloud ใช้งานได้ราบรื่นมาก!",
+      timestamp: "2 ชม. ที่แล้ว",
+      gradient: "from-indigo-600 via-purple-700 to-slate-900",
+    },
+    {
+      id: "s2",
+      userId: "sarah",
+      userName: "Sarah Miller",
+      mediaUrl: "",
+      caption: "✨ ออกแบบดีไซน์ใหม่สไตล์ Bento SaaS เสร็จแล้วนะคะ",
+      timestamp: "4 ชม. ที่แล้ว",
+      gradient: "from-emerald-600 via-teal-700 to-slate-900",
+    },
+    {
+      id: "s3",
+      userId: "somchai",
+      userName: "สมชาย ยอดรัก",
+      mediaUrl: "",
+      caption: "☕ พักดื่มกาแฟก่อนเริ่ม Sprint Planning บ่ายนี้ครับ",
+      timestamp: "5 ชม. ที่แล้ว",
+      gradient: "from-amber-600 via-orange-700 to-slate-900",
+    },
+  ];
 
   // Forwarding State
   const [forwardingMessage, setForwardingMessage] = useState<ChatMessage | null>(null);
@@ -219,6 +254,8 @@ export default function Home() {
             onOpenEditProfile={() => setIsEditProfileOpen(true)}
             onOpenBookmarks={() => setIsBookmarksOpen(true)}
             onOpenCallHistory={() => setIsCallHistoryOpen(true)}
+            onOpenAddFriends={() => setIsAddFriendOpen(true)}
+            onOpenStories={() => setIsStoryViewerOpen(true)}
             onLogout={logout}
           />
         </div>
@@ -367,6 +404,30 @@ export default function Home() {
         mediaUrl={lightboxMedia?.url || null}
         mediaName={lightboxMedia?.name}
         onClose={() => setLightboxMedia(null)}
+      />
+
+      {/* Story Viewer Modal (Instagram Stories) */}
+      <StoryViewerModal
+        isOpen={isStoryViewerOpen}
+        stories={sampleStories}
+        onClose={() => setIsStoryViewerOpen(false)}
+        onReplyStory={(story, message) => {
+          const target = onlineUsers.find((u) => u.username === story.userId);
+          if (target) {
+            handleSelectUser(target);
+          }
+        }}
+      />
+
+      {/* Add Friends & Discovery Modal */}
+      <AddFriendModal
+        isOpen={isAddFriendOpen}
+        currentUser={currentUser}
+        contacts={onlineUsers}
+        onClose={() => setIsAddFriendOpen(false)}
+        onAddFriend={(targetUsername) => {
+          console.log("Friend request sent to:", targetUsername);
+        }}
       />
 
       {/* Incoming Call Popup Modal */}
