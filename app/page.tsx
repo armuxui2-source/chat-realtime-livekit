@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useSupabaseChannels } from "@/hooks/useSupabaseChannels";
 import { useCallSignaling } from "@/hooks/useCallSignaling";
 import { UserProfile, Channel, ChatMessage } from "@/types/chat";
+import { LandingHero } from "@/components/landing/LandingHero";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { LeftSlimNav } from "@/components/layout/LeftSlimNav";
 import { UserSidebar } from "@/components/chat/UserSidebar";
@@ -54,6 +55,7 @@ export default function Home() {
   const [rightPanelMode, setRightPanelMode] = useState<RightPanelMode>("details");
   const [mobileView, setMobileView] = useState<"sidebar" | "chat" | "details">("sidebar");
 
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isCreateChannelOpen, setIsCreateChannelOpen] = useState(false);
   const [isAddFriendOpen, setIsAddFriendOpen] = useState(false);
   const [isStoryViewerOpen, setIsStoryViewerOpen] = useState(false);
@@ -251,7 +253,19 @@ export default function Home() {
   }
 
   if (!currentUser) {
-    return <AuthModal onLogin={loginUser} />;
+    return (
+      <>
+        <LandingHero
+          onOpenLogin={() => setIsAuthModalOpen(true)}
+          onQuickLogin={loginUser}
+        />
+        <AuthModal
+          isOpen={isAuthModalOpen}
+          onClose={() => setIsAuthModalOpen(false)}
+          onLogin={loginUser}
+        />
+      </>
+    );
   }
 
   return (
