@@ -32,7 +32,11 @@ import {
   UserCheck,
   UserX,
   Sparkles,
+  Sun,
+  Moon,
+  Laptop,
 } from "lucide-react";
+import { useTheme } from "@/hooks/useTheme";
 
 interface InstagramProfileDrawerProps {
   currentUser: UserProfile;
@@ -59,6 +63,8 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
   onUpdateProfile,
   onLogout,
 }) => {
+  const { themeMode, changeTheme } = useTheme();
+
   const [view, setView] = useState<
     "profile" | "edit" | "notifications" | "privacy" | "qr_code" | "activity"
   >("profile");
@@ -364,6 +370,57 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
                 <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-slate-300 transition-colors" />
               </button>
             )}
+
+            {/* 5. Theme Switcher (Day / Night / Auto Mode) */}
+            <div className="p-3.5 rounded-2xl bg-[#0F1216] border border-white/[0.07] space-y-2.5">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-bold text-white">ธีมและการแสดงผล (Theme Mode)</p>
+                  <p className="text-[10px] text-slate-400">สลับโหมดสว่าง / มืด หรือตามระบบอัตโนมัติ</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={() => changeTheme("auto")}
+                  className={`py-2 px-2 rounded-xl border text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
+                    themeMode === "auto"
+                      ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-400 font-bold"
+                      : "bg-white/[0.04] border-white/[0.08] text-slate-400 hover:text-white"
+                  }`}
+                >
+                  <Laptop className="w-3.5 h-3.5" />
+                  <span>อัตโนมัติ</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => changeTheme("light")}
+                  className={`py-2 px-2 rounded-xl border text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
+                    themeMode === "light"
+                      ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-400 font-bold"
+                      : "bg-white/[0.04] border-white/[0.08] text-slate-400 hover:text-white"
+                  }`}
+                >
+                  <Sun className="w-3.5 h-3.5" />
+                  <span>สว่าง (Day)</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => changeTheme("dark")}
+                  className={`py-2 px-2 rounded-xl border text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
+                    themeMode === "dark"
+                      ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-400 font-bold"
+                      : "bg-white/[0.04] border-white/[0.08] text-slate-400 hover:text-white"
+                  }`}
+                >
+                  <Moon className="w-3.5 h-3.5" />
+                  <span>มืด (Night)</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

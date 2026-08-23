@@ -19,6 +19,7 @@ import { MediaLightboxModal } from "@/components/chat/MediaLightboxModal";
 import { StoryViewerModal, StoryItem } from "@/components/story/StoryViewerModal";
 import { CreateStoryModal } from "@/components/story/CreateStoryModal";
 import { AddFriendModal } from "@/components/friends/AddFriendModal";
+import { useTheme } from "@/hooks/useTheme";
 import { requestNotificationPermission } from "@/lib/utils";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase/client";
 import {
@@ -67,6 +68,10 @@ export default function Home() {
     sarah: 2,
     somchai: 1,
   });
+  const [friendRequestsCount, setFriendRequestsCount] = useState(1);
+  const [missedCallsCount, setMissedCallsCount] = useState(1);
+
+  const { resolvedTheme } = useTheme();
 
   const totalUnreadMessages = Object.values(unreadCounts).reduce((acc, curr) => acc + curr, 0);
 
@@ -152,6 +157,9 @@ export default function Home() {
   const handleOpenPanelMode = (mode: RightPanelMode) => {
     setRightPanelMode(mode);
     setShowDetailsPanel(true);
+    if (mode === "call_history") {
+      setMissedCallsCount(0);
+    }
     if (typeof window !== "undefined" && window.innerWidth < 1024) {
       setMobileView("details");
     }
@@ -295,13 +303,16 @@ export default function Home() {
             <LeftSlimNav
               currentUser={currentUser}
               unreadCount={totalUnreadMessages}
-              friendRequestsCount={1}
-              missedCallsCount={1}
+              friendRequestsCount={friendRequestsCount}
+              missedCallsCount={missedCallsCount}
               bookmarkedCount={bookmarkedMessages.length}
               onOpenEditProfile={() => handleOpenPanelMode("edit_profile")}
               onOpenBookmarks={() => handleOpenPanelMode("bookmarks")}
               onOpenCallHistory={() => handleOpenPanelMode("call_history")}
-              onOpenAddFriends={() => setIsAddFriendOpen(true)}
+              onOpenAddFriends={() => {
+                setIsAddFriendOpen(true);
+                setFriendRequestsCount(0);
+              }}
               onLogout={logout}
             />
           </div>
@@ -438,14 +449,19 @@ export default function Home() {
 
           <button
             type="button"
-            onClick={() => setIsAddFriendOpen(true)}
+            onClick={() => {
+              setIsAddFriendOpen(true);
+              setFriendRequestsCount(0);
+            }}
             className="flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-slate-400 hover:text-emerald-400 transition-all relative"
           >
             <div className="relative">
               <UserPlus className="w-5 h-5" />
-              <span className="absolute -top-1 -right-2 min-w-[16px] h-[16px] px-1 rounded-full bg-rose-500 text-[9px] font-black text-white flex items-center justify-center ring-2 ring-[#161A22]">
-                1
-              </span>
+              {friendRequestsCount > 0 && (
+                <span className="absolute -top-1 -right-2 min-w-[16px] h-[16px] px-1 rounded-full bg-rose-500 text-[9px] font-black text-white flex items-center justify-center ring-2 ring-[#161A22]">
+                  {friendRequestsCount}
+                </span>
+              )}
             </div>
             <span className="text-[10px]">เพิ่มเพื่อน</span>
           </button>
@@ -461,7 +477,9 @@ export default function Home() {
           >
             <div className="relative">
               <PhoneCall className="w-5 h-5" />
-              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-[#161A22]" />
+              {missedCallsCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-[#161A22]" />
+              )}
             </div>
             <span className="text-[10px]">การโทร</span>
           </button>
