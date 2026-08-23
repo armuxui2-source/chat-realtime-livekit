@@ -253,31 +253,31 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
               {/* Button 1 (Left): Search & Add Friends */}
               <button
                 onClick={() => (onOpenAddFriends ? onOpenAddFriends() : setView("activity"))}
-                className="py-2.5 px-2 rounded-2xl bg-white/[0.05] hover:bg-emerald-500/15 border border-white/[0.08] hover:border-emerald-500/30 text-white text-xs font-medium transition-all flex flex-col items-center justify-center gap-1.5 group active:scale-95 shadow-sm"
+                className="py-2.5 px-2 rounded-2xl bg-slate-100 dark:bg-white/[0.05] hover:bg-emerald-500/10 dark:hover:bg-emerald-500/15 border border-slate-200/80 dark:border-white/[0.08] hover:border-emerald-500/30 text-slate-800 dark:text-white text-xs font-medium transition-all flex flex-col items-center justify-center gap-1.5 group active:scale-95 shadow-xs"
                 title="ค้นหาเพื่อนและแอดเพื่อน"
               >
-                <Search className="w-4 h-4 text-slate-300 group-hover:text-emerald-400 transition-colors" strokeWidth={1.8} />
-                <span className="text-[11px] text-slate-300 group-hover:text-white transition-colors">ค้นหาเพื่อน</span>
+                <Search className="w-4 h-4 text-slate-600 dark:text-slate-300 group-hover:text-emerald-500 transition-colors" strokeWidth={1.8} />
+                <span className="text-[11px] text-slate-700 dark:text-slate-300 group-hover:text-emerald-600 dark:group-hover:text-white transition-colors">ค้นหาเพื่อน</span>
               </button>
 
               {/* Button 2 (Center): Copy Profile Link */}
               <button
                 onClick={handleCopyProfileLink}
-                className="py-2.5 px-2 rounded-2xl bg-white/[0.05] hover:bg-emerald-500/15 border border-white/[0.08] hover:border-emerald-500/30 text-white text-xs font-medium transition-all flex flex-col items-center justify-center gap-1.5 group active:scale-95 shadow-sm"
+                className="py-2.5 px-2 rounded-2xl bg-slate-100 dark:bg-white/[0.05] hover:bg-emerald-500/10 dark:hover:bg-emerald-500/15 border border-slate-200/80 dark:border-white/[0.08] hover:border-emerald-500/30 text-slate-800 dark:text-white text-xs font-medium transition-all flex flex-col items-center justify-center gap-1.5 group active:scale-95 shadow-xs"
                 title="คัดลอกลิงก์โปรไฟล์"
               >
-                <LinkIcon className="w-4 h-4 text-slate-300 group-hover:text-emerald-400 transition-colors" strokeWidth={1.8} />
-                <span className="text-[11px] text-slate-300 group-hover:text-white transition-colors">คัดลอกลิงก์</span>
+                <LinkIcon className="w-4 h-4 text-slate-600 dark:text-slate-300 group-hover:text-emerald-500 transition-colors" strokeWidth={1.8} />
+                <span className="text-[11px] text-slate-700 dark:text-slate-300 group-hover:text-emerald-600 dark:group-hover:text-white transition-colors">คัดลอกลิงก์</span>
               </button>
 
               {/* Button 3 (Right): Personal QR Code */}
               <button
                 onClick={() => setView("qr_code")}
-                className="py-2.5 px-2 rounded-2xl bg-white/[0.05] hover:bg-emerald-500/15 border border-white/[0.08] hover:border-emerald-500/30 text-white text-xs font-medium transition-all flex flex-col items-center justify-center gap-1.5 group active:scale-95 shadow-sm"
+                className="py-2.5 px-2 rounded-2xl bg-slate-100 dark:bg-white/[0.05] hover:bg-emerald-500/10 dark:hover:bg-emerald-500/15 border border-slate-200/80 dark:border-white/[0.08] hover:border-emerald-500/30 text-slate-800 dark:text-white text-xs font-medium transition-all flex flex-col items-center justify-center gap-1.5 group active:scale-95 shadow-xs"
                 title="คิวอาร์โค้ดส่วนตัว"
               >
-                <QrCode className="w-4 h-4 text-slate-300 group-hover:text-emerald-400 transition-colors" strokeWidth={1.8} />
-                <span className="text-[11px] text-slate-300 group-hover:text-white transition-colors">คิวอาร์โค้ด</span>
+                <QrCode className="w-4 h-4 text-slate-600 dark:text-slate-300 group-hover:text-emerald-500 transition-colors" strokeWidth={1.8} />
+                <span className="text-[11px] text-slate-700 dark:text-slate-300 group-hover:text-emerald-600 dark:group-hover:text-white transition-colors">คิวอาร์โค้ด</span>
               </button>
             </div>
           </div>

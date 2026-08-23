@@ -214,20 +214,25 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
                   key={user.id}
                   data-testid={`contact-item-${user.username}`}
                   onClick={() => onSelectUser(user)}
-                  className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all text-left group ${
+                  className={`w-full flex items-center gap-3 p-2.5 sm:p-3 rounded-2xl transition-all text-left group relative ${
                     isSelected
-                      ? "bg-transparent border-2 border-emerald-500 text-slate-900 dark:text-white shadow-xs"
-                      : "hover:bg-slate-100 dark:hover:bg-white/5 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border-2 border-transparent"
+                      ? "bg-emerald-500/[0.08] dark:bg-emerald-500/[0.12] border border-emerald-500/30 text-slate-900 dark:text-white shadow-xs"
+                      : "hover:bg-slate-100/80 dark:hover:bg-white/[0.04] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-transparent"
                   }`}
                 >
+                  {/* Left Active Accent Pill Bar */}
+                  {isSelected && (
+                    <span className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full bg-emerald-500" />
+                  )}
+
                   <div className="relative shrink-0">
                     <div
-                      className={`w-11 h-11 rounded-full bg-gradient-to-tr ${gradient} flex items-center justify-center text-white text-xs font-bold shadow-md ring-1 ring-white/20`}
+                      className={`w-11 h-11 rounded-2xl bg-gradient-to-tr ${gradient} flex items-center justify-center text-white text-xs font-bold shadow-xs`}
                     >
                       {user.display_name.charAt(0).toUpperCase()}
                     </div>
                     <span
-                      className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-[#12161F] ${getStatusDot(
+                      className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white dark:border-[#161A22] ${getStatusDot(
                         user.status
                       )}`}
                     />
@@ -235,19 +240,19 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
-                      <p className="text-xs font-bold text-white truncate">
+                      <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
                         {user.display_name}
                       </p>
-                      <span className="text-[10px] text-slate-500 shrink-0 ml-1">
+                      <span className="text-[10px] text-slate-400 dark:text-slate-500 shrink-0 ml-1">
                         9:24
                       </span>
                     </div>
                     <div className="flex items-center justify-between mt-0.5">
-                      <p className="text-[11px] text-slate-400 truncate">
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
                         ข้อความสนทนาล่าสุด...
                       </p>
                       {(unreadCounts[user.username] || 0) > 0 && (
-                        <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-rose-500 text-[10px] font-black text-white flex items-center justify-center ring-2 ring-[#161A22] shrink-0 ml-1.5 animate-pulse">
+                        <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-rose-500 text-[10px] font-black text-white flex items-center justify-center ring-2 ring-white dark:ring-[#161A22] shrink-0 ml-1.5 animate-pulse">
                           {unreadCounts[user.username]}
                         </span>
                       )}
@@ -267,15 +272,20 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
                   key={channel.id}
                   data-testid={`channel-item-${channel.id}`}
                   onClick={() => onSelectChannel(channel)}
-                  className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all text-left group ${
+                  className={`w-full flex items-center gap-3 p-2.5 sm:p-3 rounded-2xl transition-all text-left group relative ${
                     isSelected
-                      ? "bg-transparent border-2 border-emerald-500 text-slate-900 dark:text-white shadow-xs"
-                      : "hover:bg-slate-100 dark:hover:bg-white/5 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border-2 border-transparent"
+                      ? "bg-emerald-500/[0.08] dark:bg-emerald-500/[0.12] border border-emerald-500/30 text-slate-900 dark:text-white shadow-xs"
+                      : "hover:bg-slate-100/80 dark:hover:bg-white/[0.04] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-transparent"
                   }`}
                 >
-                  <div className="w-11 h-11 rounded-2xl bg-[#0B0D11] border border-white/10 flex items-center justify-center text-emerald-400 shrink-0">
+                  {/* Left Active Accent Pill Bar */}
+                  {isSelected && (
+                    <span className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full bg-emerald-500" />
+                  )}
+
+                  <div className="w-11 h-11 rounded-2xl bg-slate-100 dark:bg-white/[0.06] border border-slate-200/80 dark:border-white/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shrink-0">
                     {channel.is_private ? (
-                      <Lock className="w-4 h-4 text-amber-400" strokeWidth={2} />
+                      <Lock className="w-4 h-4 text-amber-500" strokeWidth={2} />
                     ) : (
                       <Hash className="w-5 h-5" strokeWidth={2} />
                     )}
@@ -283,14 +293,14 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
-                      <p className="text-xs font-bold text-white truncate">
+                      <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
                         #{channel.name}
                       </p>
-                      <span className="text-[10px] text-slate-500 shrink-0 ml-1">
+                      <span className="text-[10px] text-slate-400 dark:text-slate-500 shrink-0 ml-1">
                         1 นาที
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-400 truncate mt-0.5">
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">
                       {channel.description || "ช่องสนทนากลุ่ม"}
                     </p>
                   </div>

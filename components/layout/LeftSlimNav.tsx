@@ -60,12 +60,12 @@ export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
           <button
             type="button"
             data-testid="nav-messages"
-            className="w-10 h-10 rounded-2xl emerald-button-gradient text-white flex items-center justify-center relative transition-all group shadow-md"
+            className="w-10 h-10 rounded-2xl bg-emerald-600 text-white flex items-center justify-center relative transition-all group shadow-xs border border-emerald-500/30"
             title="แชทข้อความ"
           >
             <MessageSquare className="w-5 h-5" strokeWidth={2} />
             {unreadCount > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-rose-500 text-[10px] font-black text-white flex items-center justify-center ring-2 ring-[#0F1216] shadow-sm animate-pulse">
+              <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-rose-500 text-[10px] font-black text-white flex items-center justify-center ring-2 ring-white dark:ring-[#0F1216] shadow-xs animate-pulse">
                 {unreadCount}
               </span>
             )}
@@ -77,12 +77,12 @@ export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
               type="button"
               data-testid="open-add-friends-btn"
               onClick={onOpenAddFriends}
-              className="w-10 h-10 rounded-2xl text-slate-400 hover:text-white hover:bg-white/[0.06] flex items-center justify-center transition-all relative group"
+              className="w-10 h-10 rounded-2xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.06] flex items-center justify-center transition-all relative group"
               title="เพิ่มเพื่อน & คำขอเป็นเพื่อน"
             >
               <UserPlus className="w-5 h-5" strokeWidth={1.8} />
               {friendRequestsCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-rose-500 text-[10px] font-black text-white flex items-center justify-center ring-2 ring-[#0F1216] shadow-sm">
+                <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-rose-500 text-[10px] font-black text-white flex items-center justify-center ring-2 ring-white dark:ring-[#0F1216] shadow-xs">
                   {friendRequestsCount}
                 </span>
               )}
@@ -95,15 +95,12 @@ export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
               type="button"
               data-testid="open-call-history-btn"
               onClick={onOpenCallHistory}
-              className="w-10 h-10 rounded-2xl text-slate-400 hover:text-white hover:bg-white/[0.06] flex items-center justify-center transition-all relative group"
+              className="w-10 h-10 rounded-2xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.06] flex items-center justify-center transition-all relative group"
               title="ประวัติการโทร & สายที่ไม่ได้รับ"
             >
               <PhoneCall className="w-5 h-5" strokeWidth={1.8} />
               {missedCallsCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-rose-500 ring-2 ring-[#0F1216] animate-ping" />
-              )}
-              {missedCallsCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-rose-500 ring-2 ring-[#0F1216]" />
+                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-rose-500 ring-2 ring-white dark:ring-[#0F1216]" />
               )}
             </button>
           )}
@@ -114,24 +111,24 @@ export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
               type="button"
               data-testid="open-bookmarks-btn"
               onClick={onOpenBookmarks}
-              className="w-10 h-10 rounded-2xl text-slate-400 hover:text-white hover:bg-white/[0.06] flex items-center justify-center transition-all relative group"
-              title="ข้อความที่บันทึก"
+              className="w-10 h-10 rounded-2xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.06] flex items-center justify-center transition-all relative group"
+              title="ข้อความที่บันทึกไว้"
             >
               <Bookmark className="w-5 h-5" strokeWidth={1.8} />
               {bookmarkedCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-[#0F1216]" />
+                <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-[#0F1216]" />
               )}
             </button>
           )}
 
-          {/* Settings / Profile */}
+          {/* Settings */}
           {onOpenEditProfile && (
             <button
               type="button"
-              data-testid="open-edit-profile-btn"
+              data-testid="open-settings-btn"
               onClick={onOpenEditProfile}
-              className="w-10 h-10 rounded-2xl text-slate-400 hover:text-white hover:bg-white/[0.06] flex items-center justify-center transition-all"
-              title="ตั้งค่าโปรไฟล์"
+              className="w-10 h-10 rounded-2xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.06] flex items-center justify-center transition-all group"
+              title="การตั้งค่าระบบ"
             >
               <Settings className="w-5 h-5" strokeWidth={1.8} />
             </button>
@@ -148,14 +145,14 @@ export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
           title={`ตั้งค่าโปรไฟล์ (${currentUser.display_name})`}
         >
           <div
-            className={`w-9 h-9 rounded-xl bg-gradient-to-tr ${getAvatarColor(
+            className={`w-10 h-10 rounded-2xl bg-gradient-to-tr ${getAvatarColor(
               currentUser.username
-            )} flex items-center justify-center text-white text-xs font-bold shadow-md ring-1 ring-white/20 group-hover:ring-emerald-500 transition-all`}
+            )} flex items-center justify-center text-white text-xs font-bold shadow-xs ring-1 ring-black/5 dark:ring-white/10 group-hover:ring-emerald-500 transition-all`}
           >
             {currentUser.display_name.charAt(0).toUpperCase()}
           </div>
           <span
-            className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border border-[#0F1216] ${
+            className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white dark:border-[#0F1216] ${
               currentUser.status === "busy"
                 ? "bg-rose-500"
                 : currentUser.status === "away"

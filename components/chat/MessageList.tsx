@@ -212,9 +212,9 @@ export const MessageList: React.FC<MessageListProps> = ({
             {/* Receiver Avatar */}
             {!isMe && (
               <div
-                className={`w-7 h-7 rounded-xl bg-gradient-to-tr ${getAvatarColor(
+                className={`w-8 h-8 rounded-2xl bg-gradient-to-tr ${getAvatarColor(
                   selectedUser.username
-                )} flex items-center justify-center text-white text-[10px] font-bold shrink-0 mb-1 shadow-sm ring-1 ring-white/10`}
+                )} flex items-center justify-center text-white text-xs font-bold shrink-0 mb-1 shadow-xs ring-1 ring-black/5 dark:ring-white/10`}
               >
                 {selectedUser.display_name.charAt(0).toUpperCase()}
               </div>
@@ -226,10 +226,10 @@ export const MessageList: React.FC<MessageListProps> = ({
               <div
                 className={`px-4 py-2.5 rounded-2xl text-[13px] leading-relaxed relative ${
                   msg.is_deleted
-                    ? "bg-white/5 text-slate-500 italic border border-white/5"
+                    ? "bg-slate-100 dark:bg-white/5 text-slate-400 italic border border-slate-200 dark:border-white/5"
                     : isMe
-                    ? "bg-[#16A34A] text-white rounded-br-xs shadow-lg shadow-emerald-950/40"
-                    : "bg-[#1E232B] border border-white/[0.07] text-white rounded-bl-xs shadow-md"
+                    ? "bg-emerald-600 text-white rounded-br-xs shadow-xs border border-emerald-500/30"
+                    : "bg-white dark:bg-[#1E232B] border border-slate-200/90 dark:border-white/[0.08] text-slate-900 dark:text-white rounded-bl-xs shadow-xs"
                 }`}
               >
                 {/* Quoted Reply */}
