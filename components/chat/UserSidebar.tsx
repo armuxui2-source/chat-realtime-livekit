@@ -136,17 +136,17 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
         />
       )}
 
-      {/* Segmented Tab Controls */}
+      {/* Segmented Tab Controls (Point 2: Clean Modern with Green Text) */}
       <div className="px-4 py-2 shrink-0">
-        <div className="grid grid-cols-2 p-1 rounded-2xl bg-[#0F1216] border border-white/[0.07] text-xs font-medium">
+        <div className="grid grid-cols-2 p-1 rounded-2xl bg-slate-100 dark:bg-[#0F1216] border border-slate-200/80 dark:border-white/[0.07] text-xs font-medium">
           <button
             type="button"
             data-testid="tab-dm"
             onClick={() => setActiveTab("dm")}
             className={`flex items-center justify-center gap-1.5 py-2 rounded-xl transition-all ${
               activeTab === "dm"
-                ? "emerald-button-gradient text-white font-bold"
-                : "text-slate-400 hover:text-white"
+                ? "bg-white dark:bg-white/[0.08] text-emerald-600 dark:text-emerald-400 font-bold shadow-xs border border-slate-200/60 dark:border-white/10"
+                : "text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white"
             }`}
           >
             <MessageSquare className="w-3.5 h-3.5" />
@@ -158,8 +158,8 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
             onClick={() => setActiveTab("channels")}
             className={`flex items-center justify-center gap-1.5 py-2 rounded-xl transition-all ${
               activeTab === "channels"
-                ? "emerald-button-gradient text-white font-bold"
-                : "text-slate-400 hover:text-white"
+                ? "bg-white dark:bg-white/[0.08] text-emerald-600 dark:text-emerald-400 font-bold shadow-xs border border-slate-200/60 dark:border-white/10"
+                : "text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white"
             }`}
           >
             <Users className="w-3.5 h-3.5" />
@@ -211,13 +211,13 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 
               return (
                 <button
-                  key={user.username}
+                  key={user.id}
                   data-testid={`contact-item-${user.username}`}
                   onClick={() => onSelectUser(user)}
                   className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all text-left group ${
                     isSelected
-                      ? "bg-emerald-600/15 border border-emerald-500/40 text-white"
-                      : "hover:bg-white/5 text-slate-300 hover:text-white border border-transparent"
+                      ? "bg-transparent border-2 border-emerald-500 text-slate-900 dark:text-white shadow-xs"
+                      : "hover:bg-slate-100 dark:hover:bg-white/5 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border-2 border-transparent"
                   }`}
                 >
                   <div className="relative shrink-0">
@@ -269,8 +269,8 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
                   onClick={() => onSelectChannel(channel)}
                   className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all text-left group ${
                     isSelected
-                      ? "bg-emerald-600/15 border border-emerald-500/40 text-white"
-                      : "hover:bg-white/5 text-slate-300 hover:text-white border border-transparent"
+                      ? "bg-transparent border-2 border-emerald-500 text-slate-900 dark:text-white shadow-xs"
+                      : "hover:bg-slate-100 dark:hover:bg-white/5 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border-2 border-transparent"
                   }`}
                 >
                   <div className="w-11 h-11 rounded-2xl bg-[#0B0D11] border border-white/10 flex items-center justify-center text-emerald-400 shrink-0">

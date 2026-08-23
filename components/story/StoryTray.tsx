@@ -22,27 +22,19 @@ export const StoryTray: React.FC<StoryTrayProps> = ({
   return (
     <div
       data-testid="story-tray"
-      className="flex items-center gap-3.5 px-4 py-3 overflow-x-auto custom-scrollbar select-none bg-[#0B0D11]/60 border-b border-white/10 shrink-0"
+      className="flex items-center gap-3.5 px-4 py-3 overflow-x-auto custom-scrollbar select-none bg-transparent border-b border-slate-200/80 dark:border-white/10 shrink-0"
     >
-      {/* 1. Add My Story Button */}
+      {/* 1. Add My Story Button (Clean Circle with Dark Charcoal Plus) */}
       <div
         onClick={onAddStory}
+        data-testid="add-story-btn"
         className="flex flex-col items-center gap-1 shrink-0 cursor-pointer group"
       >
-        <div className="relative">
-          <div
-            className={`w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr ${getAvatarColor(
-              currentUser.username
-            )} flex items-center justify-center text-white text-xs sm:text-sm font-bold shadow-md ring-2 ring-white/10 group-hover:ring-emerald-500 transition-all`}
-          >
-            {currentUser.display_name.charAt(0).toUpperCase()}
-          </div>
-          <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full bg-emerald-600 border-2 border-[#0B0D11] text-white flex items-center justify-center shadow-sm">
-            <Plus className="w-3.5 h-3.5 stroke-[3]" />
-          </div>
+        <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-full border-2 border-dashed border-slate-300 dark:border-white/20 bg-slate-100/90 dark:bg-white/[0.04] flex items-center justify-center text-slate-700 dark:text-slate-300 group-hover:border-emerald-500 group-hover:text-emerald-500 group-hover:bg-emerald-500/10 transition-all shadow-xs">
+          <Plus className="w-6 h-6 stroke-[2.2]" />
         </div>
-        <span className="text-[10px] font-medium text-slate-300 truncate max-w-[60px]">
-          สตอรี่ของคุณ
+        <span className="text-[10px] font-semibold text-slate-700 dark:text-slate-300 truncate max-w-[64px]">
+          เพิ่มสตอรี่
         </span>
       </div>
 
