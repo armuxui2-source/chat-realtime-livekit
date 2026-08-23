@@ -1,4 +1,7 @@
-# 🎯 Master Partnership, Mentorship & Architecture Rules (กฎเหล็กประจำตัวถาวร)
+const fs = require("fs");
+const path = require("path");
+
+const masterRulesWithMentorship = `# 🎯 Master Partnership, Mentorship & Architecture Rules (กฎเหล็กประจำตัวถาวร)
 
 เอกสารนี้คือกฎเหล็กสูงสุดในการพัฒนาซอฟต์แวร์และการร่วมงานในฐานะ **พี่เลี้ยง & อาจารย์ (Senior Architect & Engineering Mentor)** ที่ต้อง **ยึดถือและบังคับใช้กับทุกโปรเจกต์ 100% (Global Mandatory Invariants)**:
 
@@ -29,10 +32,10 @@
 ---
 
 ## 4. มาตรฐาน Typography, Iconography & Design System
-* **ฟอนต์หลักทุกโปรเจกต์:** **`Prompt` (Google Font ภาษาไทย + อังกฤษ)** เสมอ
+* **ฟอนต์หลักทุกโปรเจกต์:** **\`Prompt\` (Google Font ภาษาไทย + อังกฤษ)** เสมอ
 * **ห้ามใช้อีโมจิแทนไอคอน:** ใช้ **Lucide SVG Icons เส้นบาง คมชัด เรียบหรู** เท่านั้น
 * **ห้ามไอคอนสีรุ้ง (Zero Rainbow Badges):** ใช้ **Monochrome Frosted Glass** เป็นค่าเริ่มต้นทั้งหมด
-* **ห้ามตัวหนังสือตกบรรทัด:** ควบคุมด้วย `truncate`, `whitespace-nowrap`, และ Padding สัดส่วนที่พอดี
+* **ห้ามตัวหนังสือตกบรรทัด:** ควบคุมด้วย \`truncate\`, \`whitespace-nowrap\`, และ Padding สัดส่วนที่พอดี
 * **Full Viewport on PC:** บนคอมพิวเตอร์ต้องเต็มจอ 100% ไร้ขอบดำ, บน Mobile มี Floating Capsule Bar
 
 ---
@@ -42,3 +45,26 @@
 * **2. Slide-over Drawers:** สำหรับการตั้งค่าเชิงลึก, จัดการโปรไฟล์, ประวัติการโทร, ศูนย์แจ้งเตือน
 * **3. Contextual Right Panels:** สำหรับข้อมูลประกอบที่ทำงานร่วมกับหน้าหลักแบบ Realtime (สื่อที่แชร์, สมาชิกกลุ่ม)
 * **4. Floating Capsule Navbars:** สำหรับการควบคุมหลักที่ต้องการการเข้าถึงรวดเร็ว (Bottom Nav บนมือถือ, Audio/Video Call HUD)
+`;
+
+// Save to Global Config
+const globalRulesDir = "C:\\\\Users\\\\armyn\\\\.gemini\\\\config\\\\rules";
+fs.mkdirSync(globalRulesDir, { recursive: true });
+fs.writeFileSync(path.join(globalRulesDir, "working-principles.md"), masterRulesWithMentorship, "utf8");
+
+const globalSkillDir = "C:\\\\Users\\\\armyn\\\\.gemini\\\\config\\\\skills\\\\premium-ui-ux-design-standards";
+fs.mkdirSync(globalSkillDir, { recursive: true });
+fs.writeFileSync(path.join(globalSkillDir, "SKILL.md"), masterRulesWithMentorship, "utf8");
+
+const globalConfigDir = "C:\\\\Users\\\\armyn\\\\.gemini\\\\config";
+fs.writeFileSync(path.join(globalConfigDir, "GEMINI.md"), masterRulesWithMentorship, "utf8");
+
+// Save to Workspace Local Config
+const localRulesDir = path.join(__dirname, "..", ".agents", "rules");
+fs.mkdirSync(localRulesDir, { recursive: true });
+fs.writeFileSync(path.join(localRulesDir, "working-principles.md"), masterRulesWithMentorship, "utf8");
+
+const localAgentsMd = path.join(__dirname, "..", "AGENTS.md");
+fs.writeFileSync(localAgentsMd, masterRulesWithMentorship, "utf8");
+
+console.log("MASTER_MENTORSHIP_RULES_PERMANENTLY_SAVED");
