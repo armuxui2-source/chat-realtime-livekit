@@ -269,11 +269,11 @@ export default function Home() {
   }
 
   return (
-    <main className="h-[100dvh] w-screen flex items-center justify-center p-0 md:p-3 lg:p-4 overflow-hidden font-prompt bg-[#0B0D10] text-white">
-      {/* 3-Tier Responsive Container Shell (Desktop 3-Column Tri-Pane / Tablet 2-Column / Mobile 1-Column) */}
+    <main className="h-[100dvh] w-screen flex overflow-hidden font-prompt bg-[#0F1216] text-white">
+      {/* 3-Tier Responsive Container Shell (Desktop 3-Column Tri-Pane / Tablet 2-Column / Mobile 1-Column) - True Full Edge-to-Edge */}
       <div
         data-testid="main-dashboard"
-        className="supercar-dashboard-shell w-full h-full max-w-[100vw] lg:max-w-[1720px] rounded-none md:rounded-3xl flex flex-col md:flex-row overflow-hidden border-0 md:border md:border-white/[0.08]"
+        className="w-full h-full flex flex-col md:flex-row overflow-hidden"
       >
         {/* Main Content Tri-Pane Columns Container (Flex-1 Min-H-0) */}
         <div className="flex-1 min-h-0 flex flex-col md:flex-row w-full h-full overflow-hidden">
@@ -401,7 +401,7 @@ export default function Home() {
         {/* Permanent Mobile & PWA Bottom Navigation Bar (< 768px) */}
         <nav
           data-testid="mobile-bottom-nav"
-          className="md:hidden flex items-center justify-around h-16 bg-[#0B0D11] border-t border-white/10 px-2 select-none shrink-0 z-40 pb-safe"
+          className="md:hidden flex items-center justify-around h-16 bg-[#161A22] border-t border-white/[0.08] px-2 select-none shrink-0 z-40 pb-safe"
         >
           <button
             type="button"
