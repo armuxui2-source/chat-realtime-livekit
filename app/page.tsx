@@ -386,6 +386,7 @@ export default function Home() {
                 if (selectedChannel) handleStartCall(selectedChannel, type);
                 else if (selectedUser) handleStartCall(selectedUser, type);
               }}
+              onOpenAddFriends={() => setIsAddFriendOpen(true)}
               onClose={() => {
                 if (typeof window !== "undefined" && window.innerWidth < 1024) {
                   setMobileView("chat");

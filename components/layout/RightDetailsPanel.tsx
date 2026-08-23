@@ -55,6 +55,7 @@ interface RightDetailsPanelProps {
   onJumpToMessage?: (messageId: string) => void;
   onAddMember: (username: string) => void;
   onStartCall: (type: "audio" | "video") => void;
+  onOpenAddFriends?: () => void;
   onLogout?: () => void;
   onClose?: () => void;
 }
@@ -72,6 +73,7 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
   onJumpToMessage,
   onAddMember,
   onStartCall,
+  onOpenAddFriends,
   onLogout,
   onClose,
 }) => {
@@ -91,6 +93,7 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
           bookmarkedCount={bookmarkedMessages.length}
           onOpenBookmarks={() => onModeChange?.("bookmarks")}
           onOpenCallHistory={() => onModeChange?.("call_history")}
+          onOpenAddFriends={onOpenAddFriends}
           onClose={onClose}
           onUpdateProfile={onUpdateProfile}
           onLogout={onLogout || (() => {})}

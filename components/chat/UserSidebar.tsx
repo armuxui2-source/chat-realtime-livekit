@@ -102,23 +102,13 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
       <div className="p-4 pb-2 shrink-0">
         <div className="flex items-center justify-between mb-3 px-1">
           <h1 className="text-base font-bold text-white tracking-tight">ข้อความสนทนา</h1>
-          <div className="flex items-center gap-1">
-            <button
-              onClick={onOpenCreateLiveKitRoom}
-              data-testid="header-create-meet-btn"
-              className="p-1.5 rounded-xl hover:bg-white/10 text-slate-400 hover:text-emerald-400 transition-colors"
-              title="เปิดห้องประชุม LiveKit"
-            >
-              <Video className="w-4 h-4" strokeWidth={2} />
-            </button>
-            <button
-              onClick={() => (activeTab === "dm" ? setShowAddContact(!showAddContact) : onOpenCreateChannel())}
-              className="p-1.5 rounded-xl hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
-              title="เริ่มแชทใหม่"
-            >
-              <Plus className="w-4 h-4" strokeWidth={2} />
-            </button>
-          </div>
+          <button
+            onClick={() => (activeTab === "dm" ? setShowAddContact(!showAddContact) : onOpenCreateChannel())}
+            className="p-1.5 rounded-xl hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
+            title="เริ่มแชทใหม่"
+          >
+            <Plus className="w-4 h-4" strokeWidth={2} />
+          </button>
         </div>
 
         <div className="relative">

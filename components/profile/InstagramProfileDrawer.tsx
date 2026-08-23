@@ -7,6 +7,9 @@ import {
   Settings,
   Edit3,
   Copy,
+  Link as LinkIcon,
+  Search,
+  QrCode,
   Bookmark,
   Bell,
   Volume2,
@@ -24,6 +27,11 @@ import {
   EyeOff,
   Smartphone,
   CheckCircle2,
+  Download,
+  Share2,
+  UserCheck,
+  UserX,
+  Sparkles,
 } from "lucide-react";
 
 interface InstagramProfileDrawerProps {
@@ -32,6 +40,7 @@ interface InstagramProfileDrawerProps {
   onClose?: () => void;
   onOpenBookmarks?: () => void;
   onOpenCallHistory?: () => void;
+  onOpenAddFriends?: () => void;
   onUpdateProfile?: (data: {
     display_name: string;
     status: "online" | "busy" | "away" | "offline";
@@ -46,10 +55,13 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
   onClose,
   onOpenBookmarks,
   onOpenCallHistory,
+  onOpenAddFriends,
   onUpdateProfile,
   onLogout,
 }) => {
-  const [view, setView] = useState<"profile" | "edit" | "notifications" | "privacy">("profile");
+  const [view, setView] = useState<
+    "profile" | "edit" | "notifications" | "privacy" | "qr_code" | "activity"
+  >("profile");
 
   // Edit State
   const [editName, setEditName] = useState(currentUser.display_name);
@@ -71,6 +83,12 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
   const [showOnline, setShowOnline] = useState(true);
   const [readReceipts, setReadReceipts] = useState(true);
 
+  // Activity Mock State
+  const [friendRequests, setFriendRequests] = useState([
+    { id: "fr1", username: "somchai", name: "สมชาย ยอดรัก", time: "10 นาทีที่แล้ว" },
+    { id: "fr2", username: "alex", name: "Alex Dev", time: "1 ชม. ที่แล้ว" },
+  ]);
+
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const triggerToast = (msg: string) => {
@@ -78,10 +96,11 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
     setTimeout(() => setToastMessage(null), 3000);
   };
 
-  const handleCopyUsername = () => {
+  const handleCopyProfileLink = () => {
+    const link = `https://ticketapp.io/@${currentUser.username}`;
     if (typeof navigator !== "undefined") {
-      navigator.clipboard.writeText(`@${currentUser.username}`);
-      triggerToast("คัดลอก Username สำเร็จแล้ว!");
+      navigator.clipboard.writeText(link);
+      triggerToast("คัดลอกลิงก์โปรไฟล์แล้ว: " + link);
     }
   };
 
@@ -143,12 +162,27 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
           <span className="text-sm font-bold text-white tracking-tight">
             {view === "profile" && "ข้อมูลโปรไฟล์ผู้ใช้งาน"}
             {view === "edit" && "แก้ไขข้อมูลโปรไฟล์"}
+            {view === "qr_code" && "คิวอาร์โค้ดส่วนตัว"}
+            {view === "activity" && "กิจกรรม & การแจ้งเตือน"}
             {view === "notifications" && "ศูนย์การแจ้งเตือน & เสียง"}
             {view === "privacy" && "ความเป็นส่วนตัว & บัญชีผู้ใช้"}
           </span>
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1.5">
+          {view === "profile" && (
+            <button
+              onClick={() => setView("activity")}
+              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors relative"
+              title="กิจกรรม & การแจ้งเตือน"
+            >
+              <Bell className="w-4 h-4" strokeWidth={1.8} />
+              {friendRequests.length > 0 && (
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-500" />
+              )}
+            </button>
+          )}
+
           {onClose && (
             <button
               onClick={onClose}
@@ -161,7 +195,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
       </div>
 
       {/* ========================================================================= */}
-      {/* VIEW 1: CLEAN PROFILE OVERVIEW (UNIFIED MONOCHROME ICONS)                 */}
+      {/* VIEW 1: CLEAN PROFILE OVERVIEW (3 PILL ACTIONS: SEARCH, LINK, QR CODE)    */}
       {/* ========================================================================= */}
       {view === "profile" && (
         <div className="p-5 space-y-5 animate-fade-in">
@@ -207,25 +241,49 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
             <p className="text-xs text-slate-300 mt-3.5 leading-relaxed bg-white/5 p-3 rounded-2xl border border-white/5 w-full text-center">
               {currentUser.custom_status || "พร้อมร่วมงานและสื่อสารแบบเรียลไทม์"}
             </p>
+
+            {/* THE 3 QUICK ACTION BUTTONS IN THE USER'S SPECIFIED 3 BOXES */}
+            <div className="grid grid-cols-3 gap-2 w-full mt-4">
+              {/* Button 1 (Left): Search & Add Friends */}
+              <button
+                onClick={() => (onOpenAddFriends ? onOpenAddFriends() : setView("activity"))}
+                className="py-2.5 px-2 rounded-2xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.08] text-white text-xs font-medium transition-all flex flex-col items-center justify-center gap-1 group active:scale-95"
+                title="ค้นหาเพื่อนและแอดเพื่อน"
+              >
+                <Search className="w-4 h-4 text-slate-300 group-hover:text-white" strokeWidth={1.8} />
+                <span className="text-[11px] text-slate-300 group-hover:text-white">ค้นหาเพื่อน</span>
+              </button>
+
+              {/* Button 2 (Center): Copy Profile Link */}
+              <button
+                onClick={handleCopyProfileLink}
+                className="py-2.5 px-2 rounded-2xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.08] text-white text-xs font-medium transition-all flex flex-col items-center justify-center gap-1 group active:scale-95"
+                title="คัดลอกลิงก์โปรไฟล์"
+              >
+                <LinkIcon className="w-4 h-4 text-slate-300 group-hover:text-white" strokeWidth={1.8} />
+                <span className="text-[11px] text-slate-300 group-hover:text-white">คัดลอกลิงก์</span>
+              </button>
+
+              {/* Button 3 (Right): Personal QR Code */}
+              <button
+                onClick={() => setView("qr_code")}
+                className="py-2.5 px-2 rounded-2xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.08] text-white text-xs font-medium transition-all flex flex-col items-center justify-center gap-1 group active:scale-95"
+                title="คิวอาร์โค้ดส่วนตัว"
+              >
+                <QrCode className="w-4 h-4 text-slate-300 group-hover:text-white" strokeWidth={1.8} />
+                <span className="text-[11px] text-slate-300 group-hover:text-white">คิวอาร์โค้ด</span>
+              </button>
+            </div>
           </div>
 
-          {/* Quick Actions */}
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              onClick={() => setView("edit")}
-              className="py-2.5 px-3 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] text-white text-xs font-bold transition-all flex items-center justify-center gap-2"
-            >
-              <Edit3 className="w-4 h-4 text-slate-300" strokeWidth={1.8} />
-              <span>แก้ไขโปรไฟล์</span>
-            </button>
-            <button
-              onClick={handleCopyUsername}
-              className="py-2.5 px-3 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] text-white text-xs font-bold transition-all flex items-center justify-center gap-2"
-            >
-              <Copy className="w-4 h-4 text-slate-300" strokeWidth={1.8} />
-              <span>คัดลอก ID</span>
-            </button>
-          </div>
+          {/* Edit Profile Full Action Button */}
+          <button
+            onClick={() => setView("edit")}
+            className="w-full py-2.5 px-4 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] text-white text-xs font-bold transition-all flex items-center justify-center gap-2"
+          >
+            <Edit3 className="w-4 h-4 text-slate-300" strokeWidth={1.8} />
+            <span>แก้ไขข้อมูลโปรไฟล์</span>
+          </button>
 
           {/* Functional Menu Categories — ALL UNIFIED MONOCHROME STYLING */}
           <div className="space-y-2 pt-1">
@@ -311,7 +369,141 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
       )}
 
       {/* ========================================================================= */}
-      {/* VIEW 2: EDIT PROFILE FORM                                                 */}
+      {/* VIEW: PERSONAL QR CODE CARD                                               */}
+      {/* ========================================================================= */}
+      {view === "qr_code" && (
+        <div className="p-5 space-y-5 animate-fade-in flex-1 flex flex-col items-center justify-center text-center">
+          <div className="w-full max-w-[280px] p-6 rounded-3xl bg-[#0B0D11] border border-white/10 shadow-2xl flex flex-col items-center space-y-4">
+            <div
+              className={`w-16 h-16 rounded-2xl bg-gradient-to-tr ${getAvatarColor(
+                currentUser.username
+              )} flex items-center justify-center text-white text-xl font-black shadow-md`}
+            >
+              {currentUser.display_name.charAt(0).toUpperCase()}
+            </div>
+
+            <div>
+              <h4 className="text-sm font-bold text-white">{currentUser.display_name}</h4>
+              <p className="text-xs text-slate-400 font-mono">@{currentUser.username}</p>
+            </div>
+
+            {/* Clean Monochrome QR Code Box */}
+            <div className="p-4 rounded-2xl bg-white flex items-center justify-center shadow-lg">
+              <QrCode className="w-40 h-40 text-slate-950" strokeWidth={1.5} />
+            </div>
+
+            <p className="text-[11px] text-slate-400">
+              สแกน QR Code นี้เพื่อเพิ่มเพื่อนและเริ่มแชทได้ทันที
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2 w-full max-w-[280px]">
+            <button
+              onClick={() => triggerToast("บันทึก QR Code ลงในเครื่องแล้ว!")}
+              className="py-2.5 px-3 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+            >
+              <Download className="w-4 h-4 text-slate-300" strokeWidth={1.8} />
+              <span>บันทึกรูป</span>
+            </button>
+            <button
+              onClick={handleCopyProfileLink}
+              className="py-2.5 px-3 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+            >
+              <Share2 className="w-4 h-4 text-slate-300" strokeWidth={1.8} />
+              <span>แชร์ลิงก์</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* VIEW: ACTIVITY & SOCIAL NOTIFICATIONS (FRIEND REQUESTS & STORY VIEWS)     */}
+      {/* ========================================================================= */}
+      {view === "activity" && (
+        <div className="p-5 space-y-4 animate-fade-in">
+          {/* Section 1: Friend Requests */}
+          <div className="space-y-2.5">
+            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-1">
+              คำขอเป็นเพื่อนใหม่ ({friendRequests.length})
+            </p>
+
+            {friendRequests.length > 0 ? (
+              friendRequests.map((fr) => (
+                <div
+                  key={fr.id}
+                  className="p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 space-y-3"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <div
+                        className={`w-9 h-9 rounded-xl bg-gradient-to-tr ${getAvatarColor(
+                          fr.username
+                        )} flex items-center justify-center text-white text-xs font-bold`}
+                      >
+                        {fr.name.charAt(0).toUpperCase()}
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-white">{fr.name}</p>
+                        <p className="text-[10px] text-slate-400">@{fr.username} · {fr.time}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      onClick={() => {
+                        setFriendRequests((prev) => prev.filter((r) => r.id !== fr.id));
+                        triggerToast(`ยอมรับคำขอเป็นเพื่อนจาก ${fr.name} แล้ว!`);
+                      }}
+                      className="py-1.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-xs"
+                    >
+                      <UserCheck className="w-3.5 h-3.5" />
+                      <span>ยอมรับ</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        setFriendRequests((prev) => prev.filter((r) => r.id !== fr.id));
+                        triggerToast(`ปฏิเสธคำขอจาก ${fr.name}`);
+                      }}
+                      className="py-1.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-bold flex items-center justify-center gap-1.5 transition-all"
+                    >
+                      <UserX className="w-3.5 h-3.5" />
+                      <span>ปฏิเสธ</span>
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-xs text-slate-500 px-1">ไม่มีคำขอเป็นเพื่อนใหม่ในขณะนี้</p>
+            )}
+          </div>
+
+          {/* Section 2: Story Views Activity */}
+          <div className="space-y-2.5 pt-2">
+            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-1">
+              ผู้เข้าชมสตอรี่ (Story Activity)
+            </p>
+
+            <div className="p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 flex items-center justify-center">
+                  <Eye className="w-4 h-4" strokeWidth={1.8} />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-white">Alex Dev และอีก 14 คน</p>
+                  <p className="text-[10px] text-slate-400">เข้าชมสตอรี่ล่าสุดของคุณ · 35 นาทีที่แล้ว</p>
+                </div>
+              </div>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white font-bold border border-white/15">
+                +15 วิว
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* VIEW: EDIT PROFILE FORM                                                   */}
       {/* ========================================================================= */}
       {view === "edit" && (
         <form onSubmit={handleSaveProfile} className="p-5 space-y-4 animate-fade-in">
@@ -394,7 +586,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
       )}
 
       {/* ========================================================================= */}
-      {/* VIEW 3: NOTIFICATIONS CATEGORIES HUB (UNIFIED MONOCHROME ICONS)            */}
+      {/* VIEW: NOTIFICATIONS CATEGORIES HUB                                        */}
       {/* ========================================================================= */}
       {view === "notifications" && (
         <div className="p-5 space-y-4 animate-fade-in">
@@ -534,7 +726,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
       )}
 
       {/* ========================================================================= */}
-      {/* VIEW 4: PRIVACY & ACCOUNT SETTINGS (UNIFIED MONOCHROME ICONS)              */}
+      {/* VIEW: PRIVACY & ACCOUNT SETTINGS                                          */}
       {/* ========================================================================= */}
       {view === "privacy" && (
         <div className="p-5 space-y-5 animate-fade-in flex-1 flex flex-col justify-between">
