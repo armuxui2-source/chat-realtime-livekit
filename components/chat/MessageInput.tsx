@@ -101,7 +101,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
   return (
     <div
       ref={inputContainerRef}
-      className="relative z-30 p-3 sm:p-4 bg-[#12161F] border-t border-white/10 select-none text-white font-prompt"
+      className="relative z-30 p-3 sm:p-4 bg-[#161A22] border-t border-white/[0.07] select-none text-white font-prompt"
     >
       {/* Mention Picker Popover */}
       {showMentionPopover && (
@@ -125,7 +125,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
 
       {/* Reply Context Banner */}
       {replyingTo && (
-        <div data-testid="replying-banner" className="mb-2 flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/10 text-xs">
+        <div data-testid="replying-banner" className="mb-2 flex items-center justify-between p-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-xs">
           <div className="flex items-center gap-2 min-w-0">
             <span className="font-bold text-emerald-400 truncate">
               ตอบกลับ @{replyingTo.senderName}:
@@ -155,13 +155,13 @@ export const MessageInput: React.FC<MessageInputProps> = ({
       ) : (
         <div className="flex items-center gap-2">
           {/* Floating Capsule Input Bar */}
-          <div className="flex-1 flex items-center gap-1.5 sm:gap-2 px-3 py-2 rounded-2xl bg-[#0B0D11] border border-white/10 focus-within:border-emerald-500/50 focus-within:ring-2 focus-within:ring-emerald-500/10 transition-all">
+          <div className="flex-1 flex items-center gap-1.5 sm:gap-2 px-3.5 py-2.5 rounded-2xl bg-[#0F1216] border border-white/[0.08] focus-within:border-emerald-500/50 focus-within:ring-2 focus-within:ring-emerald-500/10 transition-all">
             {/* Attachment Button */}
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
               data-testid="attach-file-btn"
-              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors"
               title="แนบไฟล์ / รูปภาพ"
             >
               <Paperclip className="w-4 h-4" strokeWidth={1.8} />
@@ -180,7 +180,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
             <button
               type="button"
               onClick={handleInsertCodeBlock}
-              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors"
               title="แทรกบล็อกโค้ด (Code Snippet)"
             >
               <Code className="w-4 h-4" strokeWidth={1.8} />
@@ -194,7 +194,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
                 setContent((prev) => prev + "@");
                 setShowMentionPopover(true);
               }}
-              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors"
               title="กล่าวถึงสมาชิก (@)"
             >
               <AtSign className="w-4 h-4" strokeWidth={1.8} />
@@ -217,20 +217,20 @@ export const MessageInput: React.FC<MessageInputProps> = ({
               type="button"
               onClick={() => setIsRecording(true)}
               data-testid="voice-record-btn"
-              className="p-1.5 rounded-xl text-slate-400 hover:text-emerald-400 hover:bg-white/10 transition-colors"
+              className="p-1.5 rounded-xl text-slate-400 hover:text-emerald-400 hover:bg-white/[0.06] transition-colors"
               title="บันทึกข้อความเสียง"
             >
               <Mic className="w-4 h-4" strokeWidth={1.8} />
             </button>
           </div>
 
-          {/* Emerald Green Send Button */}
+          {/* Emerald Green Circular Action Button */}
           <button
             type="button"
             onClick={handleSend}
             data-testid="send-message-btn"
             disabled={!content.trim()}
-            className="w-10 h-10 rounded-2xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-30 text-white flex items-center justify-center shadow-lg shadow-emerald-600/30 transition-all active:scale-95 shrink-0"
+            className="w-11 h-11 rounded-full emerald-button-gradient disabled:opacity-30 text-white flex items-center justify-center transition-all active:scale-95 shrink-0 shadow-lg"
             title="ส่งข้อความ"
           >
             <Send className="w-4 h-4 ml-0.5" strokeWidth={2.2} />

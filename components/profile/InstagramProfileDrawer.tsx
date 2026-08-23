@@ -145,15 +145,15 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
   return (
     <div
       data-testid="instagram-profile-drawer"
-      className="w-full h-full bg-[#12161F] text-white flex flex-col font-prompt select-none overflow-y-auto custom-scrollbar"
+      className="w-full h-full bg-[#161A22] text-white flex flex-col font-prompt select-none overflow-y-auto custom-scrollbar"
     >
       {/* Header Bar */}
-      <div className="h-14 px-4 border-b border-white/10 flex items-center justify-between shrink-0 bg-[#0B0D11]/90 backdrop-blur-md sticky top-0 z-20">
+      <div className="h-14 px-4 border-b border-white/[0.07] flex items-center justify-between shrink-0 bg-[#0F1216]/90 backdrop-blur-xl sticky top-0 z-20">
         <div className="flex items-center gap-2">
           {view !== "profile" && (
             <button
               onClick={() => setView("profile")}
-              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors"
               title="ย้อนกลับ"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -173,12 +173,12 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
           {view === "profile" && (
             <button
               onClick={() => setView("activity")}
-              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors relative"
+              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors relative"
               title="กิจกรรม & การแจ้งเตือน"
             >
               <Bell className="w-4 h-4" strokeWidth={1.8} />
               {friendRequests.length > 0 && (
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-500" />
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_#22c55e]" />
               )}
             </button>
           )}
@@ -186,7 +186,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
           {onClose && (
             <button
               onClick={onClose}
-              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -195,29 +195,29 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
       </div>
 
       {/* ========================================================================= */}
-      {/* VIEW 1: CLEAN PROFILE OVERVIEW (3 PILL ACTIONS: SEARCH, LINK, QR CODE)    */}
+      {/* VIEW 1: CLEAN PROFILE OVERVIEW (3 FROSTED GLASS PILL ACTIONS)             */}
       {/* ========================================================================= */}
       {view === "profile" && (
         <div className="p-5 space-y-5 animate-fade-in">
           {/* User Card */}
-          <div className="flex flex-col items-center text-center p-5 rounded-3xl bg-[#0B0D11] border border-white/10 shadow-sm relative">
+          <div className="flex flex-col items-center text-center p-6 rounded-3xl bg-[#0F1216] border border-white/[0.07] shadow-xl relative">
             <div className="relative mb-3">
               <div
                 className={`w-20 h-20 rounded-2xl bg-gradient-to-tr ${getAvatarColor(
                   currentUser.username
-                )} flex items-center justify-center text-white text-2xl font-black shadow-lg ring-2 ring-white/15`}
+                )} flex items-center justify-center text-white text-2xl font-black shadow-lg ring-2 ring-emerald-500/30`}
               >
                 {currentUser.display_name.charAt(0).toUpperCase()}
               </div>
               <span
-                className={`absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-[#0B0D11] ${
+                className={`absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-[#0F1216] ${
                   currentUser.status === "busy"
                     ? "bg-rose-500"
                     : currentUser.status === "away"
                     ? "bg-amber-500"
                     : currentUser.status === "offline"
                     ? "bg-slate-400"
-                    : "bg-emerald-500"
+                    : "bg-emerald-500 shadow-[0_0_10px_#22c55e]"
                 }`}
               />
             </div>
@@ -238,40 +238,40 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
               </span>
             </div>
 
-            <p className="text-xs text-slate-300 mt-3.5 leading-relaxed bg-white/5 p-3 rounded-2xl border border-white/5 w-full text-center">
+            <p className="text-xs text-slate-300 mt-3.5 leading-relaxed bg-white/[0.04] p-3 rounded-2xl border border-white/[0.05] w-full text-center">
               {currentUser.custom_status || "พร้อมร่วมงานและสื่อสารแบบเรียลไทม์"}
             </p>
 
-            {/* THE 3 QUICK ACTION BUTTONS IN THE USER'S SPECIFIED 3 BOXES */}
+            {/* THE 3 FROSTED GLASS ACTION BUTTONS */}
             <div className="grid grid-cols-3 gap-2 w-full mt-4">
               {/* Button 1 (Left): Search & Add Friends */}
               <button
                 onClick={() => (onOpenAddFriends ? onOpenAddFriends() : setView("activity"))}
-                className="py-2.5 px-2 rounded-2xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.08] text-white text-xs font-medium transition-all flex flex-col items-center justify-center gap-1 group active:scale-95"
+                className="py-2.5 px-2 rounded-2xl bg-white/[0.05] hover:bg-emerald-500/15 border border-white/[0.08] hover:border-emerald-500/30 text-white text-xs font-medium transition-all flex flex-col items-center justify-center gap-1.5 group active:scale-95 shadow-sm"
                 title="ค้นหาเพื่อนและแอดเพื่อน"
               >
-                <Search className="w-4 h-4 text-slate-300 group-hover:text-white" strokeWidth={1.8} />
-                <span className="text-[11px] text-slate-300 group-hover:text-white">ค้นหาเพื่อน</span>
+                <Search className="w-4 h-4 text-slate-300 group-hover:text-emerald-400 transition-colors" strokeWidth={1.8} />
+                <span className="text-[11px] text-slate-300 group-hover:text-white transition-colors">ค้นหาเพื่อน</span>
               </button>
 
               {/* Button 2 (Center): Copy Profile Link */}
               <button
                 onClick={handleCopyProfileLink}
-                className="py-2.5 px-2 rounded-2xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.08] text-white text-xs font-medium transition-all flex flex-col items-center justify-center gap-1 group active:scale-95"
+                className="py-2.5 px-2 rounded-2xl bg-white/[0.05] hover:bg-emerald-500/15 border border-white/[0.08] hover:border-emerald-500/30 text-white text-xs font-medium transition-all flex flex-col items-center justify-center gap-1.5 group active:scale-95 shadow-sm"
                 title="คัดลอกลิงก์โปรไฟล์"
               >
-                <LinkIcon className="w-4 h-4 text-slate-300 group-hover:text-white" strokeWidth={1.8} />
-                <span className="text-[11px] text-slate-300 group-hover:text-white">คัดลอกลิงก์</span>
+                <LinkIcon className="w-4 h-4 text-slate-300 group-hover:text-emerald-400 transition-colors" strokeWidth={1.8} />
+                <span className="text-[11px] text-slate-300 group-hover:text-white transition-colors">คัดลอกลิงก์</span>
               </button>
 
               {/* Button 3 (Right): Personal QR Code */}
               <button
                 onClick={() => setView("qr_code")}
-                className="py-2.5 px-2 rounded-2xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.08] text-white text-xs font-medium transition-all flex flex-col items-center justify-center gap-1 group active:scale-95"
+                className="py-2.5 px-2 rounded-2xl bg-white/[0.05] hover:bg-emerald-500/15 border border-white/[0.08] hover:border-emerald-500/30 text-white text-xs font-medium transition-all flex flex-col items-center justify-center gap-1.5 group active:scale-95 shadow-sm"
                 title="คิวอาร์โค้ดส่วนตัว"
               >
-                <QrCode className="w-4 h-4 text-slate-300 group-hover:text-white" strokeWidth={1.8} />
-                <span className="text-[11px] text-slate-300 group-hover:text-white">คิวอาร์โค้ด</span>
+                <QrCode className="w-4 h-4 text-slate-300 group-hover:text-emerald-400 transition-colors" strokeWidth={1.8} />
+                <span className="text-[11px] text-slate-300 group-hover:text-white transition-colors">คิวอาร์โค้ด</span>
               </button>
             </div>
           </div>
@@ -279,13 +279,13 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
           {/* Edit Profile Full Action Button */}
           <button
             onClick={() => setView("edit")}
-            className="w-full py-2.5 px-4 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] text-white text-xs font-bold transition-all flex items-center justify-center gap-2"
+            className="w-full py-2.5 px-4 rounded-2xl bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.08] text-white text-xs font-bold transition-all flex items-center justify-center gap-2"
           >
             <Edit3 className="w-4 h-4 text-slate-300" strokeWidth={1.8} />
             <span>แก้ไขข้อมูลโปรไฟล์</span>
           </button>
 
-          {/* Functional Menu Categories — ALL UNIFIED MONOCHROME STYLING */}
+          {/* Functional Menu Categories — ALL FROSTED GLASS MONOCHROME STYLING */}
           <div className="space-y-2 pt-1">
             <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-1">
               การตั้งค่าและกิจกรรมระบบ
@@ -294,7 +294,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
             {/* 1. Notifications Hub */}
             <button
               onClick={() => setView("notifications")}
-              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left group"
+              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0F1216] border border-white/[0.07] hover:bg-white/[0.04] transition-all text-left group"
             >
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 group-hover:text-white flex items-center justify-center transition-colors">
@@ -313,7 +313,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
             {/* 2. Privacy & Account */}
             <button
               onClick={() => setView("privacy")}
-              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left group"
+              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0F1216] border border-white/[0.07] hover:bg-white/[0.04] transition-all text-left group"
             >
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 group-hover:text-white flex items-center justify-center transition-colors">
@@ -331,7 +331,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
             {onOpenBookmarks && (
               <button
                 onClick={onOpenBookmarks}
-                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left group"
+                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0F1216] border border-white/[0.07] hover:bg-white/[0.04] transition-all text-left group"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 group-hover:text-white flex items-center justify-center transition-colors">
@@ -350,7 +350,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
             {onOpenCallHistory && (
               <button
                 onClick={onOpenCallHistory}
-                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left group"
+                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0F1216] border border-white/[0.07] hover:bg-white/[0.04] transition-all text-left group"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 group-hover:text-white flex items-center justify-center transition-colors">
@@ -369,30 +369,30 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
       )}
 
       {/* ========================================================================= */}
-      {/* VIEW: PERSONAL QR CODE CARD                                               */}
+      {/* VIEW: PERSONAL QR CODE CARD (FIGMA FROSTED GLASS SPEC)                   */}
       {/* ========================================================================= */}
       {view === "qr_code" && (
         <div className="p-5 space-y-5 animate-fade-in flex-1 flex flex-col items-center justify-center text-center">
-          <div className="w-full max-w-[280px] p-6 rounded-3xl bg-[#0B0D11] border border-white/10 shadow-2xl flex flex-col items-center space-y-4">
+          <div className="w-full max-w-[280px] p-6 rounded-3xl glass-emerald-card flex flex-col items-center space-y-4">
             <div
               className={`w-16 h-16 rounded-2xl bg-gradient-to-tr ${getAvatarColor(
                 currentUser.username
-              )} flex items-center justify-center text-white text-xl font-black shadow-md`}
+              )} flex items-center justify-center text-white text-xl font-black shadow-lg ring-2 ring-emerald-400/40`}
             >
               {currentUser.display_name.charAt(0).toUpperCase()}
             </div>
 
             <div>
               <h4 className="text-sm font-bold text-white">{currentUser.display_name}</h4>
-              <p className="text-xs text-slate-400 font-mono">@{currentUser.username}</p>
+              <p className="text-xs text-emerald-300 font-mono">@{currentUser.username}</p>
             </div>
 
-            {/* Clean Monochrome QR Code Box */}
-            <div className="p-4 rounded-2xl bg-white flex items-center justify-center shadow-lg">
+            {/* Clean Frosted QR Code Box */}
+            <div className="p-4 rounded-2xl bg-white flex items-center justify-center shadow-xl">
               <QrCode className="w-40 h-40 text-slate-950" strokeWidth={1.5} />
             </div>
 
-            <p className="text-[11px] text-slate-400">
+            <p className="text-[11px] text-slate-300">
               สแกน QR Code นี้เพื่อเพิ่มเพื่อนและเริ่มแชทได้ทันที
             </p>
           </div>
@@ -400,14 +400,14 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
           <div className="grid grid-cols-2 gap-2 w-full max-w-[280px]">
             <button
               onClick={() => triggerToast("บันทึก QR Code ลงในเครื่องแล้ว!")}
-              className="py-2.5 px-3 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+              className="py-2.5 px-3 rounded-2xl emerald-button-gradient text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 active:scale-95"
             >
-              <Download className="w-4 h-4 text-slate-300" strokeWidth={1.8} />
+              <Download className="w-4 h-4 text-white" strokeWidth={2} />
               <span>บันทึกรูป</span>
             </button>
             <button
               onClick={handleCopyProfileLink}
-              className="py-2.5 px-3 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+              className="py-2.5 px-3 rounded-2xl bg-white/[0.08] hover:bg-white/[0.14] border border-white/[0.1] text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 active:scale-95"
             >
               <Share2 className="w-4 h-4 text-slate-300" strokeWidth={1.8} />
               <span>แชร์ลิงก์</span>
@@ -431,7 +431,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
               friendRequests.map((fr) => (
                 <div
                   key={fr.id}
-                  className="p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 space-y-3"
+                  className="p-3.5 rounded-2xl bg-[#0F1216] border border-white/[0.07] space-y-3"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
@@ -455,7 +455,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
                         setFriendRequests((prev) => prev.filter((r) => r.id !== fr.id));
                         triggerToast(`ยอมรับคำขอเป็นเพื่อนจาก ${fr.name} แล้ว!`);
                       }}
-                      className="py-1.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-xs"
+                      className="py-2 px-3 rounded-xl emerald-button-gradient text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all active:scale-95"
                     >
                       <UserCheck className="w-3.5 h-3.5" />
                       <span>ยอมรับ</span>
@@ -465,7 +465,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
                         setFriendRequests((prev) => prev.filter((r) => r.id !== fr.id));
                         triggerToast(`ปฏิเสธคำขอจาก ${fr.name}`);
                       }}
-                      className="py-1.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-bold flex items-center justify-center gap-1.5 transition-all"
+                      className="py-2 px-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-slate-300 text-xs font-bold flex items-center justify-center gap-1.5 transition-all active:scale-95"
                     >
                       <UserX className="w-3.5 h-3.5" />
                       <span>ปฏิเสธ</span>
@@ -484,17 +484,17 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
               ผู้เข้าชมสตอรี่ (Story Activity)
             </p>
 
-            <div className="p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 flex items-center justify-between">
+            <div className="p-3.5 rounded-2xl bg-[#0F1216] border border-white/[0.07] flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 flex items-center justify-center">
-                  <Eye className="w-4 h-4" strokeWidth={1.8} />
+                  <Eye className="w-4 h-4 text-emerald-400" strokeWidth={1.8} />
                 </div>
                 <div>
                   <p className="text-xs font-bold text-white">Alex Dev และอีก 14 คน</p>
                   <p className="text-[10px] text-slate-400">เข้าชมสตอรี่ล่าสุดของคุณ · 35 นาทีที่แล้ว</p>
                 </div>
               </div>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white font-bold border border-white/15">
+              <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 font-bold border border-emerald-500/25">
                 +15 วิว
               </span>
             </div>
@@ -516,7 +516,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
               value={editName}
               onChange={(e) => setEditName(e.target.value)}
               required
-              className="w-full px-3.5 py-2.5 rounded-2xl bg-[#0B0D11] border border-white/10 text-white text-xs focus:outline-none focus:border-emerald-500"
+              className="w-full px-3.5 py-2.5 rounded-2xl bg-[#0F1216] border border-white/[0.08] text-white text-xs focus:outline-none focus:border-emerald-500 transition-colors"
             />
           </div>
 
@@ -528,7 +528,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
               type="text"
               value={currentUser.username}
               disabled
-              className="w-full px-3.5 py-2.5 rounded-2xl bg-white/5 border border-white/10 text-slate-400 text-xs font-mono cursor-not-allowed"
+              className="w-full px-3.5 py-2.5 rounded-2xl bg-white/[0.03] border border-white/[0.06] text-slate-400 text-xs font-mono cursor-not-allowed"
             />
           </div>
 
@@ -540,7 +540,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
               value={editBio}
               onChange={(e) => setEditBio(e.target.value)}
               rows={3}
-              className="w-full px-3.5 py-2.5 rounded-2xl bg-[#0B0D11] border border-white/10 text-white text-xs focus:outline-none focus:border-emerald-500 resize-none leading-relaxed"
+              className="w-full px-3.5 py-2.5 rounded-2xl bg-[#0F1216] border border-white/[0.08] text-white text-xs focus:outline-none focus:border-emerald-500 resize-none leading-relaxed transition-colors"
             />
           </div>
 
@@ -559,17 +559,17 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
                   key={st.id}
                   type="button"
                   onClick={() => setEditStatus(st.id as "online" | "busy" | "away" | "offline")}
-                  className={`p-2.5 rounded-2xl border text-xs flex items-center justify-between ${
+                  className={`p-2.5 rounded-2xl border text-xs flex items-center justify-between transition-all ${
                     editStatus === st.id
-                      ? "bg-white/10 border-white/30 text-white font-bold"
-                      : "bg-[#0B0D11] border-white/10 text-slate-400"
+                      ? "bg-emerald-500/15 border-emerald-500/40 text-white font-bold"
+                      : "bg-[#0F1216] border-white/[0.08] text-slate-400 hover:text-white"
                   }`}
                 >
                   <div className="flex items-center gap-2">
                     <span className={`w-2 h-2 rounded-full ${st.color}`} />
                     <span>{st.title.split(" ")[0]}</span>
                   </div>
-                  {editStatus === st.id && <Check className="w-3.5 h-3.5 text-white" />}
+                  {editStatus === st.id && <Check className="w-3.5 h-3.5 text-emerald-400" />}
                 </button>
               ))}
             </div>
@@ -577,7 +577,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
 
           <button
             type="submit"
-            className="w-full py-3.5 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg shadow-emerald-600/30 transition-all active:scale-[0.98] flex items-center justify-center gap-2 mt-4"
+            className="w-full py-3.5 px-4 rounded-2xl emerald-button-gradient text-white font-bold text-xs shadow-lg transition-all active:scale-[0.98] flex items-center justify-center gap-2 mt-4"
           >
             <Check className="w-4 h-4" />
             <span>บันทึกการแก้ไขโปรไฟล์</span>
@@ -591,7 +591,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
       {view === "notifications" && (
         <div className="p-5 space-y-4 animate-fade-in">
           {/* Section 1: Do Not Disturb Mode */}
-          <div className="p-4 rounded-2xl bg-[#0B0D11] border border-white/10 space-y-2">
+          <div className="p-4 rounded-2xl bg-[#0F1216] border border-white/[0.07] space-y-2">
             <p className="text-xs font-bold text-white">โหมดห้ามรบกวน (Do Not Disturb)</p>
             <p className="text-[10px] text-slate-400">ปิดเสียงและการแจ้งเตือนชั่วคราว</p>
             <div className="grid grid-cols-4 gap-1.5 pt-1">
@@ -609,8 +609,8 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
                   }}
                   className={`py-1.5 px-2 rounded-xl text-xs font-bold border transition-all ${
                     dndDuration === d.id
-                      ? "bg-white/15 border-white/30 text-white shadow-xs"
-                      : "bg-white/5 border-white/10 text-slate-400 hover:text-white"
+                      ? "emerald-button-gradient text-white"
+                      : "bg-white/[0.05] border-white/[0.08] text-slate-400 hover:text-white"
                   }`}
                 >
                   {d.label}
@@ -627,11 +627,11 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
 
             <button
               onClick={() => setMsgSound(!msgSound)}
-              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
+              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0F1216] border border-white/[0.07] hover:bg-white/[0.04] transition-all text-left"
             >
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 flex items-center justify-center">
-                  {msgSound ? <Volume2 className="w-4 h-4" strokeWidth={1.8} /> : <VolumeX className="w-4 h-4 text-slate-500" strokeWidth={1.8} />}
+                  {msgSound ? <Volume2 className="w-4 h-4 text-emerald-400" strokeWidth={1.8} /> : <VolumeX className="w-4 h-4 text-slate-500" strokeWidth={1.8} />}
                 </div>
                 <div>
                   <p className="text-xs font-bold text-white">เสียงข้อความเข้า (Message Chime)</p>
@@ -645,11 +645,11 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
 
             <button
               onClick={() => setCallSound(!callSound)}
-              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
+              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0F1216] border border-white/[0.07] hover:bg-white/[0.04] transition-all text-left"
             >
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 flex items-center justify-center">
-                  {callSound ? <Volume2 className="w-4 h-4" strokeWidth={1.8} /> : <VolumeX className="w-4 h-4 text-slate-500" strokeWidth={1.8} />}
+                  {callSound ? <Volume2 className="w-4 h-4 text-emerald-400" strokeWidth={1.8} /> : <VolumeX className="w-4 h-4 text-slate-500" strokeWidth={1.8} />}
                 </div>
                 <div>
                   <p className="text-xs font-bold text-white">เสียงเรียกเข้าการโทร (Call Ringtone)</p>
@@ -670,7 +670,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
 
             <button
               onClick={() => setDmNotif(!dmNotif)}
-              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
+              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0F1216] border border-white/[0.07] hover:bg-white/[0.04] transition-all text-left"
             >
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 flex items-center justify-center">
@@ -686,7 +686,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
               </div>
             </button>
 
-            <div className="p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 space-y-2">
+            <div className="p-3.5 rounded-2xl bg-[#0F1216] border border-white/[0.07] space-y-2">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 flex items-center justify-center">
                   <Users className="w-4 h-4" strokeWidth={1.8} />
@@ -702,8 +702,8 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
                   onClick={() => setChannelNotifMode("all")}
                   className={`p-2 rounded-xl text-xs font-bold border text-center transition-all ${
                     channelNotifMode === "all"
-                      ? "bg-white/15 border-white/30 text-white"
-                      : "bg-white/5 border-white/10 text-slate-400"
+                      ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-400"
+                      : "bg-white/[0.04] border-white/[0.08] text-slate-400"
                   }`}
                 >
                   ทุกข้อความ
@@ -713,8 +713,8 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
                   onClick={() => setChannelNotifMode("mentions")}
                   className={`p-2 rounded-xl text-xs font-bold border text-center transition-all ${
                     channelNotifMode === "mentions"
-                      ? "bg-white/15 border-white/30 text-white"
-                      : "bg-white/5 border-white/10 text-slate-400"
+                      ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-400"
+                      : "bg-white/[0.04] border-white/[0.08] text-slate-400"
                   }`}
                 >
                   เฉพาะที่แท็ก (@mentions)
@@ -731,7 +731,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
       {view === "privacy" && (
         <div className="p-5 space-y-5 animate-fade-in flex-1 flex flex-col justify-between">
           <div className="space-y-4">
-            <div className="p-4 rounded-2xl bg-[#0B0D11] border border-white/10 space-y-1">
+            <div className="p-4 rounded-2xl bg-[#0F1216] border border-white/[0.07] space-y-1">
               <p className="text-xs font-bold text-white">การควบคุมความเป็นส่วนตัว</p>
               <p className="text-[10px] text-slate-400">จัดการข้อมูลที่ผู้อื่นสามารถมองเห็นได้</p>
             </div>
@@ -739,11 +739,11 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
             <div className="space-y-2">
               <button
                 onClick={() => setShowOnline(!showOnline)}
-                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
+                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0F1216] border border-white/[0.07] hover:bg-white/[0.04] transition-all text-left"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 flex items-center justify-center">
-                    {showOnline ? <Eye className="w-4 h-4" strokeWidth={1.8} /> : <EyeOff className="w-4 h-4 text-slate-500" strokeWidth={1.8} />}
+                    {showOnline ? <Eye className="w-4 h-4 text-emerald-400" strokeWidth={1.8} /> : <EyeOff className="w-4 h-4 text-slate-500" strokeWidth={1.8} />}
                   </div>
                   <div>
                     <p className="text-xs font-bold text-white">แสดงสถานะออนไลน์ (Show Presence)</p>
@@ -757,11 +757,11 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
 
               <button
                 onClick={() => setReadReceipts(!readReceipts)}
-                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
+                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0F1216] border border-white/[0.07] hover:bg-white/[0.04] transition-all text-left"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 flex items-center justify-center">
-                    <CheckCircle2 className="w-4 h-4" strokeWidth={1.8} />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400" strokeWidth={1.8} />
                   </div>
                   <div>
                     <p className="text-xs font-bold text-white">ใบเสร็จการอ่าน (Read Receipts)</p>
@@ -775,7 +775,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
             </div>
 
             {/* Active Session info */}
-            <div className="p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 flex items-center justify-between">
+            <div className="p-3.5 rounded-2xl bg-[#0F1216] border border-white/[0.07] flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 flex items-center justify-center">
                   <Smartphone className="w-4 h-4" strokeWidth={1.8} />
@@ -785,17 +785,17 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
                   <p className="text-[10px] text-slate-400">Desktop Web Browser · Active Now</p>
                 </div>
               </div>
-              <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-white/10 text-white font-bold border border-white/15">
+              <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 font-bold border border-emerald-500/25">
                 ใช้งานอยู่
               </span>
             </div>
           </div>
 
           {/* SAFELY PLACED LOGOUT BUTTON AT THE VERY BOTTOM */}
-          <div className="pt-6 border-t border-white/10">
+          <div className="pt-6 border-t border-white/[0.07]">
             <button
               onClick={onLogout}
-              className="w-full py-3 px-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white font-medium text-xs transition-all flex items-center justify-center gap-2"
+              className="w-full py-3 px-4 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.07] text-slate-300 hover:text-white font-medium text-xs transition-all flex items-center justify-center gap-2"
             >
               <LogOut className="w-4 h-4 text-slate-400" strokeWidth={1.8} />
               <span>ออกจากระบบบัญชีนี้ (Log Out)</span>
@@ -806,7 +806,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
 
       {/* Toast Feedback */}
       {toastMessage && (
-        <div className="p-3 m-4 rounded-2xl bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-bold shadow-lg animate-scale-up text-center">
+        <div className="p-3 m-4 rounded-2xl glass-emerald-card text-white text-xs font-bold shadow-2xl animate-scale-up text-center">
           {toastMessage}
         </div>
       )}

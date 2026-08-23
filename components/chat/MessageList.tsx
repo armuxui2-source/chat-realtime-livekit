@@ -124,36 +124,112 @@ export const MessageList: React.FC<MessageListProps> = ({
         const isBookmarked = bookmarkedIds.includes(msg.id);
         const codeBlock = parseCodeBlock(msg.content);
         const urlMatch = extractUrl(msg.content);
+        const previewUrl = extractUrl(msg.content);
 
         return (
           <div
             key={msg.id}
             id={`msg-${msg.id}`}
-            data-testid={`message-item-${msg.id}`}
-            className={`group flex items-end gap-2 transition-all relative ${
+            data-testid={`chat-message-${msg.id}`}
+            className={`flex items-end gap-2 group relative transition-all duration-300 ${
               isMe ? "justify-end" : "justify-start"
             }`}
           >
-            {/* Avatar for Incoming Messages */}
+            {/* Action Toolbar on Hover */}
+            {!msg.is_deleted && (
+              <div
+                className={`absolute top-0 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity z-20 flex items-center gap-1 bg-[#161A22] border border-white/[0.08] p-1 rounded-2xl shadow-xl ${
+                  isMe ? "right-0" : "left-0"
+                }`}
+              >
+                {/* Reactions */}
+                <div className="flex items-center gap-0.5 border-r border-white/10 pr-1 mr-0.5">
+                  {["👍", "❤️", "🔥", "🎉"].map((emoji) => (
+                    <button
+                      key={emoji}
+                      onClick={() => onToggleReaction?.(msg.id, emoji)}
+                      className="p-1 rounded-lg hover:bg-white/10 text-xs transition-transform active:scale-125"
+                    >
+                      {emoji}
+                    </button>
+                  ))}
+                </div>
+
+                <button
+                  onClick={() =>
+                    onSetReply({
+                      messageId: msg.id,
+                      senderName: isMe ? currentUser.display_name : selectedUser.display_name,
+                      content: msg.content,
+                    })
+                  }
+                  className="p-1 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white"
+                  title="ตอบกลับ"
+                >
+                  <Reply className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => onOpenForward?.(msg)}
+                  className="p-1 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white"
+                  title="ส่งต่อ"
+                >
+                  <Forward className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => onToggleBookmark?.(msg)}
+                  className={`p-1 rounded-lg hover:bg-white/10 ${
+                    bookmarkedIds.includes(msg.id) ? "text-emerald-400" : "text-slate-400 hover:text-white"
+                  }`}
+                  title="บันทึก"
+                >
+                  <Bookmark className="w-3.5 h-3.5" />
+                </button>
+
+                {isMe && (
+                  <>
+                    <button
+                      onClick={() => {
+                        setEditingMessageId(msg.id);
+                        setEditContent(msg.content);
+                      }}
+                      className="p-1 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white"
+                      title="แก้ไข"
+                    >
+                      <Edit2 className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={() => onDeleteMessage?.(msg.id)}
+                      className="p-1 rounded-lg hover:bg-white/10 text-slate-400 hover:text-rose-400"
+                      title="ลบข้อความ"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </>
+                )}
+              </div>
+            )}
+
+            {/* Receiver Avatar */}
             {!isMe && (
               <div
-                className={`w-8 h-8 rounded-full bg-gradient-to-tr ${getAvatarColor(
+                className={`w-7 h-7 rounded-xl bg-gradient-to-tr ${getAvatarColor(
                   selectedUser.username
-                )} flex items-center justify-center text-white text-xs font-bold shrink-0 mb-0.5 shadow-sm ring-1 ring-white/20`}
+                )} flex items-center justify-center text-white text-[10px] font-bold shrink-0 mb-1 shadow-sm ring-1 ring-white/10`}
               >
                 {selectedUser.display_name.charAt(0).toUpperCase()}
               </div>
             )}
 
-            <div className={`flex flex-col max-w-[85%] md:max-w-[70%] ${isMe ? "items-end" : "items-start"}`}>
-              {/* Message Bubble */}
+            {/* Bubble Container */}
+            <div className={`flex flex-col max-w-[85%] sm:max-w-md ${isMe ? "items-end" : "items-start"}`}>
+              {/* Bubble Body */}
               <div
                 className={`px-4 py-2.5 rounded-2xl text-[13px] leading-relaxed relative ${
                   msg.is_deleted
                     ? "bg-white/5 text-slate-500 italic border border-white/5"
                     : isMe
-                    ? "bg-emerald-600 text-white rounded-br-xs shadow-lg shadow-emerald-950/40"
-                    : "bg-[#1D2433] border border-white/10 text-white rounded-bl-xs shadow-md"
+                    ? "bg-[#16A34A] text-white rounded-br-xs shadow-lg shadow-emerald-950/40"
+                    : "bg-[#1E232B] border border-white/[0.07] text-white rounded-bl-xs shadow-md"
                 }`}
               >
                 {/* Quoted Reply */}

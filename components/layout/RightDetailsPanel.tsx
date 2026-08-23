@@ -86,7 +86,7 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
     return (
       <aside
         data-testid="right-details-panel"
-        className="w-full h-full bg-[#0B0D11] border-l border-white/10 select-none overflow-hidden flex flex-col text-white relative font-prompt"
+        className="w-full h-full bg-[#161A22] border-l border-white/[0.07] select-none overflow-hidden flex flex-col text-white relative font-prompt"
       >
         <InstagramProfileDrawer
           currentUser={currentUser}
@@ -167,16 +167,16 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
   return (
     <aside
       data-testid="right-details-panel"
-      className="w-full h-full bg-[#12161F] border-l border-white/10 p-5 select-none overflow-y-auto custom-scrollbar flex flex-col justify-between text-white relative font-prompt"
+      className="w-full h-full bg-[#161A22] border-l border-white/[0.07] p-5 select-none overflow-y-auto custom-scrollbar flex flex-col justify-between text-white relative font-prompt"
     >
       <div>
         {/* Panel Header */}
-        <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/10">
+        <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/[0.07]">
           <div className="flex items-center gap-2">
             {mode !== "details" && (
               <button
                 onClick={() => onModeChange?.("details")}
-                className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors mr-1"
+                className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors mr-1"
                 title="ย้อนกลับ"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -194,7 +194,7 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
             <button
               onClick={onClose}
               data-testid="close-details-btn"
-              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -207,16 +207,16 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
         {mode === "details" && (
           <div className="space-y-5 animate-fade-in">
             {/* User Profile Card */}
-            <div className="flex flex-col items-center text-center pb-4 border-b border-white/10">
+            <div className="flex flex-col items-center text-center pb-4 border-b border-white/[0.07]">
               <div className="relative mb-3">
                 <div
                   className={`w-20 h-20 rounded-2xl bg-gradient-to-tr ${getAvatarColor(
                     username
-                  )} flex items-center justify-center text-white text-2xl font-bold shadow-lg ring-2 ring-white/10`}
+                  )} flex items-center justify-center text-white text-2xl font-bold shadow-lg ring-2 ring-emerald-500/30`}
                 >
                   {displayName.replace("#", "").charAt(0).toUpperCase()}
                 </div>
-                <span className="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-emerald-500 ring-2 ring-[#12161F]" />
+                <span className="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-emerald-500 ring-2 ring-[#161A22]" />
               </div>
 
               <h4 className="text-base font-bold text-white">{displayName}</h4>

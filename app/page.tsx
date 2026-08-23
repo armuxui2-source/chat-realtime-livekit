@@ -269,11 +269,11 @@ export default function Home() {
   }
 
   return (
-    <main className="h-[100dvh] w-screen flex items-center justify-center p-0 md:p-3 lg:p-4 overflow-hidden font-prompt bg-[#07080B] text-white">
+    <main className="h-[100dvh] w-screen flex items-center justify-center p-0 md:p-3 lg:p-4 overflow-hidden font-prompt bg-[#0B0D10] text-white">
       {/* 3-Tier Responsive Container Shell (Desktop 3-Column Tri-Pane / Tablet 2-Column / Mobile 1-Column) */}
       <div
         data-testid="main-dashboard"
-        className="supercar-dashboard-shell w-full h-full max-w-[100vw] lg:max-w-[1720px] rounded-none md:rounded-3xl flex flex-col md:flex-row overflow-hidden border-0 md:border md:border-white/10"
+        className="supercar-dashboard-shell w-full h-full max-w-[100vw] lg:max-w-[1720px] rounded-none md:rounded-3xl flex flex-col md:flex-row overflow-hidden border-0 md:border md:border-white/[0.08]"
       >
         {/* Main Content Tri-Pane Columns Container (Flex-1 Min-H-0) */}
         <div className="flex-1 min-h-0 flex flex-col md:flex-row w-full h-full overflow-hidden">
@@ -323,7 +323,7 @@ export default function Home() {
           <div
             className={`${
               mobileView === "chat" ? "flex w-full" : "hidden"
-            } md:flex flex-1 h-full min-w-0 flex-col bg-[#0B0D11]`}
+            } md:flex flex-1 h-full min-w-0 flex-col bg-[#0F1216]`}
           >
             <ChatContainer
               currentUser={currentUser}

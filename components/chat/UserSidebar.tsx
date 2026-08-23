@@ -96,7 +96,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
   return (
     <aside
       data-testid="left-navigation-sidebar"
-      className="w-full md:w-72 lg:w-80 shrink-0 flex flex-col h-full bg-[#12161F] border-r border-white/10 select-none min-w-0 font-prompt text-white"
+      className="w-full md:w-72 lg:w-80 shrink-0 flex flex-col h-full bg-[#161A22] border-r border-white/[0.07] select-none min-w-0 font-prompt text-white"
     >
       {/* Top Header & Search Bar */}
       <div className="p-4 pb-2 shrink-0">
@@ -104,7 +104,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
           <h1 className="text-base font-bold text-white tracking-tight">ข้อความสนทนา</h1>
           <button
             onClick={() => (activeTab === "dm" ? setShowAddContact(!showAddContact) : onOpenCreateChannel())}
-            className="p-1.5 rounded-xl hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
+            className="p-2 rounded-xl bg-white/[0.05] hover:bg-emerald-500/20 text-slate-300 hover:text-emerald-400 border border-white/[0.08] transition-all"
             title="เริ่มแชทใหม่"
           >
             <Plus className="w-4 h-4" strokeWidth={2} />
@@ -119,7 +119,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="ค้นหาข้อความ, สมาชิก, ช่อง..."
-            className="w-full pl-9 pr-3.5 py-2.5 rounded-2xl bg-[#0B0D11] border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-all"
+            className="w-full pl-9 pr-3.5 py-2.5 rounded-2xl bg-[#0F1216] border border-white/[0.07] text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-all"
           />
         </div>
       </div>
@@ -136,14 +136,14 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 
       {/* Segmented Tab Controls */}
       <div className="px-4 py-2 shrink-0">
-        <div className="grid grid-cols-2 p-1 rounded-2xl bg-[#0B0D11] border border-white/10 text-xs font-medium">
+        <div className="grid grid-cols-2 p-1 rounded-2xl bg-[#0F1216] border border-white/[0.07] text-xs font-medium">
           <button
             type="button"
             data-testid="tab-dm"
             onClick={() => setActiveTab("dm")}
-            className={`flex items-center justify-center gap-1.5 py-1.5 rounded-xl transition-all ${
+            className={`flex items-center justify-center gap-1.5 py-2 rounded-xl transition-all ${
               activeTab === "dm"
-                ? "bg-emerald-600 text-white font-bold shadow-md shadow-emerald-600/30"
+                ? "emerald-button-gradient text-white font-bold"
                 : "text-slate-400 hover:text-white"
             }`}
           >
@@ -154,9 +154,9 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
             type="button"
             data-testid="tab-channels"
             onClick={() => setActiveTab("channels")}
-            className={`flex items-center justify-center gap-1.5 py-1.5 rounded-xl transition-all ${
+            className={`flex items-center justify-center gap-1.5 py-2 rounded-xl transition-all ${
               activeTab === "channels"
-                ? "bg-emerald-600 text-white font-bold shadow-md shadow-emerald-600/30"
+                ? "emerald-button-gradient text-white font-bold"
                 : "text-slate-400 hover:text-white"
             }`}
           >
