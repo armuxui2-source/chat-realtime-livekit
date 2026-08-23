@@ -206,32 +206,32 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
       {view === "profile" && (
         <div className="p-5 space-y-5 animate-fade-in">
           {/* User Card */}
-          <div className="flex flex-col items-center text-center p-6 rounded-3xl bg-[#0F1216] border border-white/[0.07] shadow-xl relative">
+          <div className="flex flex-col items-center text-center p-6 rounded-3xl bg-slate-50 dark:bg-[#121212] border border-[#DBDBDB] dark:border-[#262626] shadow-sm relative">
             <div className="relative mb-3">
               <div
-                className={`w-20 h-20 rounded-2xl bg-gradient-to-tr ${getAvatarColor(
+                className={`w-20 h-20 rounded-full bg-gradient-to-tr ${getAvatarColor(
                   currentUser.username
-                )} flex items-center justify-center text-white text-2xl font-black shadow-lg ring-2 ring-emerald-500/30`}
+                )} flex items-center justify-center text-white text-2xl font-bold shadow-md ring-2 ring-black/5 dark:ring-white/10`}
               >
                 {currentUser.display_name.charAt(0).toUpperCase()}
               </div>
               <span
-                className={`absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-[#0F1216] ${
+                className={`absolute bottom-0 right-0 w-4 h-4 rounded-full border-2 border-white dark:border-black ${
                   currentUser.status === "busy"
                     ? "bg-rose-500"
                     : currentUser.status === "away"
                     ? "bg-amber-500"
                     : currentUser.status === "offline"
                     ? "bg-slate-400"
-                    : "bg-emerald-500 shadow-[0_0_10px_#22c55e]"
+                    : "bg-[#10B981]"
                 }`}
               />
             </div>
 
-            <h3 className="text-base font-bold text-white leading-tight">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white leading-tight">
               {currentUser.display_name}
             </h3>
-            <p className="text-xs text-slate-400 font-mono mt-0.5">@{currentUser.username}</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-0.5">@{currentUser.username}</p>
 
             <div className="mt-2.5">
               <span

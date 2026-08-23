@@ -10,6 +10,7 @@ import {
   AtSign,
   Code2,
   Mic,
+  Heart,
   X,
 } from "lucide-react";
 import { UserProfile } from "@/types/chat";
@@ -303,22 +304,18 @@ export const MessageInput: React.FC<MessageInputProps> = ({
           }}
         />
       ) : (
-        <div className="flex items-center gap-2.5">
-          {/* Floating Capsule Input Bar */}
-          <div className="flex-1 flex items-center gap-2 px-3 py-2 rounded-2xl bg-[#0F1216] border border-white/[0.08] focus-within:border-emerald-500/50 focus-within:ring-2 focus-within:ring-emerald-500/10 transition-all">
-            {/* Single Plus Menu Toggle Button */}
+        <div className="flex items-center gap-2">
+          {/* Instagram Direct Floating Capsule Pill Input */}
+          <div className="flex-1 flex items-center gap-2.5 px-4 py-2 rounded-full border border-[#DBDBDB] dark:border-[#363636] bg-white dark:bg-black focus-within:border-slate-400 dark:focus-within:border-slate-600 transition-all">
+            {/* Smile / Quick Action Button */}
             <button
               type="button"
               onClick={() => setShowAttachMenu(!showAttachMenu)}
               data-testid="attach-menu-toggle-btn"
-              className={`p-2 rounded-xl transition-all ${
-                showAttachMenu
-                  ? "bg-emerald-500/20 text-emerald-400 rotate-45"
-                  : "text-slate-400 hover:text-white hover:bg-white/[0.06]"
-              }`}
-              title="แนบรูปภาพ ไฟล์ หรือกิจกรรม (+)"
+              className="p-1 rounded-full text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all shrink-0"
+              title="แนบรูปภาพหรือกิจกรรม (+)"
             >
-              <Plus className="w-4 h-4" strokeWidth={2.2} />
+              <Plus className="w-5 h-5 stroke-[2]" />
             </button>
 
             {/* Textarea Input */}
@@ -328,34 +325,57 @@ export const MessageInput: React.FC<MessageInputProps> = ({
               value={content}
               onChange={handleTextChange}
               onKeyDown={handleKeyDown}
-              placeholder="พิมพ์ข้อความที่นี่..."
+              placeholder="ส่งข้อความ..."
               rows={1}
-              className="flex-1 resize-none bg-transparent text-xs text-white placeholder-slate-500 focus:outline-none max-h-28 leading-relaxed py-1"
+              className="flex-1 resize-none bg-transparent text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none max-h-28 leading-relaxed py-0.5"
             />
 
-            {/* Voice Message Mic Button */}
-            <button
-              type="button"
-              onClick={() => setIsRecording(true)}
-              data-testid="voice-record-btn"
-              className="p-2 rounded-xl text-slate-400 hover:text-emerald-400 hover:bg-white/[0.06] transition-colors"
-              title="บันทึกข้อความเสียง"
-            >
-              <Mic className="w-4 h-4" strokeWidth={1.8} />
-            </button>
-          </div>
+            {/* Right Action Icons (Mic, Image, Heart when empty / Send when text entered) */}
+            {content.trim() ? (
+              <button
+                type="button"
+                onClick={handleSend}
+                data-testid="send-message-btn"
+                className="text-[#0095F6] hover:text-[#1877F2] font-bold text-sm px-2 py-0.5 transition-colors shrink-0"
+                title="ส่งข้อความ"
+              >
+                ส่ง
+              </button>
+            ) : (
+              <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300 shrink-0">
+                {/* Voice Message Mic */}
+                <button
+                  type="button"
+                  onClick={() => setIsRecording(true)}
+                  data-testid="voice-record-btn"
+                  className="p-1 hover:text-slate-900 dark:hover:text-white transition-colors"
+                  title="บันทึกข้อความเสียง"
+                >
+                  <Mic className="w-5 h-5" strokeWidth={1.8} />
+                </button>
 
-          {/* Emerald Green Circular Action Button */}
-          <button
-            type="button"
-            onClick={handleSend}
-            data-testid="send-message-btn"
-            disabled={!content.trim()}
-            className="w-11 h-11 rounded-full emerald-button-gradient disabled:opacity-30 text-white flex items-center justify-center transition-all active:scale-95 shrink-0 shadow-lg"
-            title="ส่งข้อความ"
-          >
-            <Send className="w-4 h-4 ml-0.5" strokeWidth={2.2} />
-          </button>
+                {/* Photos & Media */}
+                <button
+                  type="button"
+                  onClick={() => imageInputRef.current?.click()}
+                  className="p-1 hover:text-slate-900 dark:hover:text-white transition-colors"
+                  title="ส่งรูปภาพ"
+                >
+                  <ImageIcon className="w-5 h-5" strokeWidth={1.8} />
+                </button>
+
+                {/* Send Heart ❤️ */}
+                <button
+                  type="button"
+                  onClick={() => onSendMessage("❤️")}
+                  className="p-1 hover:text-rose-500 transition-colors"
+                  title="ส่งหัวใจ"
+                >
+                  <Heart className="w-5 h-5" strokeWidth={1.8} />
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>

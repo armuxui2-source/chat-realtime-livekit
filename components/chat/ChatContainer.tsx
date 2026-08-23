@@ -60,47 +60,26 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
     return (
       <div
         data-testid="chat-container-empty"
-        className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-[#0F1216] text-white select-none"
+        className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-white dark:bg-[#000000] text-slate-900 dark:text-white select-none font-prompt"
       >
-        <div className="relative mb-5">
-          <div className="w-16 h-16 rounded-3xl bg-[#161A22] border border-white/[0.08] flex items-center justify-center shadow-lg">
-            <Command className="w-8 h-8 text-white" strokeWidth={2} />
-          </div>
+        <div className="w-24 h-24 rounded-full border-2 border-slate-900 dark:border-white flex items-center justify-center mb-4">
+          <MessageSquare className="w-12 h-12 stroke-[1.5]" />
         </div>
 
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 text-xs font-semibold mb-3">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Ticketapp Workspace</span>
-        </div>
-
-        <h3 className="text-xl font-extrabold text-white mb-2">
-          A real-time system that works like an Organiser
+        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1.5">
+          ข้อความของคุณ (Your Messages)
         </h3>
-        <p className="text-xs text-slate-400 max-w-sm mb-6 leading-relaxed">
-          เลือกรายชื่อสมาชิกหรือช่องสนทนาจากแถบด้านซ้าย เพื่อเริ่มต้นการส่งข้อความ ข้อความเสียง และโทรเสียง/วิดีโอคอลได้ทันที
+        <p className="text-sm text-slate-500 dark:text-slate-400 max-w-xs mb-5 leading-relaxed">
+          ส่งรูปภาพและข้อความส่วนตัวถึงเพื่อนหรือกลุ่มสนทนาแบบเรียลไทม์
         </p>
 
-        <div className="grid grid-cols-2 gap-3 max-w-sm w-full">
-          <div className="p-3.5 rounded-2xl bg-[#161A22] border border-white/[0.08] shadow-sm text-left flex items-start gap-2.5">
-            <div className="p-2 rounded-xl bg-white/[0.06] text-slate-300 border border-white/[0.08]">
-              <PhoneCall className="w-4 h-4" strokeWidth={1.75} />
-            </div>
-            <div>
-              <p className="text-xs font-bold text-white">HD Voice Calls</p>
-              <p className="text-[11px] text-slate-400">Opus Audio Codec</p>
-            </div>
-          </div>
-
-          <div className="p-3.5 rounded-2xl bg-[#161A22] border border-white/[0.08] shadow-sm text-left flex items-start gap-2.5">
-            <div className="p-2 rounded-xl emerald-button-gradient text-white shadow-sm">
-              <Video className="w-4 h-4" strokeWidth={1.75} />
-            </div>
-            <div>
-              <p className="text-xs font-bold text-white">ห้องประชุมสายสด (Meeting Room)</p>
-              <p className="text-[11px] text-slate-400">WebRTC SFU Cloud</p>
-            </div>
-          </div>
-        </div>
+        <button
+          type="button"
+          onClick={() => {}}
+          className="px-4 py-2 rounded-lg bg-[#0095F6] hover:bg-[#1877F2] text-white text-xs font-semibold shadow-xs transition-colors"
+        >
+          ส่งข้อความ
+        </button>
       </div>
     );
   }

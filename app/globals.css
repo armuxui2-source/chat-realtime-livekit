@@ -4,94 +4,122 @@
 
 @layer base {
   :root {
-    --background: 15 18 22;
-    --foreground: 248 250 252;
-    --card: 22 26 34;
-    --card-foreground: 248 250 252;
-    --popover: 22 26 34;
-    --popover-foreground: 248 250 252;
-    --primary: 34 197 94;
+    --background: 0 0 0;
+    --foreground: 245 245 245;
+    --card: 18 18 18;
+    --card-foreground: 245 245 245;
+    --popover: 18 18 18;
+    --popover-foreground: 245 245 245;
+    --primary: 55 151 240;
     --primary-foreground: 255 255 255;
-    --secondary: 30 35 43;
-    --secondary-foreground: 248 250 252;
-    --muted: 30 35 43;
-    --muted-foreground: 148 163 184;
-    --accent: 34 197 94;
+    --secondary: 38 38 38;
+    --secondary-foreground: 245 245 245;
+    --muted: 38 38 38;
+    --muted-foreground: 168 168 168;
+    --accent: 55 151 240;
     --accent-foreground: 255 255 255;
-    --destructive: 239 68 68;
+    --destructive: 237 73 86;
     --destructive-foreground: 255 255 255;
-    --border: 255 255 255 / 0.08;
-    --input: 255 255 255 / 0.08;
-    --ring: 34 197 94;
+    --border: 38 38 38;
+    --input: 38 38 38;
+    --ring: 55 151 240;
     --radius: 1.25rem;
   }
 
   [data-theme="light"] {
-    --background: 248 250 252;
-    --foreground: 15 23 42;
+    --background: 255 255 255;
+    --foreground: 0 0 0;
     --card: 255 255 255;
-    --card-foreground: 15 23 42;
+    --card-foreground: 0 0 0;
     --popover: 255 255 255;
-    --popover-foreground: 15 23 42;
-    --secondary: 241 245 249;
-    --secondary-foreground: 15 23 42;
-    --muted: 241 245 249;
-    --muted-foreground: 100 116 139;
-    --border: 0 0 0 / 0.08;
-    --input: 0 0 0 / 0.08;
+    --popover-foreground: 0 0 0;
+    --secondary: 239 239 239;
+    --secondary-foreground: 0 0 0;
+    --muted: 239 239 239;
+    --muted-foreground: 115 115 115;
+    --border: 219 219 219;
+    --input: 219 219 219;
   }
 }
 
 body {
-  background-color: #0F1216;
-  color: #F8FAFC;
+  background-color: #000000;
+  color: #F5F5F5;
   font-family: var(--font-prompt), sans-serif;
   overflow-x: hidden;
   letter-spacing: -0.01em;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-[data-theme="light"] body {
-  background-color: #F8FAFC;
-  color: #0F172A;
-}
-
-/* Smart Light Mode Auto Surface Adapters */
-[data-theme="light"] [class*="bg-[#0F1216]"],
+/* Explicit Instagram Day Mode (Light) Rules */
+[data-theme="light"] body,
+[data-theme="light"] main,
+[data-theme="light"] [data-testid="left-slim-navigation"],
+[data-theme="light"] [data-testid="left-navigation-sidebar"],
 [data-theme="light"] [data-testid="chat-container-active"],
-[data-theme="light"] .custom-scrollbar {
-  background-color: #F8FAFC !important;
-}
-
-[data-theme="light"] [class*="bg-[#161A22]"] {
+[data-theme="light"] [data-testid="chat-container-empty"],
+[data-theme="light"] [data-testid="message-list-container"],
+[data-theme="light"] [data-testid="chat-header"],
+[data-theme="light"] [data-testid="message-input-container"],
+[data-theme="light"] [data-testid="right-details-panel"] {
   background-color: #FFFFFF !important;
+  color: #000000 !important;
+  border-color: #DBDBDB !important;
 }
 
-[data-theme="light"] [class*="bg-[#1E232B]"] {
-  background-color: #FFFFFF !important;
-  border-color: rgba(0, 0, 0, 0.08) !important;
-  color: #0F172A !important;
+[data-theme="light"] [data-testid="contact-search-input"] {
+  background-color: #EFEFEF !important;
+  color: #000000 !important;
 }
 
-[data-theme="light"] [class*="border-white"] {
-  border-color: rgba(0, 0, 0, 0.08) !important;
+/* Explicit Instagram Night Mode (Dark) Rules */
+[data-theme="dark"] body,
+[data-theme="dark"] main,
+[data-theme="dark"] [data-testid="left-slim-navigation"],
+[data-theme="dark"] [data-testid="left-navigation-sidebar"],
+[data-theme="dark"] [data-testid="chat-container-active"],
+[data-theme="dark"] [data-testid="chat-container-empty"],
+[data-theme="dark"] [data-testid="message-list-container"],
+[data-theme="dark"] [data-testid="chat-header"],
+[data-theme="dark"] [data-testid="message-input-container"],
+[data-theme="dark"] [data-testid="right-details-panel"] {
+  background-color: #000000 !important;
+  color: #F5F5F5 !important;
+  border-color: #262626 !important;
 }
 
-[data-theme="light"] [class*="text-white"] {
-  color: #0F172A !important;
+[data-theme="dark"] [data-testid="contact-search-input"] {
+  background-color: #262626 !important;
+  color: #FFFFFF !important;
 }
 
-[data-theme="light"] [class*="text-slate-400"] {
-  color: #64748B !important;
+/* Instagram Signature Gradient Ring */
+.ig-gradient-ring {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
 }
 
-[data-theme="light"] [class*="text-slate-300"] {
-  color: #334155 !important;
+/* Instagram Direct Purple-Blue Gradient Bubble */
+.ig-direct-gradient {
+  background: linear-gradient(135deg, #7F00FF 0%, #E100FF 50%, #00D2FF 100%);
+  color: #FFFFFF !important;
+}
+
+/* Instagram Accent Blue Button */
+.ig-blue-button {
+  background-color: #0095F6;
+  color: #FFFFFF !important;
+}
+.ig-blue-button:hover {
+  background-color: #1877F2;
 }
 
 /* Ensure buttons with solid colors and gradients keep white text */
 [data-theme="light"] .emerald-button-gradient,
 [data-theme="light"] .emerald-button-gradient *,
+[data-theme="light"] .ig-direct-gradient,
+[data-theme="light"] .ig-direct-gradient *,
+[data-theme="light"] .ig-blue-button,
+[data-theme="light"] .ig-blue-button *,
 [data-theme="light"] [class*="bg-emerald-500"],
 [data-theme="light"] [class*="bg-emerald-500"] *,
 [data-theme="light"] [class*="bg-rose-500"],
