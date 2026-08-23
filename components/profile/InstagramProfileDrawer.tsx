@@ -22,10 +22,8 @@ import {
   Users,
   Eye,
   EyeOff,
-  Moon,
   Smartphone,
   CheckCircle2,
-  AlertCircle,
 } from "lucide-react";
 
 interface InstagramProfileDrawerProps {
@@ -163,7 +161,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
       </div>
 
       {/* ========================================================================= */}
-      {/* VIEW 1: CLEAN PROFILE OVERVIEW (NO LOGOUT DISTRACTION)                    */}
+      {/* VIEW 1: CLEAN PROFILE OVERVIEW (UNIFIED MONOCHROME ICONS)                 */}
       {/* ========================================================================= */}
       {view === "profile" && (
         <div className="p-5 space-y-5 animate-fade-in">
@@ -215,21 +213,21 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
           <div className="grid grid-cols-2 gap-2">
             <button
               onClick={() => setView("edit")}
-              className="py-2.5 px-3 rounded-2xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+              className="py-2.5 px-3 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] text-white text-xs font-bold transition-all flex items-center justify-center gap-2"
             >
-              <Edit3 className="w-3.5 h-3.5" />
+              <Edit3 className="w-4 h-4 text-slate-300" strokeWidth={1.8} />
               <span>แก้ไขโปรไฟล์</span>
             </button>
             <button
               onClick={handleCopyUsername}
-              className="py-2.5 px-3 rounded-2xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+              className="py-2.5 px-3 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] text-white text-xs font-bold transition-all flex items-center justify-center gap-2"
             >
-              <Copy className="w-3.5 h-3.5" />
+              <Copy className="w-4 h-4 text-slate-300" strokeWidth={1.8} />
               <span>คัดลอก ID</span>
             </button>
           </div>
 
-          {/* Functional Menu Categories */}
+          {/* Functional Menu Categories — ALL UNIFIED MONOCHROME STYLING */}
           <div className="space-y-2 pt-1">
             <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-1">
               การตั้งค่าและกิจกรรมระบบ
@@ -238,11 +236,11 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
             {/* 1. Notifications Hub */}
             <button
               onClick={() => setView("notifications")}
-              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
+              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left group"
             >
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center">
-                  <Bell className="w-4 h-4" />
+                <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 group-hover:text-white flex items-center justify-center transition-colors">
+                  <Bell className="w-4 h-4" strokeWidth={1.8} />
                 </div>
                 <div>
                   <p className="text-xs font-bold text-white">ศูนย์การแจ้งเตือน & เสียง</p>
@@ -251,42 +249,42 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
                   </p>
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-500" />
+              <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-slate-300 transition-colors" />
             </button>
 
             {/* 2. Privacy & Account */}
             <button
               onClick={() => setView("privacy")}
-              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
+              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left group"
             >
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
-                  <Shield className="w-4 h-4" />
+                <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 group-hover:text-white flex items-center justify-center transition-colors">
+                  <Shield className="w-4 h-4" strokeWidth={1.8} />
                 </div>
                 <div>
                   <p className="text-xs font-bold text-white">ความเป็นส่วนตัว & บัญชี</p>
                   <p className="text-[10px] text-slate-400">สถานะออนไลน์, อุปกรณ์, และความปลอดภัย</p>
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-500" />
+              <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-slate-300 transition-colors" />
             </button>
 
             {/* 3. Bookmarks */}
             {onOpenBookmarks && (
               <button
                 onClick={onOpenBookmarks}
-                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
+                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
-                    <Bookmark className="w-4 h-4" />
+                  <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 group-hover:text-white flex items-center justify-center transition-colors">
+                    <Bookmark className="w-4 h-4" strokeWidth={1.8} />
                   </div>
                   <div>
                     <p className="text-xs font-bold text-white">ข้อความที่บันทึกไว้ (Bookmarks)</p>
                     <p className="text-[10px] text-slate-400">{bookmarkedCount} รายการ</p>
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-slate-500" />
+                <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-slate-300 transition-colors" />
               </button>
             )}
 
@@ -294,18 +292,18 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
             {onOpenCallHistory && (
               <button
                 onClick={onOpenCallHistory}
-                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
+                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center">
-                    <PhoneCall className="w-4 h-4" />
+                  <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 group-hover:text-white flex items-center justify-center transition-colors">
+                    <PhoneCall className="w-4 h-4" strokeWidth={1.8} />
                   </div>
                   <div>
                     <p className="text-xs font-bold text-white">ประวัติการโทร & WebRTC</p>
                     <p className="text-[10px] text-slate-400">รายการสายโทรเข้าและวิดีโอคอล</p>
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-slate-500" />
+                <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-slate-300 transition-colors" />
               </button>
             )}
           </div>
@@ -371,7 +369,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
                   onClick={() => setEditStatus(st.id as "online" | "busy" | "away" | "offline")}
                   className={`p-2.5 rounded-2xl border text-xs flex items-center justify-between ${
                     editStatus === st.id
-                      ? "bg-emerald-600/20 border-emerald-500 text-white font-bold"
+                      ? "bg-white/10 border-white/30 text-white font-bold"
                       : "bg-[#0B0D11] border-white/10 text-slate-400"
                   }`}
                 >
@@ -379,7 +377,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
                     <span className={`w-2 h-2 rounded-full ${st.color}`} />
                     <span>{st.title.split(" ")[0]}</span>
                   </div>
-                  {editStatus === st.id && <Check className="w-3.5 h-3.5 text-emerald-400" />}
+                  {editStatus === st.id && <Check className="w-3.5 h-3.5 text-white" />}
                 </button>
               ))}
             </div>
@@ -396,7 +394,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
       )}
 
       {/* ========================================================================= */}
-      {/* VIEW 3: NOTIFICATIONS CATEGORIES HUB                                      */}
+      {/* VIEW 3: NOTIFICATIONS CATEGORIES HUB (UNIFIED MONOCHROME ICONS)            */}
       {/* ========================================================================= */}
       {view === "notifications" && (
         <div className="p-5 space-y-4 animate-fade-in">
@@ -419,7 +417,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
                   }}
                   className={`py-1.5 px-2 rounded-xl text-xs font-bold border transition-all ${
                     dndDuration === d.id
-                      ? "bg-emerald-600 border-emerald-500 text-white shadow-xs"
+                      ? "bg-white/15 border-white/30 text-white shadow-xs"
                       : "bg-white/5 border-white/10 text-slate-400 hover:text-white"
                   }`}
                 >
@@ -440,7 +438,9 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
               className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
             >
               <div className="flex items-center gap-3">
-                {msgSound ? <Volume2 className="w-4 h-4 text-emerald-400" /> : <VolumeX className="w-4 h-4 text-slate-500" />}
+                <div className="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 flex items-center justify-center">
+                  {msgSound ? <Volume2 className="w-4 h-4" strokeWidth={1.8} /> : <VolumeX className="w-4 h-4 text-slate-500" strokeWidth={1.8} />}
+                </div>
                 <div>
                   <p className="text-xs font-bold text-white">เสียงข้อความเข้า (Message Chime)</p>
                   <p className="text-[10px] text-slate-400">{msgSound ? "เปิดเสียง" : "ปิดเสียง"}</p>
@@ -456,7 +456,9 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
               className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
             >
               <div className="flex items-center gap-3">
-                {callSound ? <Volume2 className="w-4 h-4 text-emerald-400" /> : <VolumeX className="w-4 h-4 text-slate-500" />}
+                <div className="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 flex items-center justify-center">
+                  {callSound ? <Volume2 className="w-4 h-4" strokeWidth={1.8} /> : <VolumeX className="w-4 h-4 text-slate-500" strokeWidth={1.8} />}
+                </div>
                 <div>
                   <p className="text-xs font-bold text-white">เสียงเรียกเข้าการโทร (Call Ringtone)</p>
                   <p className="text-[10px] text-slate-400">{callSound ? "เปิดเสียงเรียกเข้า" : "ปิดเสียงเรียกเข้า"}</p>
@@ -479,7 +481,9 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
               className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
             >
               <div className="flex items-center gap-3">
-                <MessageSquare className="w-4 h-4 text-blue-400" />
+                <div className="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 flex items-center justify-center">
+                  <MessageSquare className="w-4 h-4" strokeWidth={1.8} />
+                </div>
                 <div>
                   <p className="text-xs font-bold text-white">แชทส่วนตัว (Direct Messages)</p>
                   <p className="text-[10px] text-slate-400">{dmNotif ? "แจ้งเตือนทุกข้อความ" : "ปิดการแจ้งเตือน"}</p>
@@ -492,7 +496,9 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
 
             <div className="p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 space-y-2">
               <div className="flex items-center gap-3">
-                <Users className="w-4 h-4 text-amber-400" />
+                <div className="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 flex items-center justify-center">
+                  <Users className="w-4 h-4" strokeWidth={1.8} />
+                </div>
                 <div>
                   <p className="text-xs font-bold text-white">แชทกลุ่มและแชนเนล (Channels)</p>
                   <p className="text-[10px] text-slate-400">เลือกประเภทการแจ้งเตือนในห้องกลุ่ม</p>
@@ -504,7 +510,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
                   onClick={() => setChannelNotifMode("all")}
                   className={`p-2 rounded-xl text-xs font-bold border text-center transition-all ${
                     channelNotifMode === "all"
-                      ? "bg-emerald-600/20 border-emerald-500 text-emerald-400"
+                      ? "bg-white/15 border-white/30 text-white"
                       : "bg-white/5 border-white/10 text-slate-400"
                   }`}
                 >
@@ -515,7 +521,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
                   onClick={() => setChannelNotifMode("mentions")}
                   className={`p-2 rounded-xl text-xs font-bold border text-center transition-all ${
                     channelNotifMode === "mentions"
-                      ? "bg-emerald-600/20 border-emerald-500 text-emerald-400"
+                      ? "bg-white/15 border-white/30 text-white"
                       : "bg-white/5 border-white/10 text-slate-400"
                   }`}
                 >
@@ -528,7 +534,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
       )}
 
       {/* ========================================================================= */}
-      {/* VIEW 4: PRIVACY & ACCOUNT SETTINGS (WITH SAFELY PLACED LOGOUT AT BOTTOM)   */}
+      {/* VIEW 4: PRIVACY & ACCOUNT SETTINGS (UNIFIED MONOCHROME ICONS)              */}
       {/* ========================================================================= */}
       {view === "privacy" && (
         <div className="p-5 space-y-5 animate-fade-in flex-1 flex flex-col justify-between">
@@ -544,7 +550,9 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
                 className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
               >
                 <div className="flex items-center gap-3">
-                  {showOnline ? <Eye className="w-4 h-4 text-emerald-400" /> : <EyeOff className="w-4 h-4 text-slate-500" />}
+                  <div className="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 flex items-center justify-center">
+                    {showOnline ? <Eye className="w-4 h-4" strokeWidth={1.8} /> : <EyeOff className="w-4 h-4 text-slate-500" strokeWidth={1.8} />}
+                  </div>
                   <div>
                     <p className="text-xs font-bold text-white">แสดงสถานะออนไลน์ (Show Presence)</p>
                     <p className="text-[10px] text-slate-400">{showOnline ? "สมาชิกคนอื่นเห็นว่าคุณออนไลน์" : "ซ่อนสถานะออนไลน์"}</p>
@@ -560,7 +568,9 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
                 className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
               >
                 <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-blue-400" />
+                  <div className="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 flex items-center justify-center">
+                    <CheckCircle2 className="w-4 h-4" strokeWidth={1.8} />
+                  </div>
                   <div>
                     <p className="text-xs font-bold text-white">ใบเสร็จการอ่าน (Read Receipts)</p>
                     <p className="text-[10px] text-slate-400">{readReceipts ? "ส่งเครื่องหมายอ่านแล้วให้คู่สนทนา" : "ปิดใบเสร็จการอ่าน"}</p>
@@ -575,25 +585,27 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
             {/* Active Session info */}
             <div className="p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <Smartphone className="w-4 h-4 text-slate-400" />
+                <div className="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/[0.08] text-slate-300 flex items-center justify-center">
+                  <Smartphone className="w-4 h-4" strokeWidth={1.8} />
+                </div>
                 <div>
                   <p className="text-xs font-bold text-white">อุปกรณ์ปัจจุบัน</p>
                   <p className="text-[10px] text-slate-400">Desktop Web Browser · Active Now</p>
                 </div>
               </div>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">
-                ออนไลน์
+              <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-white/10 text-white font-bold border border-white/15">
+                ใช้งานอยู่
               </span>
             </div>
           </div>
 
-          {/* SAFELY PLACED LOGOUT BUTTON AT THE VERY BOTTOM OF SECURITY */}
+          {/* SAFELY PLACED LOGOUT BUTTON AT THE VERY BOTTOM */}
           <div className="pt-6 border-t border-white/10">
             <button
               onClick={onLogout}
-              className="w-full py-3 px-4 rounded-2xl bg-rose-600/10 hover:bg-rose-600/20 border border-rose-500/20 text-rose-400 font-medium text-xs transition-all flex items-center justify-center gap-2"
+              className="w-full py-3 px-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white font-medium text-xs transition-all flex items-center justify-center gap-2"
             >
-              <LogOut className="w-4 h-4" />
+              <LogOut className="w-4 h-4 text-slate-400" strokeWidth={1.8} />
               <span>ออกจากระบบบัญชีนี้ (Log Out)</span>
             </button>
           </div>
@@ -602,7 +614,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
 
       {/* Toast Feedback */}
       {toastMessage && (
-        <div className="p-3 m-4 rounded-2xl bg-emerald-600 text-white text-xs font-bold shadow-lg animate-scale-up text-center">
+        <div className="p-3 m-4 rounded-2xl bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-bold shadow-lg animate-scale-up text-center">
           {toastMessage}
         </div>
       )}

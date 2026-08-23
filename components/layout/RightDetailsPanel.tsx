@@ -226,10 +226,10 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
                 <button
                   type="button"
                   onClick={() => onStartCall("audio")}
-                  className="flex flex-col items-center gap-1 text-slate-400 hover:text-white"
+                  className="flex flex-col items-center gap-1.5 text-slate-400 hover:text-white transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center transition-all">
-                    <Phone className="w-4 h-4 text-emerald-400" />
+                  <div className="w-10 h-10 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] flex items-center justify-center text-slate-300 hover:text-white transition-all">
+                    <Phone className="w-4 h-4" strokeWidth={1.8} />
                   </div>
                   <span className="text-[10px] font-medium">โทรเสียง</span>
                 </button>
@@ -237,10 +237,10 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
                 <button
                   type="button"
                   onClick={() => onStartCall("video")}
-                  className="flex flex-col items-center gap-1 text-slate-400 hover:text-white"
+                  className="flex flex-col items-center gap-1.5 text-slate-400 hover:text-white transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center shadow-lg shadow-emerald-600/30 transition-all">
-                    <Video className="w-4 h-4" />
+                  <div className="w-10 h-10 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] flex items-center justify-center text-slate-300 hover:text-white transition-all">
+                    <Video className="w-4 h-4" strokeWidth={1.8} />
                   </div>
                   <span className="text-[10px] font-medium">วิดีโอคอล</span>
                 </button>
@@ -248,12 +248,12 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
                 <button
                   type="button"
                   onClick={() => onModeChange?.("edit_profile")}
-                  className="flex flex-col items-center gap-1 text-slate-400 hover:text-white"
+                  className="flex flex-col items-center gap-1.5 text-slate-400 hover:text-white transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center transition-all">
-                    <Edit3 className="w-4 h-4" />
+                  <div className="w-10 h-10 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] flex items-center justify-center text-slate-300 hover:text-white transition-all">
+                    <Edit3 className="w-4 h-4" strokeWidth={1.8} />
                   </div>
-                  <span className="text-[10px] font-medium">โปรไฟล์ IG</span>
+                  <span className="text-[10px] font-medium">โปรไฟล์</span>
                 </button>
               </div>
             </div>
@@ -265,7 +265,7 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
                   onClick={() => setActiveMediaTab("media")}
                   className={`pb-2 px-3 font-semibold transition-all border-b-2 ${
                     activeMediaTab === "media"
-                      ? "border-emerald-500 text-emerald-400"
+                      ? "border-white text-white"
                       : "border-transparent text-slate-400 hover:text-slate-200"
                   }`}
                 >
@@ -275,7 +275,7 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
                   onClick={() => setActiveMediaTab("files")}
                   className={`pb-2 px-3 font-semibold transition-all border-b-2 ${
                     activeMediaTab === "files"
-                      ? "border-emerald-500 text-emerald-400"
+                      ? "border-white text-white"
                       : "border-transparent text-slate-400 hover:text-slate-200"
                   }`}
                 >
@@ -286,7 +286,7 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
                     onClick={() => setActiveMediaTab("members")}
                     className={`pb-2 px-3 font-semibold transition-all border-b-2 ${
                       activeMediaTab === "members"
-                        ? "border-emerald-500 text-emerald-400"
+                        ? "border-white text-white"
                         : "border-transparent text-slate-400 hover:text-slate-200"
                     }`}
                   >
