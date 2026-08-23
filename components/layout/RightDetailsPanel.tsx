@@ -88,6 +88,9 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
       >
         <InstagramProfileDrawer
           currentUser={currentUser}
+          bookmarkedCount={bookmarkedMessages.length}
+          onOpenBookmarks={() => onModeChange?.("bookmarks")}
+          onOpenCallHistory={() => onModeChange?.("call_history")}
           onClose={onClose}
           onUpdateProfile={onUpdateProfile}
           onLogout={onLogout || (() => {})}

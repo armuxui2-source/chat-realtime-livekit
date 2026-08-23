@@ -15,12 +15,17 @@ import {
   LogOut,
   ChevronRight,
   Check,
-  Camera,
   ChevronLeft,
   X,
-  User,
-  Activity,
+  PhoneCall,
+  MessageSquare,
+  Users,
+  Eye,
+  EyeOff,
+  Moon,
+  Smartphone,
   CheckCircle2,
+  AlertCircle,
 } from "lucide-react";
 
 interface InstagramProfileDrawerProps {
@@ -28,6 +33,7 @@ interface InstagramProfileDrawerProps {
   bookmarkedCount?: number;
   onClose?: () => void;
   onOpenBookmarks?: () => void;
+  onOpenCallHistory?: () => void;
   onUpdateProfile?: (data: {
     display_name: string;
     status: "online" | "busy" | "away" | "offline";
@@ -41,12 +47,13 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
   bookmarkedCount = 0,
   onClose,
   onOpenBookmarks,
+  onOpenCallHistory,
   onUpdateProfile,
   onLogout,
 }) => {
-  const [view, setView] = useState<"profile" | "edit" | "settings">("profile");
+  const [view, setView] = useState<"profile" | "edit" | "notifications" | "privacy">("profile");
 
-  // Real Edit State
+  // Edit State
   const [editName, setEditName] = useState(currentUser.display_name);
   const [editBio, setEditBio] = useState(
     currentUser.custom_status || "พร้อมร่วมงานและสื่อสารแบบเรียลไทม์"
@@ -55,9 +62,17 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
     currentUser.status === "in_call" ? "busy" : (currentUser.status || "online")
   );
 
-  // Settings State
-  const [soundEnabled, setSoundEnabled] = useState(true);
-  const [notifEnabled, setNotifEnabled] = useState(true);
+  // Notification Preferences State
+  const [msgSound, setMsgSound] = useState(true);
+  const [callSound, setCallSound] = useState(true);
+  const [dmNotif, setDmNotif] = useState(true);
+  const [channelNotifMode, setChannelNotifMode] = useState<"all" | "mentions">("mentions");
+  const [dndDuration, setDndDuration] = useState<"off" | "1h" | "8h" | "always">("off");
+
+  // Privacy Preferences State
+  const [showOnline, setShowOnline] = useState(true);
+  const [readReceipts, setReadReceipts] = useState(true);
+
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const triggerToast = (msg: string) => {
@@ -80,7 +95,7 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
       status: editStatus,
       customStatus: editBio.trim(),
     });
-    triggerToast("บันทึกการตั้งค่าโปรไฟล์เรียบร้อยแล้ว");
+    triggerToast("บันทึกข้อมูลโปรไฟล์เรียบร้อยแล้ว");
     setView("profile");
   };
 
@@ -128,29 +143,14 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
             </button>
           )}
           <span className="text-sm font-bold text-white tracking-tight">
-            {view === "profile" && "โปรไฟล์ผู้ใช้งาน"}
+            {view === "profile" && "ข้อมูลโปรไฟล์ผู้ใช้งาน"}
             {view === "edit" && "แก้ไขข้อมูลโปรไฟล์"}
-            {view === "settings" && "การตั้งค่าระบบ & แจ้งเตือน"}
+            {view === "notifications" && "ศูนย์การแจ้งเตือน & เสียง"}
+            {view === "privacy" && "ความเป็นส่วนตัว & บัญชีผู้ใช้"}
           </span>
         </div>
 
         <div className="flex items-center gap-1">
-          {view === "profile" ? (
-            <button
-              onClick={() => setView("settings")}
-              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
-              title="การตั้งค่าระบบ"
-            >
-              <Settings className="w-4 h-4" />
-            </button>
-          ) : (
-            <button
-              onClick={() => setView("profile")}
-              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          )}
           {onClose && (
             <button
               onClick={onClose}
@@ -163,11 +163,11 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
       </div>
 
       {/* ========================================================================= */}
-      {/* VIEW 1: CLEAN PROFILE VIEW (REAL SYSTEM DATA ONLY)                        */}
+      {/* VIEW 1: CLEAN PROFILE OVERVIEW (NO LOGOUT DISTRACTION)                    */}
       {/* ========================================================================= */}
       {view === "profile" && (
         <div className="p-5 space-y-5 animate-fade-in">
-          {/* User Avatar & Name Center Card */}
+          {/* User Card */}
           <div className="flex flex-col items-center text-center p-5 rounded-3xl bg-[#0B0D11] border border-white/10 shadow-sm relative">
             <div className="relative mb-3">
               <div
@@ -206,13 +206,12 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
               </span>
             </div>
 
-            {/* Custom Bio / Status Note */}
             <p className="text-xs text-slate-300 mt-3.5 leading-relaxed bg-white/5 p-3 rounded-2xl border border-white/5 w-full text-center">
               {currentUser.custom_status || "พร้อมร่วมงานและสื่อสารแบบเรียลไทม์"}
             </p>
           </div>
 
-          {/* Action Buttons: Edit Profile & Copy Username */}
+          {/* Quick Actions */}
           <div className="grid grid-cols-2 gap-2">
             <button
               onClick={() => setView("edit")}
@@ -230,12 +229,49 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
             </button>
           </div>
 
-          {/* System Shortcuts: Bookmarks & Settings */}
-          <div className="space-y-2 pt-2">
+          {/* Functional Menu Categories */}
+          <div className="space-y-2 pt-1">
             <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-1">
-              เมนูระบบ
+              การตั้งค่าและกิจกรรมระบบ
             </p>
 
+            {/* 1. Notifications Hub */}
+            <button
+              onClick={() => setView("notifications")}
+              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center">
+                  <Bell className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-white">ศูนย์การแจ้งเตือน & เสียง</p>
+                  <p className="text-[10px] text-slate-400">
+                    {dndDuration === "off" ? "เสียงและป็อปอัปเปิดใช้งาน" : `โหมดห้ามรบกวน (${dndDuration})`}
+                  </p>
+                </div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-slate-500" />
+            </button>
+
+            {/* 2. Privacy & Account */}
+            <button
+              onClick={() => setView("privacy")}
+              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                  <Shield className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-white">ความเป็นส่วนตัว & บัญชี</p>
+                  <p className="text-[10px] text-slate-400">สถานะออนไลน์, อุปกรณ์, และความปลอดภัย</p>
+                </div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-slate-500" />
+            </button>
+
+            {/* 3. Bookmarks */}
             {onOpenBookmarks && (
               <button
                 onClick={onOpenBookmarks}
@@ -247,45 +283,37 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
                   </div>
                   <div>
                     <p className="text-xs font-bold text-white">ข้อความที่บันทึกไว้ (Bookmarks)</p>
-                    <p className="text-[10px] text-slate-400">{bookmarkedCount} รายการที่บันทึก</p>
+                    <p className="text-[10px] text-slate-400">{bookmarkedCount} รายการ</p>
                   </div>
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-500" />
               </button>
             )}
 
-            <button
-              onClick={() => setView("settings")}
-              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center">
-                  <Bell className="w-4 h-4" />
+            {/* 4. Call Logs */}
+            {onOpenCallHistory && (
+              <button
+                onClick={onOpenCallHistory}
+                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center">
+                    <PhoneCall className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-white">ประวัติการโทร & WebRTC</p>
+                    <p className="text-[10px] text-slate-400">รายการสายโทรเข้าและวิดีโอคอล</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-xs font-bold text-white">การแจ้งเตือน & เสียง</p>
-                  <p className="text-[10px] text-slate-400">ตั้งค่าเสียงเตือนและ Push Notifications</p>
-                </div>
-              </div>
-              <ChevronRight className="w-4 h-4 text-slate-500" />
-            </button>
-          </div>
-
-          {/* Logout Button */}
-          <div className="pt-3">
-            <button
-              onClick={onLogout}
-              className="w-full py-3 px-4 rounded-2xl bg-rose-600/15 hover:bg-rose-600/25 border border-rose-500/30 text-rose-400 font-bold text-xs transition-all flex items-center justify-center gap-2"
-            >
-              <LogOut className="w-4 h-4" />
-              <span>ออกจากระบบ (Log Out)</span>
-            </button>
+                <ChevronRight className="w-4 h-4 text-slate-500" />
+              </button>
+            )}
           </div>
         </div>
       )}
 
       {/* ========================================================================= */}
-      {/* VIEW 2: EDIT PROFILE FORM (ACTUAL APP SYSTEM FIELDS)                      */}
+      {/* VIEW 2: EDIT PROFILE FORM                                                 */}
       {/* ========================================================================= */}
       {view === "edit" && (
         <form onSubmit={handleSaveProfile} className="p-5 space-y-4 animate-fade-in">
@@ -368,72 +396,205 @@ export const InstagramProfileDrawer: React.FC<InstagramProfileDrawerProps> = ({
       )}
 
       {/* ========================================================================= */}
-      {/* VIEW 3: SETTINGS & NOTIFICATIONS                                          */}
+      {/* VIEW 3: NOTIFICATIONS CATEGORIES HUB                                      */}
       {/* ========================================================================= */}
-      {view === "settings" && (
+      {view === "notifications" && (
         <div className="p-5 space-y-4 animate-fade-in">
-          <div className="p-4 rounded-2xl bg-[#0B0D11] border border-white/10 space-y-1">
-            <p className="text-xs font-bold text-white">การแจ้งเตือนและการทำงาน</p>
-            <p className="text-[11px] text-slate-400 leading-relaxed">
-              จัดการเสียงแจ้งเตือนข้อความเข้าและสถานะการติดต่อ
-            </p>
+          {/* Section 1: Do Not Disturb Mode */}
+          <div className="p-4 rounded-2xl bg-[#0B0D11] border border-white/10 space-y-2">
+            <p className="text-xs font-bold text-white">โหมดห้ามรบกวน (Do Not Disturb)</p>
+            <p className="text-[10px] text-slate-400">ปิดเสียงและการแจ้งเตือนชั่วคราว</p>
+            <div className="grid grid-cols-4 gap-1.5 pt-1">
+              {[
+                { id: "off", label: "ปิด" },
+                { id: "1h", label: "1 ชม." },
+                { id: "8h", label: "8 ชม." },
+                { id: "always", label: "ตลอดไป" },
+              ].map((d) => (
+                <button
+                  key={d.id}
+                  onClick={() => {
+                    setDndDuration(d.id as any);
+                    triggerToast(`ตั้งค่าโหมดห้ามรบกวน: ${d.label}`);
+                  }}
+                  className={`py-1.5 px-2 rounded-xl text-xs font-bold border transition-all ${
+                    dndDuration === d.id
+                      ? "bg-emerald-600 border-emerald-500 text-white shadow-xs"
+                      : "bg-white/5 border-white/10 text-slate-400 hover:text-white"
+                  }`}
+                >
+                  {d.label}
+                </button>
+              ))}
+            </div>
           </div>
 
+          {/* Section 2: Sound & Alerts */}
           <div className="space-y-2">
+            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-1">
+              เสียงแจ้งเตือน (Sounds)
+            </p>
+
             <button
-              onClick={() => setSoundEnabled(!soundEnabled)}
+              onClick={() => setMsgSound(!msgSound)}
               className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
             >
               <div className="flex items-center gap-3">
-                {soundEnabled ? (
-                  <Volume2 className="w-4 h-4 text-emerald-400" />
-                ) : (
-                  <VolumeX className="w-4 h-4 text-slate-400" />
-                )}
+                {msgSound ? <Volume2 className="w-4 h-4 text-emerald-400" /> : <VolumeX className="w-4 h-4 text-slate-500" />}
                 <div>
-                  <p className="text-xs font-bold text-white">เสียงแจ้งเตือน (Sound Alert)</p>
-                  <p className="text-[10px] text-slate-400">
-                    {soundEnabled ? "เปิดเสียงเตือนเมื่อมีข้อความ" : "ปิดเสียงเตือน"}
-                  </p>
+                  <p className="text-xs font-bold text-white">เสียงข้อความเข้า (Message Chime)</p>
+                  <p className="text-[10px] text-slate-400">{msgSound ? "เปิดเสียง" : "ปิดเสียง"}</p>
                 </div>
               </div>
-              <div
-                className={`w-9 h-5 rounded-full p-0.5 transition-colors ${
-                  soundEnabled ? "bg-emerald-600" : "bg-slate-700"
-                }`}
-              >
-                <div
-                  className={`w-4 h-4 rounded-full bg-white transition-transform ${
-                    soundEnabled ? "translate-x-4" : "translate-x-0"
-                  }`}
-                />
+              <div className={`w-9 h-5 rounded-full p-0.5 transition-colors ${msgSound ? "bg-emerald-600" : "bg-slate-700"}`}>
+                <div className={`w-4 h-4 rounded-full bg-white transition-transform ${msgSound ? "translate-x-4" : "translate-x-0"}`} />
               </div>
             </button>
 
             <button
-              onClick={() => setNotifEnabled(!notifEnabled)}
+              onClick={() => setCallSound(!callSound)}
               className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
             >
               <div className="flex items-center gap-3">
-                <Bell className="w-4 h-4 text-blue-400" />
+                {callSound ? <Volume2 className="w-4 h-4 text-emerald-400" /> : <VolumeX className="w-4 h-4 text-slate-500" />}
                 <div>
-                  <p className="text-xs font-bold text-white">Push Notifications</p>
-                  <p className="text-[10px] text-slate-400">
-                    {notifEnabled ? "เปิดรับการแจ้งเตือนบนเดสก์ท็อป" : "ปิดการแจ้งเตือน"}
-                  </p>
+                  <p className="text-xs font-bold text-white">เสียงเรียกเข้าการโทร (Call Ringtone)</p>
+                  <p className="text-[10px] text-slate-400">{callSound ? "เปิดเสียงเรียกเข้า" : "ปิดเสียงเรียกเข้า"}</p>
                 </div>
               </div>
-              <div
-                className={`w-9 h-5 rounded-full p-0.5 transition-colors ${
-                  notifEnabled ? "bg-emerald-600" : "bg-slate-700"
-                }`}
-              >
-                <div
-                  className={`w-4 h-4 rounded-full bg-white transition-transform ${
-                    notifEnabled ? "translate-x-4" : "translate-x-0"
-                  }`}
-                />
+              <div className={`w-9 h-5 rounded-full p-0.5 transition-colors ${callSound ? "bg-emerald-600" : "bg-slate-700"}`}>
+                <div className={`w-4 h-4 rounded-full bg-white transition-transform ${callSound ? "translate-x-4" : "translate-x-0"}`} />
               </div>
+            </button>
+          </div>
+
+          {/* Section 3: Message & Group Categories */}
+          <div className="space-y-2 pt-2">
+            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-1">
+              หมวดหมู่ข้อความ (Categories)
+            </p>
+
+            <button
+              onClick={() => setDmNotif(!dmNotif)}
+              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
+            >
+              <div className="flex items-center gap-3">
+                <MessageSquare className="w-4 h-4 text-blue-400" />
+                <div>
+                  <p className="text-xs font-bold text-white">แชทส่วนตัว (Direct Messages)</p>
+                  <p className="text-[10px] text-slate-400">{dmNotif ? "แจ้งเตือนทุกข้อความ" : "ปิดการแจ้งเตือน"}</p>
+                </div>
+              </div>
+              <div className={`w-9 h-5 rounded-full p-0.5 transition-colors ${dmNotif ? "bg-emerald-600" : "bg-slate-700"}`}>
+                <div className={`w-4 h-4 rounded-full bg-white transition-transform ${dmNotif ? "translate-x-4" : "translate-x-0"}`} />
+              </div>
+            </button>
+
+            <div className="p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 space-y-2">
+              <div className="flex items-center gap-3">
+                <Users className="w-4 h-4 text-amber-400" />
+                <div>
+                  <p className="text-xs font-bold text-white">แชทกลุ่มและแชนเนล (Channels)</p>
+                  <p className="text-[10px] text-slate-400">เลือกประเภทการแจ้งเตือนในห้องกลุ่ม</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={() => setChannelNotifMode("all")}
+                  className={`p-2 rounded-xl text-xs font-bold border text-center transition-all ${
+                    channelNotifMode === "all"
+                      ? "bg-emerald-600/20 border-emerald-500 text-emerald-400"
+                      : "bg-white/5 border-white/10 text-slate-400"
+                  }`}
+                >
+                  ทุกข้อความ
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setChannelNotifMode("mentions")}
+                  className={`p-2 rounded-xl text-xs font-bold border text-center transition-all ${
+                    channelNotifMode === "mentions"
+                      ? "bg-emerald-600/20 border-emerald-500 text-emerald-400"
+                      : "bg-white/5 border-white/10 text-slate-400"
+                  }`}
+                >
+                  เฉพาะที่แท็ก (@mentions)
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* VIEW 4: PRIVACY & ACCOUNT SETTINGS (WITH SAFELY PLACED LOGOUT AT BOTTOM)   */}
+      {/* ========================================================================= */}
+      {view === "privacy" && (
+        <div className="p-5 space-y-5 animate-fade-in flex-1 flex flex-col justify-between">
+          <div className="space-y-4">
+            <div className="p-4 rounded-2xl bg-[#0B0D11] border border-white/10 space-y-1">
+              <p className="text-xs font-bold text-white">การควบคุมความเป็นส่วนตัว</p>
+              <p className="text-[10px] text-slate-400">จัดการข้อมูลที่ผู้อื่นสามารถมองเห็นได้</p>
+            </div>
+
+            <div className="space-y-2">
+              <button
+                onClick={() => setShowOnline(!showOnline)}
+                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
+              >
+                <div className="flex items-center gap-3">
+                  {showOnline ? <Eye className="w-4 h-4 text-emerald-400" /> : <EyeOff className="w-4 h-4 text-slate-500" />}
+                  <div>
+                    <p className="text-xs font-bold text-white">แสดงสถานะออนไลน์ (Show Presence)</p>
+                    <p className="text-[10px] text-slate-400">{showOnline ? "สมาชิกคนอื่นเห็นว่าคุณออนไลน์" : "ซ่อนสถานะออนไลน์"}</p>
+                  </div>
+                </div>
+                <div className={`w-9 h-5 rounded-full p-0.5 transition-colors ${showOnline ? "bg-emerald-600" : "bg-slate-700"}`}>
+                  <div className={`w-4 h-4 rounded-full bg-white transition-transform ${showOnline ? "translate-x-4" : "translate-x-0"}`} />
+                </div>
+              </button>
+
+              <button
+                onClick={() => setReadReceipts(!readReceipts)}
+                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 hover:bg-white/5 transition-all text-left"
+              >
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 className="w-4 h-4 text-blue-400" />
+                  <div>
+                    <p className="text-xs font-bold text-white">ใบเสร็จการอ่าน (Read Receipts)</p>
+                    <p className="text-[10px] text-slate-400">{readReceipts ? "ส่งเครื่องหมายอ่านแล้วให้คู่สนทนา" : "ปิดใบเสร็จการอ่าน"}</p>
+                  </div>
+                </div>
+                <div className={`w-9 h-5 rounded-full p-0.5 transition-colors ${readReceipts ? "bg-emerald-600" : "bg-slate-700"}`}>
+                  <div className={`w-4 h-4 rounded-full bg-white transition-transform ${readReceipts ? "translate-x-4" : "translate-x-0"}`} />
+                </div>
+              </button>
+            </div>
+
+            {/* Active Session info */}
+            <div className="p-3.5 rounded-2xl bg-[#0B0D11] border border-white/10 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Smartphone className="w-4 h-4 text-slate-400" />
+                <div>
+                  <p className="text-xs font-bold text-white">อุปกรณ์ปัจจุบัน</p>
+                  <p className="text-[10px] text-slate-400">Desktop Web Browser · Active Now</p>
+                </div>
+              </div>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">
+                ออนไลน์
+              </span>
+            </div>
+          </div>
+
+          {/* SAFELY PLACED LOGOUT BUTTON AT THE VERY BOTTOM OF SECURITY */}
+          <div className="pt-6 border-t border-white/10">
+            <button
+              onClick={onLogout}
+              className="w-full py-3 px-4 rounded-2xl bg-rose-600/10 hover:bg-rose-600/20 border border-rose-500/20 text-rose-400 font-medium text-xs transition-all flex items-center justify-center gap-2"
+            >
+              <LogOut className="w-4 h-4" />
+              <span>ออกจากระบบบัญชีนี้ (Log Out)</span>
             </button>
           </div>
         </div>
