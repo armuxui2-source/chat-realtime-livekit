@@ -98,17 +98,27 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
       data-testid="left-navigation-sidebar"
       className="w-full md:w-72 lg:w-80 shrink-0 flex flex-col h-full bg-[#12161F] border-r border-white/10 select-none min-w-0 font-prompt text-white"
     >
-      {/* Top Search Bar & Header */}
+      {/* Top Header & Search Bar */}
       <div className="p-4 pb-2 shrink-0">
         <div className="flex items-center justify-between mb-3 px-1">
           <h1 className="text-base font-bold text-white tracking-tight">ข้อความสนทนา</h1>
-          <button
-            onClick={() => (activeTab === "dm" ? setShowAddContact(!showAddContact) : onOpenCreateChannel())}
-            className="p-1.5 rounded-xl hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
-            title="เริ่มแชทใหม่"
-          >
-            <Plus className="w-4 h-4" strokeWidth={2} />
-          </button>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={onOpenCreateLiveKitRoom}
+              data-testid="header-create-meet-btn"
+              className="p-1.5 rounded-xl hover:bg-white/10 text-slate-400 hover:text-emerald-400 transition-colors"
+              title="เปิดห้องประชุม LiveKit"
+            >
+              <Video className="w-4 h-4" strokeWidth={2} />
+            </button>
+            <button
+              onClick={() => (activeTab === "dm" ? setShowAddContact(!showAddContact) : onOpenCreateChannel())}
+              className="p-1.5 rounded-xl hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
+              title="เริ่มแชทใหม่"
+            >
+              <Plus className="w-4 h-4" strokeWidth={2} />
+            </button>
+          </div>
         </div>
 
         <div className="relative">
@@ -290,18 +300,6 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
             })}
           </>
         )}
-      </div>
-
-      {/* Quick LiveKit Meeting Button */}
-      <div className="p-3 border-t border-white/10 shrink-0">
-        <button
-          onClick={onOpenCreateLiveKitRoom}
-          data-testid="quick-create-meet-room-btn"
-          className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all active:scale-95 shadow-lg shadow-emerald-600/30"
-        >
-          <Video className="w-4 h-4" strokeWidth={2} />
-          <span>เปิดห้องประชุม LiveKit</span>
-        </button>
       </div>
     </aside>
   );

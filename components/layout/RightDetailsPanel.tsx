@@ -27,6 +27,7 @@ import {
   Activity,
   User,
 } from "lucide-react";
+import { InstagramProfileDrawer } from "@/components/profile/InstagramProfileDrawer";
 
 export type RightPanelMode =
   | "details"
@@ -54,6 +55,7 @@ interface RightDetailsPanelProps {
   onJumpToMessage?: (messageId: string) => void;
   onAddMember: (username: string) => void;
   onStartCall: (type: "audio" | "video") => void;
+  onLogout?: () => void;
   onClose?: () => void;
 }
 
@@ -70,43 +72,35 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
   onJumpToMessage,
   onAddMember,
   onStartCall,
+  onLogout,
   onClose,
 }) => {
   const [activeMediaTab, setActiveMediaTab] = useState<"media" | "files" | "members">("media");
   const [newMemberUsername, setNewMemberUsername] = useState("");
-
-  // Edit profile state
-  const [editName, setEditName] = useState(currentUser.display_name);
-  const [editBio, setEditBio] = useState("Lead Product Designer & Engineer");
-  const [editStatus, setEditStatus] = useState<"online" | "busy" | "away" | "offline">(
-    currentUser.status === "in_call" ? "busy" : (currentUser.status || "online")
-  );
-  const [soundEnabled, setSoundEnabled] = useState(true);
-  const [notifEnabled, setNotifEnabled] = useState(true);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // If mode is edit_profile or settings, render the full InstagramProfileDrawer
+  if (mode === "edit_profile" || mode === "settings") {
+    return (
+      <aside
+        data-testid="right-details-panel"
+        className="w-full h-full bg-[#0B0D11] border-l border-white/10 select-none overflow-hidden flex flex-col text-white relative font-prompt"
+      >
+        <InstagramProfileDrawer
+          currentUser={currentUser}
+          onClose={onClose}
+          onUpdateProfile={onUpdateProfile}
+          onLogout={onLogout || (() => {})}
+        />
+      </aside>
+    );
+  }
 
   const isChannel = !!selectedChannel;
   const displayName = isChannel
     ? `#${selectedChannel.name}`
     : selectedUser?.display_name || currentUser.display_name;
   const username = isChannel ? selectedChannel.id : selectedUser?.username || currentUser.username;
-
-  const triggerToast = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3000);
-  };
-
-  const handleSaveProfile = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!editName.trim()) return;
-    onUpdateProfile?.({
-      display_name: editName.trim(),
-      status: editStatus,
-      customStatus: editBio.trim(),
-    });
-    triggerToast("บันทึกการตั้งค่าโปรไฟล์เรียบร้อยแล้ว");
-    onModeChange?.("details");
-  };
 
   // Mock Call Logs
   const mockCallLogs: CallLog[] = [
@@ -184,11 +178,9 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
             )}
             <h3 className="text-sm font-bold text-white leading-tight">
               {mode === "details" && (isChannel ? "ข้อมูลช่องสนทนา" : "ข้อมูลผู้ใช้งาน")}
-              {mode === "edit_profile" && "ตั้งค่าโปรไฟล์ส่วนตัว"}
               {mode === "call_history" && "ประวัติการโทร & WebRTC"}
               {mode === "bookmarks" && "ข้อความที่บันทึกไว้"}
               {mode === "notifications" && "ศูนย์การแจ้งเตือน"}
-              {mode === "settings" && "การตั้งค่าระบบ"}
             </h3>
           </div>
 
@@ -258,7 +250,7 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
                   <div className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center transition-all">
                     <Edit3 className="w-4 h-4" />
                   </div>
-                  <span className="text-[10px] font-medium">แก้ไข</span>
+                  <span className="text-[10px] font-medium">โปรไฟล์ IG</span>
                 </button>
               </div>
             </div>
@@ -373,78 +365,7 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
         )}
 
         {/* ========================================================================= */}
-        {/* VIEW 2: INLINE PROFILE EDITOR                                             */}
-        {/* ========================================================================= */}
-        {mode === "edit_profile" && (
-          <form onSubmit={handleSaveProfile} className="space-y-4 animate-fade-in">
-            <div>
-              <label className="text-xs font-bold text-slate-300 block mb-1.5">
-                ชื่อที่ใช้แสดง (Display Name)
-              </label>
-              <input
-                type="text"
-                value={editName}
-                onChange={(e) => setEditName(e.target.value)}
-                required
-                className="w-full px-3.5 py-2.5 rounded-xl bg-[#0B0D11] border border-white/10 text-white text-xs focus:outline-none focus:border-emerald-500"
-              />
-            </div>
-
-            <div>
-              <label className="text-xs font-bold text-slate-300 block mb-1.5">
-                ประวัติหรือบทบาท (Bio / Role)
-              </label>
-              <textarea
-                value={editBio}
-                onChange={(e) => setEditBio(e.target.value)}
-                rows={3}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-[#0B0D11] border border-white/10 text-white text-xs focus:outline-none focus:border-emerald-500 resize-none"
-              />
-            </div>
-
-            <div>
-              <label className="text-xs font-bold text-slate-300 block mb-1.5">
-                สถานะการทำงาน (Status)
-              </label>
-              <div className="space-y-1.5">
-                {[
-                  { id: "online", title: "ออนไลน์ (Online)", color: "bg-emerald-500" },
-                  { id: "busy", title: "กำลังยุ่ง (Do Not Disturb)", color: "bg-rose-500" },
-                  { id: "away", title: "ไม่อยู่ชั่วคราว (Away)", color: "bg-amber-500" },
-                  { id: "offline", title: "ออฟไลน์ (Invisible)", color: "bg-slate-400" },
-                ].map((st) => (
-                  <button
-                    key={st.id}
-                    type="button"
-                    onClick={() => setEditStatus(st.id as "online" | "busy" | "away" | "offline")}
-                    className={`w-full p-2.5 rounded-xl border text-left flex items-center justify-between transition-all ${
-                      editStatus === st.id
-                        ? "bg-emerald-600/20 border-emerald-500 text-white font-bold"
-                        : "bg-white/5 border-white/10 text-slate-400 hover:text-white"
-                    }`}
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className={`w-2.5 h-2.5 rounded-full ${st.color}`} />
-                      <span className="text-xs">{st.title}</span>
-                    </div>
-                    {editStatus === st.id && <Check className="w-4 h-4 text-emerald-400" />}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg shadow-emerald-600/30 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
-            >
-              <Check className="w-4 h-4" />
-              <span>บันทึกการเปลี่ยนแปลง</span>
-            </button>
-          </form>
-        )}
-
-        {/* ========================================================================= */}
-        {/* VIEW 3: CALL HISTORY                                                      */}
+        {/* VIEW 2: CALL HISTORY                                                      */}
         {/* ========================================================================= */}
         {mode === "call_history" && (
           <div className="space-y-2.5 animate-fade-in">
@@ -499,7 +420,7 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
         )}
 
         {/* ========================================================================= */}
-        {/* VIEW 4: NOTIFICATIONS CENTER                                              */}
+        {/* VIEW 3: NOTIFICATIONS CENTER                                              */}
         {/* ========================================================================= */}
         {mode === "notifications" && (
           <div className="space-y-2.5 animate-fade-in">
@@ -523,7 +444,7 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
         )}
 
         {/* ========================================================================= */}
-        {/* VIEW 5: BOOKMARKS / SAVED ITEMS                                           */}
+        {/* VIEW 4: BOOKMARKS / SAVED ITEMS                                           */}
         {/* ========================================================================= */}
         {mode === "bookmarks" && (
           <div className="space-y-2.5 animate-fade-in">
@@ -564,13 +485,6 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
           </div>
         )}
       </div>
-
-      {/* Action Toast Feedback */}
-      {toastMessage && (
-        <div className="p-3 rounded-xl bg-emerald-600 text-white text-xs font-bold shadow-lg animate-scale-up text-center mt-4">
-          {toastMessage}
-        </div>
-      )}
     </aside>
   );
 };
