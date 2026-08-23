@@ -1,72 +1,112 @@
 ---
 name: premium-ui-ux-design-standards
-description: Master production-grade UI/UX design standards for modern web & mobile applications. Implements Figma-spec Frosted Glassmorphism, Floating Capsule Navbars, Dynamic Action Sheets, Bottom Selection Drawers, and Human-Centered UX Architecture. Use for all UI/UX design and frontend component development.
+description: Master production-grade UI/UX design standards for modern web & mobile applications. Implements Figma & Pinterest board standards (RonDesignLab, Iko Setiawan, Bento SaaS, WhatsApp Dark Gunmetal), 3-Tier Responsive Engine (PC Desktop 3-Column / Mobile 1-Column Floating Capsule), Thai Prompt Typography Scale, Frosted Glassmorphism, and Human-Centered UX Architecture. Use for ALL projects and UI development.
 ---
 
-# 💎 Premium UI/UX Design Standards & Architecture Specification
+# 💎 Master UI/UX Production Standards & Design System Specification
 
-คู่มือมาตรฐานและแนวทางการออกแบบ User Interface / User Experience (UI/UX) ระดับ World-Class Production ที่ต้องนำมาใช้เป็น **มาตรฐานหลักสำหรับทุกโปรเจกต์**
+คู่มือแม่แบบและกฎเหล็กการออกแบบ User Interface / User Experience (UI/UX) ระดับ World-Class Production ตามมาตรฐานของ **Pinterest Board (RonDesignLab, Iko Setiawan, Bento SaaS, Finova)** ที่ต้อง **นำมาใช้เป็นค่าหลักอัตโนมัติกับทุกโปรเจกต์ 100%** โดยไม่ต้องรอสั่งซ้ำ
 
 ---
 
-## 1. Core Visual DNA & Aesthetic Hierarchy
+## ⚡ กฎเหล็กที่ 1: การวิเคราะห์และวางแผนก่อนลงมือทำ (Planning & Analysis First)
+1. **วิเคราะห์พฤติกรรมมนุษย์ (Human Psychology):** ทุกปุ่ม ทุกการ์ด และทุกเมนูต้องอยู่ในจุดที่ผู้ใช้คาดหวังตามธรรมชาติ (เช่น ปุ่มโทรอยู่ในห้องแชท/โปรไฟล์ ไม่วางรกส่วนหัว)
+2. **สร้าง Implementation Plan เสมอ:** วางโครงสร้าง Layout, สัดส่วนขนาดการ์ด, และชุดสีให้ชัดเจนก่อนเริ่มเขียนโค้ด
+3. **ห้ามทำ UI แบบเด็กเล่น / ลวกๆ:** ห้ามใช้สีไอคอนสีรุ้งสะเปะสะปะ (No Rainbow badges) ให้ใช้ Monochrome Glassmorphism หรือ Dark Neutral เท่านั้น
 
-### 1.1 Color Palette & Atmospheric Depth
-* **Deep Matte Backgrounds (Never Pitch Black):**
-  * Shell / App Background: `#0F1216` (Gunmetal Matte) or `#0B0D10`
-  * Panels & Sidebars: `#161A22` (Dark Charcoal) with `border-white/[0.07]`
-  * Cards & Nested Containers: `#1E232B` / `rgba(255, 255, 255, 0.04)`
-* **Signature Accent Glow & Prismatic Highlights:**
-  * Emerald / Mint Gradient: `linear-gradient(135deg, #4ADE80 0%, #22C55E 50%, #16A34A 100%)`
-  * Soft Ambient Edge Glow: Prismatic subtle gradient along top-left card borders (`rgba(74, 222, 128, 0.25)`)
-  * Glow Box Shadow: `box-shadow: 0 4px 20px rgba(34, 197, 94, 0.35)`
+---
 
-### 1.2 Figma Frosted Glassmorphism Spec
-* **Glass Container Formula:**
+## 🇹🇭 กฎเหล็กที่ 2: ระบบฟอนต์มาตรฐานประจำตัว (Typography System)
+* **ฟอนต์หลักประจำตัว (Mandatory Font):** **`Prompt` (Google Font ภาษาไทย + อังกฤษ)**
+* **CSS Declaration:**
   ```css
+  font-family: var(--font-prompt), "Prompt", sans-serif;
+  letter-spacing: -0.015em;
+  ```
+* **Typography Hierarchy:**
+  * **H1 / Hero Display:** `text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.15]`
+  * **H2 / Section Title:** `text-lg sm:text-xl font-extrabold text-white`
+  * **H3 / Card Header:** `text-sm sm:text-base font-bold text-white tracking-tight`
+  * **Body / Message Content:** `text-xs sm:text-[13px] leading-relaxed text-slate-200`
+  * **Subtext / Meta / Timestamps:** `text-[10px] sm:text-[11px] font-medium text-slate-400 font-mono`
+
+---
+
+## 📐 กฎเหล็กที่ 3: สัดส่วนและขนาดเลย์เอาต์ (Layout & Proportions Engine)
+
+### 3.1 สัดส่วนหน้าจอคอมพิวเตอร์ (PC / Desktop Viewport ≥ 1024px / 1440px)
+* **3-Tier Tri-Pane Layout (ใช้พื้นที่เต็มหน้าจอ ไร้ขอบดำว่างเปล่า):**
+  1. **Left Slim Navigation Rail (64px - 72px):** แถบไอคอนหลักแนวตั้ง (Monochrome Squircle Icons)
+  2. **Conversation / Sub-Menu Sidebar (280px - 320px):** รายชื่อห้องสนทนา, Story Tray แนวนอน, ช่องค้นหา, และ Segmented Tab
+  3. **Main Workspace / Center Feed (Fluid `flex-1 min-w-0`):** พื้นที่แชทหรือแดชบอร์ดหลัก ยืดหยุ่นตามความกว้างจอ
+  4. **Right Contextual Drawer (320px - 380px):** สไลด์พาเนลสำหรับรายละเอียดโปรไฟล์, สื่อที่แชร์, หรือการตั้งค่า (เปิด/ปิดได้นุ่มนวล)
+
+### 3.2 สัดส่วนหน้าจอมือถือ (Mobile Viewport < 768px)
+* **Single-Column Fluid Viewport (`100dvh`, `w-full`):**
+* **Floating Capsule Bottom Navigation Bar (ความสูง 56px - 64px):**
+  * ลอยเหนือขอบล่าง `bottom-3 mx-4` ด้วย Frosted Glass (`rounded-full`)
+  * มี Active Capsule Indicator ครอบไอคอนที่เลือกอย่างสมูท
+
+### 3.3 ขนาดการ์ดและช่องไฟมาตรฐาน (Bento Grid & Card Proportions)
+* **Card Corner Radius:** `rounded-2xl` (16px) หรือ `rounded-3xl` (24px)
+* **Card Inner Padding:** `p-4` (16px) สำหรับการ์ดเล็ก, `p-5` ถึง `p-6` (20px - 24px) สำหรับการ์ดหลัก
+* **Grid Gaps:** `gap-3` (12px) ถึง `gap-4` (16px)
+* **Progress Rings & Charts:**
+  * วงแหวนความคืบหน้า (Circular Progress Rings) เช่น `72%` โค้งมนพร้อม Gradient
+  * กราฟเส้น Curve นุ่มนวล (Smooth Bezier) พร้อมพื้นที่ใต้กราฟไล่ระดับสีโปร่งแสง (Area Gradient)
+
+---
+
+## 🎨 กฎเหล็กที่ 4: ชุดธีมสีและวัสดุแก้ว (Figma Frosted Glass Spec)
+
+### 4.1 Master Dark Gunmetal Theme (WhatsApp & Finova Dark Spec)
+* **App Outer Background:** `#0B0D10`
+* **Main Feed & Canvas:** `#0F1216` (Matte Dark Gunmetal)
+* **Sidebars & Panels:** `#161A22` (Charcoal Container)
+* **Cards & Receiver Bubbles:** `#1E232B` with `border-white/[0.07]`
+* **Sender Bubbles & Highlights:** `#16A34A` / `#22C55E` (Emerald Green)
+
+### 4.2 Frosted Glass Tokens
+```css
+/* Frosted Glass Container */
+.glass-frosted {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  border-radius: 1.25rem; /* rounded-2xl / rounded-3xl */
-  ```
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 36px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* Emerald Glass Accent Card */
+.glass-emerald-card {
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.15) 0%, rgba(22, 163, 74, 0.05) 100%),
+              rgba(22, 26, 34, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Emerald Glow Button */
+.emerald-button-gradient {
+  background: linear-gradient(135deg, #4ADE80 0%, #22C55E 50%, #16A34A 100%);
+  box-shadow: 0 4px 20px rgba(34, 197, 94, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+```
 
 ---
 
-## 2. Component Design Blueprints (จากภาพอ้างอิงแม่แบบ)
+## 📱 กฎเหล็กที่ 5: คอมโพเนนต์มาตรฐานระดับโปรดักชั่น (Production Component Blueprints)
 
-### 2.1 Floating Capsule Navigation & Tab Bar (ภาพที่ 1)
-* **โครงสร้าง:** แถบแคปซูลลอยทรงมนสมบูรณ์แบบ (`rounded-full`) ด้วย Frosted Glass
-* **Active State:** Capsule Pill ครอบไอคอนที่เลือกอย่างนุ่มนวล พร้อมแสง Glow เบาๆ
-* **Iconography:** ใช้ไอคอน Monochrome เส้นบาง คมชัด เรียบหรู (`Lucide Icons`, `strokeWidth={1.8}`)
-
-### 2.2 Dark Frosted Auth & Login Card (ภาพที่ 2)
-* **Title Hierarchy:** หัวข้อตัวหนาชัดเจน (`H1 text-2xl font-bold`) + Subtext สีเทาอ่อน
-* **Integrated Input Pill:** กล่อง Input ที่มีปุ่ม Action ฝังอยู่ด้านในสุดทางขวา (เช่น ปุ่มลูกศรสีเขียวทรงกลม `rounded-full`)
-* **OAuth SSO Buttons:** กล่องสี่เหลี่ยมผืนผ้ามน `rounded-2xl bg-white/[0.04]` พร้อมไอคอนแบรนด์แท้ (Google, X/Twitter) และลูกศรชี้นำทาง
-
-### 2.3 Dynamic Floating Status Sheets (ภาพที่ 3)
-* **Loading State:** แสดงไอคอนเคลื่อนไหว / ภาพวาด + ข้อความบอกขั้นตอนแบบเป็นมิตร ("Performing magic...") + ปุ่มแคปซูลดำพร้อม Spinner
-* **Success State:** วงกลมเขียวเครื่องหมายถูก + ข้อความแสดงความยินดี ("We are live! 🎉") + ปุ่ม `[Close]` รอง และปุ่ม `[View live ↗]` หลัก
-* **Error State:** วงกลมเหลืองสามเหลี่ยมเตือนภัย + อธิบายสาเหตุและวิธีแก้ไข + ปุ่ม `[Close]` และ `[Try again]`
-
-### 2.4 Bottom Sheet Selection Drawers (ภาพที่ 4)
-* **Slide-over / Bottom Sheet:** เลื่อนขึ้นจากด้านล่างหรือด้านข้าง พร้อม Handle Bar และปุ่ม `X` ปิดมุมขวา
-* **Search Integration:** กล่องค้นหาติดไว้ด้านบนสุดเสมอ สำหรับกรองรายชื่อหรือหมวดหมู่
-* **Grouped Rows:** จัดแถวพร้อม Avatar ย่อ, ชื่อ, รายละเอียด, และ Radio/Checkmark ขวามือ
-* **Persistent Bottom Action:** ปุ่ม Action สำคัญตรึงอยู่ด้านล่างเสมอ (เช่น `[+ New Item]`, `[Continue]`)
-
-### 2.5 Profile Hierarchy & Information Grouping (ภาพที่ 5)
-* **Centric Avatar:** รูปโปรไฟล์ทรงกลมขนาดใหญ่ตรงกลาง พร้อมปุ่มดินสอแก้ไขลอยอยู่มุมขวาล่าง (`ring-2 ring-emerald-500/30`)
-* **Unified Grouped Cards:** รวมข้อมูลที่เกี่ยวข้องกัน (เบอร์โทร, อีเมล, ที่อยู่) ไว้ภายในการ์ดโค้งมนใบเดียว มีไอคอนนำและลูกศร Chevron ด้านขวา
-* **Horizontal Squircle Grid Cards:** หมวดหมู่ย่อย (เช่น เอกสาร, สถิติ, ประวัติ) จัดเป็นกล่องมน Squircle วางเรียงกันในแนวนอน
-
----
-
-## 3. Human-Centered UX Rules (กฎเหล็กในการพัฒนา)
-
-1. **ห้ามใช้สีไอคอนสีรุ้งฉูดฉาดแบบเด็กเล่น:** ไอคอนทั้งหมดต้องใช้ Monochrome Glassmorphism หรือ Neutral Palette
-2. **ห้ามวางปุ่ม Action ผิดที่ผิดทาง:** ปุ่มโทรวิดีโอต้องอยู่ในห้องแชทหรือหน้าโปรไฟล์ ไม่วางรกส่วนหัว Sidebar
-3. **ปุ่มออกจากระบบ (Log Out):** ต้องซ่อนไว้อย่างปลอดภัยที่ด้านล่างสุดของการตั้งค่าความเป็นส่วนตัว
-4. **ความสมบูรณ์แบบของช่องไฟ (Spacing & Padding):** ใช้ระยะห่างที่หายใจได้ (`p-4`, `p-5`, `gap-3`) และมุมโค้งมนที่สอดคล้องกันทั่วทั้งระบบ (`rounded-2xl`, `rounded-3xl`)
+1. **Profile Action Bar (3 Pills):**
+   * ซ้ายสุด: `[🔍 ค้นหาเพื่อน]` (Search & Add Friend Modal)
+   * ตรงกลาง: `[🔗 คัดลอกลิงก์]` (Copy Link + Toast)
+   * ขวาสุด: `[📱 คิวอาร์โค้ด]` (Personal Frosted QR Card with Download & Share)
+   * ด้านล่าง: `[✏️ แก้ไขข้อมูลโปรไฟล์]`
+2. **Social Activity & Notification Bell:**
+   * กระดิ่งแจ้งเตือนที่มุมขวาบนของโปรไฟล์
+   * แสดงคำขอเป็นเพื่อนใหม่ (`[ยอมรับ]` / `[ปฏิเสธ]`) และยอดผู้เข้าชมสตอรี่
+3. **Dynamic Action Sheets & Selection Bottom Drawers:**
+   * การ์ดสไลด์โค้งมน `rounded-3xl` พร้อม Search Bar, Avatar ย่อ, รายการ Radio, และปุ่ม Action ตรึงล่างสุด
+4. **Clean Logout Safety:**
+   * ปุ่ม Log Out ต้องซ่อนอย่างปลอดภัยไว้ท้ายสุดของการตั้งค่าความเป็นส่วนตัว ไม่วางเด่นบนหน้าโปรไฟล์หลัก
