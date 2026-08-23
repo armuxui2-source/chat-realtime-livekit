@@ -1,4 +1,7 @@
-# 🎯 Master Engineering, Mentorship & UI/UX Production Standards (กฎเหล็กประจำตัวถาวรสูงสุด)
+const fs = require("fs");
+const path = require("path");
+
+const masterRulesAndStandards = `# 🎯 Master Engineering, Mentorship & UI/UX Production Standards (กฎเหล็กประจำตัวถาวรสูงสุด)
 
 เอกสารนี้คือกฎเหล็กและข้อกำหนดทางวิศวกรรมระดับสูงสุดที่ต้อง **โหลดและบังคับใช้เป็นอันดับแรก 100% กับทุกโปรเจกต์ (Global Invariants Across All Projects)** โดยไม่มีข้อยกเว้น:
 
@@ -14,7 +17,7 @@
 
 ## 2. การประหยัดโทเคนและประสิทธิภาพสูงสุด (Token & Cost Optimization)
 * **Context Efficiency:** บีบอัดข้อความและคำอธิบายให้กระชับ ตรงจุด ไม่อธิบายซ้ำซาก
-* **Skill Auto-Invocation:** เรียกใช้ทักษะจากคลัง 308 สกิล (`cost-optimization`, `backend-security-coder`, `nextjs-app-router-patterns`, `premium-ui-ux-design-standards`) ทันทีตั้งแต่ก้าวแรก
+* **Skill Auto-Invocation:** เรียกใช้ทักษะจากคลัง 308 สกิล (\`cost-optimization\`, \`backend-security-coder\`, \`nextjs-app-router-patterns\`, \`premium-ui-ux-design-standards\`) ทันทีตั้งแต่ก้าวแรก
 
 ---
 
@@ -27,11 +30,11 @@
 ---
 
 ## 4. มาตรฐาน Typography, Iconography & Component Design
-* **ฟอนต์หลักทุกโปรเจกต์:** **`Prompt` (Google Font รองรับภาษาไทย + อังกฤษ)**
+* **ฟอนต์หลักทุกโปรเจกต์:** **\`Prompt\` (Google Font รองรับภาษาไทย + อังกฤษ)**
 * **ห้ามใช้อีโมจิแทนไอคอน:** ใช้ **Lucide SVG Icons เส้นบาง คมชัด เรียบหรู** เท่านั้น
-* **ห้ามไอคอนสีรุ้ง (Zero Rainbow Badges):** ใช้ **Monochrome Frosted Glass** (`bg-white/[0.05] border border-white/[0.08]`) ทุกไอคอนต้องคุมโทนสีเดียวกัน และจะเกิด Accent Glow เฉพาะตอน Hover เท่านั้น
-* **ห้ามตัวหนังสือตกบรรทัด:** ควบคุมด้วย `truncate`, `whitespace-nowrap`, และ `leading-tight`
-* **ช่องพิมพ์แชท:** ใช้ปุ่มบวกเดี่ยว **`+` (Single Plus Action Menu)** เพื่อเปิดเมนูแนบรูป เอกสาร แชร์โลเคชั่น กล่าวถึงสมาชิก แทนการวางปุ่มเรียงกันจนรก
+* **ห้ามไอคอนสีรุ้ง (Zero Rainbow Badges):** ใช้ **Monochrome Frosted Glass** (\`bg-white/[0.05] border border-white/[0.08]\`) ทุกไอคอนต้องคุมโทนสีเดียวกัน และจะเกิด Accent Glow เฉพาะตอน Hover เท่านั้น
+* **ห้ามตัวหนังสือตกบรรทัด:** ควบคุมด้วย \`truncate\`, \`whitespace-nowrap\`, และ \`leading-tight\`
+* **ช่องพิมพ์แชท:** ใช้ปุ่มบวกเดี่ยว **\`+\` (Single Plus Action Menu)** เพื่อเปิดเมนูแนบรูป เอกสาร แชร์โลเคชั่น กล่าวถึงสมาชิก แทนการวางปุ่มเรียงกันจนรก
 
 ---
 
@@ -49,3 +52,33 @@
 * **2. Slide-over Drawers:** สำหรับการตั้งค่าเชิงลึก, จัดการโปรไฟล์, ประวัติการโทร, ศูนย์แจ้งเตือน
 * **3. Contextual Right Panels:** สำหรับข้อมูลประกอบที่ทำงานร่วมกับหน้าหลักแบบ Realtime (สื่อที่แชร์, สมาชิกกลุ่ม)
 * **4. Floating Capsule Navbars:** สำหรับชุดควบคุมหลักที่ต้องเข้าถึงง่าย (Bottom Nav, Audio/Video Call HUD)
+`;
+
+// 1. Global Customizations Root
+const globalRulesDir = "C:\\\\Users\\\\armyn\\\\.gemini\\\\config\\\\rules";
+fs.mkdirSync(globalRulesDir, { recursive: true });
+fs.writeFileSync(path.join(globalRulesDir, "working-principles.md"), masterRulesAndStandards, "utf8");
+fs.writeFileSync(path.join(globalRulesDir, "master-engineering-rules.md"), masterRulesAndStandards, "utf8");
+
+const globalSkillDir = "C:\\\\Users\\\\armyn\\\\.gemini\\\\config\\\\skills\\\\premium-ui-ux-design-standards";
+fs.mkdirSync(globalSkillDir, { recursive: true });
+fs.writeFileSync(path.join(globalSkillDir, "SKILL.md"), masterRulesAndStandards, "utf8");
+
+const globalConfigDir = "C:\\\\Users\\\\armyn\\\\.gemini\\\\config";
+fs.writeFileSync(path.join(globalConfigDir, "GEMINI.md"), masterRulesAndStandards, "utf8");
+fs.writeFileSync(path.join(globalConfigDir, "AGENTS.md"), masterRulesAndStandards, "utf8");
+
+// 2. Local Workspace Customizations Root
+const localRulesDir = path.join(__dirname, "..", ".agents", "rules");
+fs.mkdirSync(localRulesDir, { recursive: true });
+fs.writeFileSync(path.join(localRulesDir, "working-principles.md"), masterRulesAndStandards, "utf8");
+fs.writeFileSync(path.join(localRulesDir, "master-engineering-rules.md"), masterRulesAndStandards, "utf8");
+
+const localAgentsMd = path.join(__dirname, "..", "AGENTS.md");
+fs.writeFileSync(localAgentsMd, masterRulesAndStandards, "utf8");
+
+const localSkillDir = path.join(__dirname, "..", ".agents", "skills", "premium-ui-ux-design-standards");
+fs.mkdirSync(localSkillDir, { recursive: true });
+fs.writeFileSync(path.join(localSkillDir, "SKILL.md"), masterRulesAndStandards, "utf8");
+
+console.log("ALL_MASTER_RULES_AND_SKILLS_PERMANENTLY_SYNCHRONIZED");
