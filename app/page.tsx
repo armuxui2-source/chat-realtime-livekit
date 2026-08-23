@@ -17,6 +17,7 @@ import { IncomingCallDialog } from "@/components/call/IncomingCallDialog";
 import { ForwardMessageModal } from "@/components/chat/ForwardMessageModal";
 import { MediaLightboxModal } from "@/components/chat/MediaLightboxModal";
 import { StoryViewerModal, StoryItem } from "@/components/story/StoryViewerModal";
+import { CreateStoryModal } from "@/components/story/CreateStoryModal";
 import { AddFriendModal } from "@/components/friends/AddFriendModal";
 import { requestNotificationPermission } from "@/lib/utils";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase/client";
@@ -59,17 +60,18 @@ export default function Home() {
   const [isCreateChannelOpen, setIsCreateChannelOpen] = useState(false);
   const [isAddFriendOpen, setIsAddFriendOpen] = useState(false);
   const [isStoryViewerOpen, setIsStoryViewerOpen] = useState(false);
+  const [isCreateStoryOpen, setIsCreateStoryOpen] = useState(false);
   const [storyInitialIndex, setStoryInitialIndex] = useState(0);
   const [bookmarkedMessages, setBookmarkedMessages] = useState<ChatMessage[]>([]);
 
-  // Demo Stories
-  const sampleStories: StoryItem[] = [
+  // Dynamic Stories List
+  const [storiesList, setStoriesList] = useState<StoryItem[]>([
     {
       id: "s1",
       userId: "alex",
       userName: "Alex Dev",
       mediaUrl: "",
-      caption: "🚀 LiveKit WebRTC Cloud & PiP Mode ใช้งานได้ราบรื่นมาก!",
+      caption: "🚀 ระบบสายสนทนาสดและ PiP Mode ใช้งานได้ราบรื่นมาก!",
       timestamp: "2 ชม. ที่แล้ว",
       gradient: "from-indigo-600 via-purple-700 to-slate-900",
     },
@@ -78,7 +80,7 @@ export default function Home() {
       userId: "sarah",
       userName: "Sarah Miller",
       mediaUrl: "",
-      caption: "✨ ออกแบบดีไซน์ใหม่สไตล์ Supercar Luxury Dark Mode เสร็จแล้วนะคะ",
+      caption: "✨ ออกแบบดีไซน์ใหม่สไตล์ Luxury Dark Mode เสร็จแล้วนะคะ",
       timestamp: "4 ชม. ที่แล้ว",
       gradient: "from-emerald-600 via-teal-700 to-slate-900",
     },
@@ -91,7 +93,7 @@ export default function Home() {
       timestamp: "5 ชม. ที่แล้ว",
       gradient: "from-amber-600 via-orange-700 to-slate-900",
     },
-  ];
+  ]);
 
   // Forwarding State
   const [forwardingMessage, setForwardingMessage] = useState<ChatMessage | null>(null);
@@ -301,7 +303,7 @@ export default function Home() {
               currentUser={currentUser}
               contacts={onlineUsers}
               channels={channels}
-              stories={sampleStories}
+              stories={storiesList}
               selectedUser={selectedUser}
               selectedChannel={selectedChannel}
               onSelectUser={handleSelectUser}
@@ -313,8 +315,7 @@ export default function Home() {
                 setIsStoryViewerOpen(true);
               }}
               onAddStory={() => {
-                setStoryInitialIndex(0);
-                setIsStoryViewerOpen(true);
+                setIsCreateStoryOpen(true);
               }}
             />
           </div>
@@ -480,16 +481,27 @@ export default function Home() {
         onClose={() => setLightboxMedia(null)}
       />
 
-      {/* Story Viewer Modal (Instagram Stories) */}
+      {/* Story Viewer Modal */}
       <StoryViewerModal
         isOpen={isStoryViewerOpen}
-        stories={sampleStories}
+        stories={storiesList}
+        initialIndex={storyInitialIndex}
         onClose={() => setIsStoryViewerOpen(false)}
         onReplyStory={(story, message) => {
           const target = onlineUsers.find((u) => u.username === story.userId);
           if (target) {
             handleSelectUser(target);
           }
+        }}
+      />
+
+      {/* Create Story Studio Modal */}
+      <CreateStoryModal
+        isOpen={isCreateStoryOpen}
+        currentUser={currentUser}
+        onClose={() => setIsCreateStoryOpen(false)}
+        onPublishStory={(newStory) => {
+          setStoriesList((prev) => [newStory, ...prev]);
         }}
       />
 
@@ -539,7 +551,7 @@ export default function Home() {
                 </div>
                 <div>
                   <h3 className="text-sm font-bold text-white">เปิดห้องประชุมวิดีโอ</h3>
-                  <p className="text-[11px] text-slate-400">LiveKit WebRTC Cloud</p>
+                  <p className="text-[11px] text-slate-400">สายสนทนาสดกลุ่ม HD</p>
                 </div>
               </div>
               <button
