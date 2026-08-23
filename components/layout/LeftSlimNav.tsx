@@ -28,9 +28,9 @@ interface LeftSlimNavProps {
 
 export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
   currentUser,
-  unreadCount = 2,
-  friendRequestsCount = 1,
-  missedCallsCount = 1,
+  unreadCount = 0,
+  friendRequestsCount = 0,
+  missedCallsCount = 0,
   bookmarkedCount = 0,
   onOpenEditProfile,
   onOpenBookmarks,

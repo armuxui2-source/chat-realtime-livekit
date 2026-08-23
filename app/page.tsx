@@ -64,12 +64,9 @@ export default function Home() {
   const [isCreateStoryOpen, setIsCreateStoryOpen] = useState(false);
   const [storyInitialIndex, setStoryInitialIndex] = useState(0);
   const [bookmarkedMessages, setBookmarkedMessages] = useState<ChatMessage[]>([]);
-  const [unreadCounts, setUnreadCounts] = useState<Record<string, number>>({
-    sarah: 2,
-    somchai: 1,
-  });
-  const [friendRequestsCount, setFriendRequestsCount] = useState(1);
-  const [missedCallsCount, setMissedCallsCount] = useState(1);
+  const [unreadCounts, setUnreadCounts] = useState<Record<string, number>>({});
+  const [friendRequestsCount, setFriendRequestsCount] = useState(0);
+  const [missedCallsCount, setMissedCallsCount] = useState(0);
 
   const { resolvedTheme } = useTheme();
 
