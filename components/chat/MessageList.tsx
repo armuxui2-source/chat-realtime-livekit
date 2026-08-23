@@ -158,7 +158,7 @@ export const MessageList: React.FC<MessageListProps> = ({
                 <button
                   onClick={() =>
                     onSetReply({
-                      messageId: msg.id,
+                      id: msg.id,
                       senderName: isMe ? currentUser.display_name : selectedUser.display_name,
                       content: msg.content,
                     })
