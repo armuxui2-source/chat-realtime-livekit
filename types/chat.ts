@@ -5,6 +5,8 @@ export interface UserProfile {
   avatar_url?: string;
   status: "online" | "offline" | "busy" | "in_call" | "away";
   last_seen?: string;
+  custom_status?: string;
+  bio?: string;
 }
 
 export interface MessageReaction {

@@ -287,10 +287,6 @@ export default function Home() {
               onOpenBookmarks={() => handleOpenPanelMode("bookmarks")}
               onOpenCallHistory={() => handleOpenPanelMode("call_history")}
               onOpenAddFriends={() => setIsAddFriendOpen(true)}
-              onOpenStories={() => {
-                setStoryInitialIndex(0);
-                setIsStoryViewerOpen(true);
-              }}
               onLogout={logout}
             />
           </div>
@@ -415,18 +411,6 @@ export default function Home() {
           >
             <MessageSquare className="w-5 h-5" />
             <span className="text-[10px]">แชท</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              setStoryInitialIndex(0);
-              setIsStoryViewerOpen(true);
-            }}
-            className="flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-slate-400 hover:text-rose-400 transition-all"
-          >
-            <Radio className="w-5 h-5 text-rose-400" />
-            <span className="text-[10px]">สตอรี่</span>
           </button>
 
           <button
