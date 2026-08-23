@@ -63,6 +63,12 @@ export default function Home() {
   const [isCreateStoryOpen, setIsCreateStoryOpen] = useState(false);
   const [storyInitialIndex, setStoryInitialIndex] = useState(0);
   const [bookmarkedMessages, setBookmarkedMessages] = useState<ChatMessage[]>([]);
+  const [unreadCounts, setUnreadCounts] = useState<Record<string, number>>({
+    sarah: 2,
+    somchai: 1,
+  });
+
+  const totalUnreadMessages = Object.values(unreadCounts).reduce((acc, curr) => acc + curr, 0);
 
   // Dynamic Stories List
   const [storiesList, setStoriesList] = useState<StoryItem[]>([
@@ -130,6 +136,11 @@ export default function Home() {
     setSelectedUser(user);
     setSelectedChannel(null);
     setMobileView("chat");
+    // Mark messages as read dynamically when user opens chat
+    setUnreadCounts((prev) => ({
+      ...prev,
+      [user.username]: 0,
+    }));
   };
 
   const handleSelectChannel = (channel: Channel) => {
@@ -283,7 +294,9 @@ export default function Home() {
           <div className="hidden md:flex shrink-0">
             <LeftSlimNav
               currentUser={currentUser}
-              unreadCount={2}
+              unreadCount={totalUnreadMessages}
+              friendRequestsCount={1}
+              missedCallsCount={1}
               bookmarkedCount={bookmarkedMessages.length}
               onOpenEditProfile={() => handleOpenPanelMode("edit_profile")}
               onOpenBookmarks={() => handleOpenPanelMode("bookmarks")}
@@ -304,6 +317,7 @@ export default function Home() {
               contacts={onlineUsers}
               channels={channels}
               stories={storiesList}
+              unreadCounts={unreadCounts}
               selectedUser={selectedUser}
               selectedChannel={selectedChannel}
               onSelectUser={handleSelectUser}
@@ -413,9 +427,11 @@ export default function Home() {
           >
             <div className="relative">
               <MessageSquare className="w-5 h-5" />
-              <span className="absolute -top-1 -right-2 min-w-[16px] h-[16px] px-1 rounded-full bg-rose-500 text-[9px] font-black text-white flex items-center justify-center ring-2 ring-[#161A22] animate-pulse">
-                2
-              </span>
+              {totalUnreadMessages > 0 && (
+                <span className="absolute -top-1 -right-2 min-w-[16px] h-[16px] px-1 rounded-full bg-rose-500 text-[9px] font-black text-white flex items-center justify-center ring-2 ring-[#161A22] animate-pulse">
+                  {totalUnreadMessages}
+                </span>
+              )}
             </div>
             <span className="text-[10px]">แชท</span>
           </button>

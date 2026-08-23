@@ -20,6 +20,7 @@ interface UserSidebarProps {
   contacts: UserProfile[];
   channels: Channel[];
   stories?: StoryItem[];
+  unreadCounts?: Record<string, number>;
   selectedUser: UserProfile | null;
   selectedChannel: Channel | null;
   onSelectUser: (user: UserProfile) => void;
@@ -35,6 +36,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
   contacts,
   channels,
   stories = [],
+  unreadCounts = {},
   selectedUser,
   selectedChannel,
   onSelectUser,
@@ -244,9 +246,9 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
                       <p className="text-[11px] text-slate-400 truncate">
                         ข้อความสนทนาล่าสุด...
                       </p>
-                      {user.username === "sarah" && (
+                      {(unreadCounts[user.username] || 0) > 0 && (
                         <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-rose-500 text-[10px] font-black text-white flex items-center justify-center ring-2 ring-[#161A22] shrink-0 ml-1.5 animate-pulse">
-                          2
+                          {unreadCounts[user.username]}
                         </span>
                       )}
                     </div>
