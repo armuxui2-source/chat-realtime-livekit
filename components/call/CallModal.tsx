@@ -94,16 +94,16 @@ export const CallModal: React.FC<CallModalProps> = ({
       data-testid="call-modal"
       className={`fixed z-50 transition-all duration-300 font-prompt select-none ${
         isFullscreen
-          ? "inset-0 bg-slate-900"
-          : "inset-2 md:inset-8 rounded-3xl overflow-hidden shadow-2xl border border-slate-200 bg-white/95 backdrop-blur-2xl"
-      } flex flex-col text-slate-800`}
+          ? "inset-0 bg-[#0F1216]"
+          : "inset-2 md:inset-8 rounded-3xl overflow-hidden shadow-2xl border border-white/[0.08] bg-[#0F1216] backdrop-blur-2xl"
+      } flex flex-col text-white`}
     >
       {/* Header bar */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-white/80 shrink-0">
+      <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.07] bg-[#161A22] shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
+          <div className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse" />
           <div>
-            <h3 className="text-slate-800 font-bold text-base">
+            <h3 className="text-white font-bold text-base">
               {activeCall.callType === "video" ? "วิดีโอคอล (Video Call)" : "โทรเสียง (Audio Call)"}
             </h3>
             <p className="text-xs text-slate-400">สนทนากับ {activeCall.partnerDisplayName}</p>
@@ -113,15 +113,15 @@ export const CallModal: React.FC<CallModalProps> = ({
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsFullscreen(!isFullscreen)}
-            className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+            className="p-2 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] text-slate-300 hover:text-white transition-colors"
             title={isFullscreen ? "ออกจากเต็มจอ" : "เต็มจอ"}
           >
-            {isFullscreen ? <Minimize2 className="w-5 h-5" /> : <Maximize2 className="w-5 h-5" />}
+            {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
           </button>
           <button
             onClick={onHangup}
             data-testid="hangup-btn"
-            className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs flex items-center gap-2 shadow-md shadow-rose-500/20 transition-all active:scale-95"
+            className="px-4 py-2 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs flex items-center gap-2 shadow-md shadow-rose-600/30 transition-all active:scale-95"
           >
             <PhoneOff className="w-4 h-4" />
             <span>วางสาย</span>
@@ -130,11 +130,11 @@ export const CallModal: React.FC<CallModalProps> = ({
       </div>
 
       {/* Main Call View Area */}
-      <div className="flex-1 relative overflow-hidden bg-slate-50 flex items-center justify-center p-4">
+      <div className="flex-1 relative overflow-hidden bg-[#0F1216] flex items-center justify-center p-4">
         {loading ? (
           <div className="flex flex-col items-center gap-4 text-center">
-            <div className="w-12 h-12 rounded-full border-4 border-blue-200 border-t-blue-600 animate-spin" />
-            <p className="text-sm text-slate-600">กำลังเชื่อมต่อสัญญาณ WebRTC ผ่าน LiveKit...</p>
+            <div className="w-12 h-12 rounded-full border-4 border-emerald-500/30 border-t-emerald-400 animate-spin" />
+            <p className="text-sm text-slate-300">กำลังเชื่อมต่อสัญญาณ WebRTC ผ่าน LiveKit Cloud...</p>
           </div>
         ) : isConfigured && token && wsUrl ? (
           <LiveKitRoom
@@ -182,15 +182,15 @@ function CustomLiveKitConference({
           tracks.map((trackRef) => (
             <div
               key={trackRef.participant.identity + trackRef.source}
-              className="relative w-full h-full rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-sm flex items-center justify-center"
+              className="relative w-full h-full rounded-2xl overflow-hidden bg-[#161A22] border border-white/[0.08] shadow-md flex items-center justify-center"
             >
               <ParticipantTile trackRef={trackRef} className="w-full h-full object-cover" />
             </div>
           ))
         ) : (
           <div className="col-span-2 flex flex-col items-center justify-center text-slate-400">
-            <div className="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center mb-3 text-slate-500 shadow-inner">
-              <Sparkles className="w-8 h-8 text-blue-600" />
+            <div className="w-20 h-20 rounded-full bg-white/[0.06] flex items-center justify-center mb-3 text-emerald-400 shadow-inner">
+              <Sparkles className="w-8 h-8" />
             </div>
             <p className="font-semibold text-xs">กำลังรอผู้สนทนาเปิดกล้อง/ไมค์...</p>
           </div>
@@ -198,7 +198,7 @@ function CustomLiveKitConference({
       </div>
 
       {/* Built-in LiveKit Control Bar */}
-      <div className="flex items-center justify-center py-3 bg-white/90 backdrop-blur-md rounded-2xl mx-4 mb-2 border border-slate-200 shadow-sm">
+      <div className="flex items-center justify-center py-3 bg-[#161A22]/90 backdrop-blur-md rounded-2xl mx-4 mb-2 border border-white/[0.08] shadow-lg">
         <ControlBar
           controls={{
             camera: callType === "video",
@@ -271,21 +271,21 @@ function StandaloneMediaTester({
   };
 
   return (
-    <div className="relative w-full h-full flex flex-col items-center justify-between p-4 bg-slate-900/90 rounded-2xl overflow-hidden text-white font-prompt">
+    <div className="relative w-full h-full flex flex-col items-center justify-between p-4 bg-[#0F1216] rounded-3xl overflow-hidden text-white font-prompt">
       {/* Background / Main Stream (Partner View) */}
       <div className="flex-1 w-full flex flex-col items-center justify-center relative">
         <div className="flex flex-col items-center gap-4 text-center">
           <div className="relative">
-            <div className="w-28 h-28 rounded-full bg-gradient-to-tr from-blue-600 via-indigo-600 to-violet-600 flex items-center justify-center text-white text-4xl font-bold shadow-2xl ring-4 ring-white/20">
+            <div className="w-28 h-28 rounded-3xl bg-gradient-to-tr from-emerald-600 via-teal-700 to-slate-800 flex items-center justify-center text-white text-4xl font-bold shadow-2xl ring-4 ring-emerald-500/20">
               {partnerName.charAt(0).toUpperCase()}
             </div>
             {/* Animated Call Pulse Ring */}
-            <div className="absolute inset-0 rounded-full border-2 border-blue-400/40 animate-ping" />
+            <div className="absolute inset-0 rounded-3xl border-2 border-emerald-400/40 animate-ping" />
           </div>
 
           <div>
             <h4 className="text-xl font-bold text-white mb-1">{partnerName}</h4>
-            <p className="text-xs text-blue-200 flex items-center justify-center gap-1.5 font-medium">
+            <p className="text-xs text-emerald-400 flex items-center justify-center gap-1.5 font-medium">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               {callType === "video" ? "กำลังเชื่อมต่อวิดีโอคอล..." : "กำลังสนทนาสายเสียง..."}
             </p>
@@ -295,7 +295,7 @@ function StandaloneMediaTester({
         {/* Floating Self-PIP Camera (Instagram / Messenger Top-Right Corner) */}
         <div
           data-testid="self-camera-pip"
-          className="absolute top-2 right-2 w-28 h-40 sm:w-36 sm:h-52 rounded-2xl overflow-hidden bg-slate-800 border-2 border-white/40 shadow-2xl flex items-center justify-center transition-all hover:scale-105"
+          className="absolute top-2 right-2 w-28 h-40 sm:w-36 sm:h-52 rounded-2xl overflow-hidden bg-[#161A22] border-2 border-white/20 shadow-2xl flex items-center justify-center transition-all hover:scale-105"
         >
           {camEnabled ? (
             <video
@@ -311,14 +311,14 @@ function StandaloneMediaTester({
               <span className="text-[10px]">กล้องปิดอยู่</span>
             </div>
           )}
-          <div className="absolute bottom-1.5 left-1.5 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-[9px] font-medium text-white">
+          <div className="absolute bottom-1.5 left-1.5 px-2 py-0.5 rounded-md bg-black/70 backdrop-blur-md text-[9px] font-medium text-white">
             คุณ (Self)
           </div>
         </div>
       </div>
 
       {/* Floating Bottom Control Bar (Instagram / Messenger Circle Buttons) */}
-      <div className="flex items-center gap-4 px-6 py-3 rounded-full bg-white/20 backdrop-blur-xl border border-white/20 shadow-2xl z-10 mb-2">
+      <div className="flex items-center gap-4 px-6 py-3 rounded-full bg-[#161A22]/90 backdrop-blur-xl border border-white/[0.08] shadow-2xl z-10 mb-2">
         {/* Toggle Mic Button */}
         <button
           type="button"
@@ -326,7 +326,7 @@ function StandaloneMediaTester({
           data-testid="toggle-mic-btn"
           className={`w-12 h-12 rounded-full flex items-center justify-center transition-all shadow-lg active:scale-95 ${
             micEnabled
-              ? "bg-white/20 hover:bg-white/30 text-white"
+              ? "bg-white/[0.08] hover:bg-white/[0.15] text-white"
               : "bg-rose-600 text-white"
           }`}
           title={micEnabled ? "ปิดไมค์ (Mute)" : "เปิดไมค์ (Unmute)"}
@@ -341,7 +341,7 @@ function StandaloneMediaTester({
           data-testid="toggle-cam-btn"
           className={`w-12 h-12 rounded-full flex items-center justify-center transition-all shadow-lg active:scale-95 ${
             camEnabled
-              ? "bg-white/20 hover:bg-white/30 text-white"
+              ? "bg-white/[0.08] hover:bg-white/[0.15] text-white"
               : "bg-rose-600 text-white"
           }`}
           title={camEnabled ? "ปิดกล้อง (Turn off Video)" : "เปิดกล้อง (Turn on Video)"}

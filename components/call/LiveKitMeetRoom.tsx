@@ -135,10 +135,10 @@ export const LiveKitMeetRoom: React.FC<LiveKitMeetRoomProps> = ({
       data-testid="livekit-meeting-container"
       className={`fixed z-50 transition-all duration-300 select-none font-prompt ${
         isPiP
-          ? "bottom-4 right-4 w-72 sm:w-80 h-48 rounded-2xl shadow-2xl border border-emerald-500/40 bg-[#0B0D11] overflow-hidden"
+          ? "bottom-4 right-4 w-72 sm:w-80 h-48 rounded-2xl shadow-2xl border border-emerald-500/40 bg-[#0F1216] overflow-hidden"
           : isFullscreen
-          ? "inset-0 bg-[#0B0D11]"
-          : "inset-2 md:inset-6 rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#0B0D11]"
+          ? "inset-0 bg-[#0F1216]"
+          : "inset-2 md:inset-6 rounded-3xl overflow-hidden shadow-2xl border border-white/[0.08] bg-[#0F1216]"
       } flex flex-col text-white`}
     >
       {/* Top Floating Glass Header */}
@@ -254,7 +254,7 @@ export const LiveKitMeetRoom: React.FC<LiveKitMeetRoomProps> = ({
       {/* Bottom Floating Control Capsule (Hidden in PiP mode) */}
       {!isPiP && (
         <div className="absolute bottom-6 left-0 right-0 z-30 flex items-center justify-center px-4">
-          <div className="flex items-center gap-3 px-5 py-3 rounded-full bg-[#12161F]/90 backdrop-blur-2xl border border-white/10 shadow-2xl">
+          <div className="flex items-center gap-3 px-5 py-3 rounded-full bg-[#161A22]/90 backdrop-blur-2xl border border-white/[0.08] shadow-2xl">
             {/* Mic Toggle */}
             <button
               onClick={() => setIsMuted(!isMuted)}

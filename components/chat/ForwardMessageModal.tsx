@@ -56,53 +56,53 @@ export const ForwardMessageModal: React.FC<ForwardMessageModalProps> = ({
   return (
     <div
       data-testid="forward-message-modal"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/20 backdrop-blur-md animate-fade-in font-prompt select-none"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-fade-in font-prompt select-none text-white"
     >
-      <div className="relative w-full max-w-md bg-white border border-slate-200 rounded-3xl p-6 shadow-2xl backdrop-blur-2xl text-slate-800">
+      <div className="relative w-full max-w-md bg-[#161A22]/95 border border-white/[0.08] rounded-3xl p-6 shadow-2xl backdrop-blur-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-blue-50 text-blue-600 border border-blue-100">
-              <Forward className="w-5 h-5" />
+        <div className="flex items-center justify-between pb-4 border-b border-white/[0.07]">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-white/[0.06] border border-white/[0.08] text-emerald-400 flex items-center justify-center shadow-sm">
+              <Forward className="w-5 h-5" strokeWidth={1.8} />
             </div>
             <div>
-              <h2 className="text-base font-bold text-slate-800 leading-tight">ส่งต่อข้อความ</h2>
+              <h2 className="text-base font-bold text-white leading-tight">ส่งต่อข้อความ</h2>
               <p className="text-xs text-slate-400">เลือกผู้รับหรือกลุ่มที่ต้องการส่งต่อ</p>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+            className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Message Snippet Card */}
-        <div className="my-4 p-3 rounded-2xl bg-slate-50 border border-slate-200/80 text-xs text-slate-600 space-y-1">
-          <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wider block">
+        <div className="my-4 p-3.5 rounded-2xl bg-[#0F1216] border border-white/[0.07] text-xs space-y-1">
+          <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block">
             ข้อความต้นฉบับ:
           </span>
-          <p className="line-clamp-2 italic text-slate-700 leading-relaxed">
+          <p className="line-clamp-2 italic text-slate-300 leading-relaxed">
             {message.content || (message.file_name ? `[ไฟล์] ${message.file_name}` : "[บันทึกเสียง]")}
           </p>
         </div>
 
         {/* Search */}
         <div className="relative mb-3">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="ค้นหาผู้ติดต่อหรือกลุ่ม..."
-            className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-500"
+            className="w-full pl-9 pr-3.5 py-2.5 rounded-2xl bg-[#0F1216] border border-white/[0.08] text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors"
           />
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="max-h-48 overflow-y-auto space-y-1 pr-1 custom-scrollbar">
+          <div className="max-h-48 overflow-y-auto space-y-1 p-1 bg-[#0F1216] border border-white/[0.08] rounded-2xl custom-scrollbar">
             {/* Contacts */}
             <p className="text-[10px] font-bold uppercase text-slate-400 px-2 pt-1">
               ผู้ติดต่อ (Contacts)
@@ -121,8 +121,8 @@ export const ForwardMessageModal: React.FC<ForwardMessageModalProps> = ({
                   onClick={() => setSelectedTarget(contact)}
                   className={`w-full flex items-center justify-between p-2 rounded-xl text-xs transition-all ${
                     isSelected
-                      ? "bg-blue-50 text-blue-700 font-bold border border-blue-200"
-                      : "hover:bg-slate-50 text-slate-700 border border-transparent"
+                      ? "bg-emerald-500/15 text-white font-bold border border-emerald-500/40"
+                      : "hover:bg-white/[0.04] text-slate-300 border border-transparent"
                   }`}
                 >
                   <div
@@ -130,7 +130,7 @@ export const ForwardMessageModal: React.FC<ForwardMessageModalProps> = ({
                     className="flex items-center gap-2.5 min-w-0"
                   >
                     <div
-                      className={`w-7 h-7 rounded-full bg-gradient-to-tr ${getAvatarColor(
+                      className={`w-7 h-7 rounded-xl bg-gradient-to-tr ${getAvatarColor(
                         contact.username
                       )} flex items-center justify-center text-white text-[10px] font-bold`}
                     >
@@ -138,7 +138,7 @@ export const ForwardMessageModal: React.FC<ForwardMessageModalProps> = ({
                     </div>
                     <span className="truncate">{contact.display_name}</span>
                   </div>
-                  {isSelected && <Check className="w-4 h-4 text-blue-600" />}
+                  {isSelected && <Check className="w-4 h-4 text-emerald-400" />}
                 </button>
               );
             })}
@@ -161,31 +161,31 @@ export const ForwardMessageModal: React.FC<ForwardMessageModalProps> = ({
                   onClick={() => setSelectedTarget(channel)}
                   className={`w-full flex items-center justify-between p-2 rounded-xl text-xs transition-all ${
                     isSelected
-                      ? "bg-blue-50 text-blue-700 font-bold border border-blue-200"
-                      : "hover:bg-slate-50 text-slate-700 border border-transparent"
+                      ? "bg-emerald-500/15 text-white font-bold border border-emerald-500/40"
+                      : "hover:bg-white/[0.04] text-slate-300 border border-transparent"
                   }`}
                 >
                   <div
                     data-testid={`forward-target-channel-${channel.name.toLowerCase()}`}
                     className="flex items-center gap-2.5 min-w-0"
                   >
-                    <div className="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                    <div className="w-7 h-7 rounded-xl bg-white/[0.06] flex items-center justify-center text-emerald-400 border border-white/[0.08]">
                       <Hash className="w-3.5 h-3.5" />
                     </div>
                     <span className="truncate">#{channel.name}</span>
                   </div>
-                  {isSelected && <Check className="w-4 h-4 text-blue-600" />}
+                  {isSelected && <Check className="w-4 h-4 text-emerald-400" />}
                 </button>
               );
             })}
           </div>
 
           {/* Footer Buttons */}
-          <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+          <div className="flex items-center justify-end gap-2 pt-3 border-t border-white/[0.07]">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-xs font-medium text-slate-500 hover:text-slate-800"
+              className="px-4 py-2.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] text-xs font-bold text-slate-400 hover:text-white transition-all"
             >
               ยกเลิก
             </button>
@@ -193,7 +193,7 @@ export const ForwardMessageModal: React.FC<ForwardMessageModalProps> = ({
               type="submit"
               data-testid="confirm-forward-btn"
               disabled={!selectedTarget || isSubmitting}
-              className="flex items-center gap-1.5 px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium text-xs shadow-md shadow-blue-500/20 transition-all active:scale-95"
+              className="flex items-center gap-1.5 px-5 py-2.5 rounded-2xl emerald-button-gradient disabled:opacity-40 text-white font-bold text-xs shadow-md transition-all active:scale-95"
             >
               <Forward className="w-4 h-4" />
               <span>ส่งต่อเดี๋ยวนี้</span>

@@ -58,7 +58,7 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
       active = false;
       if (timerRef.current) clearInterval(timerRef.current);
       if (streamRef.current) {
-        streamRef.current.getTracks().forEach((track) => track.stop());
+        streamRef.current.getTracks().forEach((t) => t.stop());
       }
     };
   }, []);
@@ -72,19 +72,18 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
     ) {
       mediaRecorderRef.current.onstop = () => {
         const audioBlob = new Blob(audioChunksRef.current, {
-          type: "audio/webm",
+          type: "audio/webm;codecs=opus",
         });
-        if (streamRef.current) {
-          streamRef.current.getTracks().forEach((t) => t.stop());
-        }
-        onSendVoice(audioBlob, Math.max(duration, 1));
+        onSendVoice(audioBlob, duration);
       };
       mediaRecorderRef.current.stop();
     } else {
-      const syntheticBlob = new Blob(["AUDIO_SIMULATED_DATA"], {
-        type: "audio/webm",
-      });
-      onSendVoice(syntheticBlob, Math.max(duration, 1));
+      const mockBlob = new Blob(["mock-audio-data"], { type: "audio/webm" });
+      onSendVoice(mockBlob, duration);
+    }
+
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((t) => t.stop());
     }
   };
 
@@ -111,7 +110,7 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
   return (
     <div
       data-testid="voice-recorder-bar"
-      className="flex-1 flex items-center justify-between px-3.5 py-2 rounded-2xl bg-white border border-rose-200 shadow-sm animate-fade-in"
+      className="flex-1 flex items-center justify-between px-3.5 py-2 rounded-2xl bg-[#161A22] border border-rose-500/30 shadow-lg animate-fade-in text-white"
     >
       {/* Recording indicator & timer */}
       <div className="flex items-center gap-3">
@@ -121,10 +120,10 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold text-rose-600">Recording</span>
+          <span className="text-xs font-bold text-rose-400">Recording</span>
           <span
             data-testid="voice-record-duration"
-            className="text-xs font-mono font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded-lg border border-slate-200"
+            className="text-xs font-mono font-bold text-white bg-[#0F1216] px-2 py-0.5 rounded-xl border border-white/[0.08]"
           >
             {formatTime(duration)}
           </span>
@@ -152,8 +151,8 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
           type="button"
           onClick={handleCancel}
           data-testid="cancel-voice-record-btn"
-          className="p-1.5 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
-          title="Cancel"
+          className="p-2 rounded-xl text-slate-400 hover:text-rose-400 hover:bg-rose-500/15 transition-colors"
+          title="ยกเลิก"
         >
           <Trash2 className="w-4 h-4" />
         </button>
@@ -162,10 +161,10 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
           type="button"
           onClick={handleStopAndSend}
           data-testid="send-voice-record-btn"
-          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-sm transition-all active:scale-95"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl emerald-button-gradient text-white text-xs font-bold shadow-md transition-all active:scale-95"
         >
           <Send className="w-3.5 h-3.5" />
-          <span>Send</span>
+          <span>ส่งเสียง</span>
         </button>
       </div>
     </div>

@@ -28,22 +28,22 @@ export const MediaLightboxModal: React.FC<MediaLightboxModalProps> = ({
   return (
     <div
       data-testid="media-lightbox-modal"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xl animate-fade-in font-prompt select-none"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl animate-fade-in font-prompt select-none text-white"
     >
       {/* Top Controls Bar */}
-      <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10 max-w-4xl mx-auto p-3 rounded-2xl bg-white/90 border border-slate-200 shadow-lg backdrop-blur-md">
+      <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10 max-w-4xl mx-auto p-3.5 rounded-3xl bg-[#161A22]/95 border border-white/[0.08] shadow-2xl backdrop-blur-2xl">
         <div className="flex items-center gap-2">
-          <p className="text-xs font-bold text-slate-800 truncate max-w-sm">
-            {mediaName || "รูปภาพ / มีเดีย"}
+          <p className="text-xs font-bold text-white truncate max-w-sm">
+            {mediaName || "รูปภาพ / สื่อมัลติมีเดีย"}
           </p>
         </div>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
           {/* Zoom Controls */}
           <button
             type="button"
             onClick={handleZoomIn}
-            className="p-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+            className="p-2 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] text-white border border-white/[0.08] transition-colors"
             title="ซูมเข้า"
           >
             <ZoomIn className="w-4 h-4" />
@@ -51,7 +51,7 @@ export const MediaLightboxModal: React.FC<MediaLightboxModalProps> = ({
           <button
             type="button"
             onClick={handleZoomOut}
-            className="p-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+            className="p-2 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] text-white border border-white/[0.08] transition-colors"
             title="ซูมออก"
           >
             <ZoomOut className="w-4 h-4" />
@@ -59,7 +59,7 @@ export const MediaLightboxModal: React.FC<MediaLightboxModalProps> = ({
           <button
             type="button"
             onClick={handleRotate}
-            className="p-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+            className="p-2 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] text-white border border-white/[0.08] transition-colors"
             title="หมุนรูปภาพ"
           >
             <RotateCw className="w-4 h-4" />
@@ -71,7 +71,7 @@ export const MediaLightboxModal: React.FC<MediaLightboxModalProps> = ({
             download={mediaName || "download"}
             target="_blank"
             rel="noreferrer"
-            className="p-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+            className="p-2 rounded-2xl emerald-button-gradient text-white transition-colors shadow-sm"
             title="ดาวน์โหลดไฟล์"
           >
             <Download className="w-4 h-4" />
@@ -81,7 +81,7 @@ export const MediaLightboxModal: React.FC<MediaLightboxModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-xl bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-500 transition-colors ml-1"
+            className="p-2 rounded-2xl bg-white/[0.06] hover:bg-rose-500/20 hover:text-rose-400 text-slate-400 transition-colors ml-1"
             title="ปิดหน้าต่าง"
           >
             <X className="w-4 h-4" />
@@ -100,7 +100,7 @@ export const MediaLightboxModal: React.FC<MediaLightboxModalProps> = ({
             transform: `scale(${scale}) rotate(${rotation}deg)`,
             transition: "transform 0.2s ease-out",
           }}
-          className="max-h-[75vh] max-w-full object-contain rounded-3xl shadow-2xl border border-white"
+          className="max-w-full max-h-[75vh] object-contain rounded-2xl shadow-2xl border border-white/[0.08]"
         />
       </div>
     </div>
