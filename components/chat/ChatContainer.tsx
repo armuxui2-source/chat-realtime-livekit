@@ -77,7 +77,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
           A real-time system that works like an Organiser
         </h3>
         <p className="text-xs text-slate-400 max-w-sm mb-6 leading-relaxed">
-          เลือกรายชื่อสมาชิกหรือช่องสนทนาจากแถบด้านซ้าย เพื่อเริ่มต้นการส่งข้อความ ข้อความเสียง และประชุม LiveKit ได้ทันที
+          เลือกรายชื่อสมาชิกหรือช่องสนทนาจากแถบด้านซ้าย เพื่อเริ่มต้นการส่งข้อความ ข้อความเสียง และโทรเสียง/วิดีโอคอลได้ทันที
         </p>
 
         <div className="grid grid-cols-2 gap-3 max-w-sm w-full">
@@ -96,7 +96,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
               <Video className="w-4 h-4" strokeWidth={1.75} />
             </div>
             <div>
-              <p className="text-xs font-bold text-white">LiveKit Meeting</p>
+              <p className="text-xs font-bold text-white">ห้องประชุมสายสด (Meeting Room)</p>
               <p className="text-[11px] text-slate-400">WebRTC SFU Cloud</p>
             </div>
           </div>

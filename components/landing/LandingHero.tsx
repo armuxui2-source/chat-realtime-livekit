@@ -55,7 +55,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
             <a href="#features" className="hover:text-slate-900 transition-colors">
               ความสามารถ (Features)
             </a>
-            <a href="#livekit" className="hover:text-slate-900 transition-colors">
+            <a href="#media-calls" className="hover:text-slate-900 transition-colors">
               WebRTC SFU Cloud
             </a>
             <a href="#security" className="hover:text-slate-900 transition-colors">
@@ -85,7 +85,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
         {/* Soft Announcement Badge */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/60 text-emerald-800 text-xs font-semibold mb-6 shadow-xs animate-fade-in">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span>Realtime WebRTC LiveKit Cloud + Supabase Engine 2.0</span>
+          <span>Ticketapp Realtime Ultra-Fast Engine</span>
           <ChevronRight className="w-3.5 h-3.5 text-emerald-600" />
         </div>
 
@@ -148,7 +148,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
             </div>
           </div>
 
-          {/* Card 2: LiveKit Voice & Video */}
+          {/* Card 2: HD Voice & Video Calls */}
           <div className="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-lg shadow-slate-900/5 flex flex-col justify-between group hover:border-emerald-500/50 transition-all hover:shadow-xl">
             <div>
               <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
@@ -165,7 +165,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
               </p>
             </div>
             <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-              <span>LiveKit Cloud SFU</span>
+              <span>HD Voice & Video SFU</span>
               <CheckCircle2 className="w-4 h-4 text-emerald-500" />
             </div>
           </div>
@@ -180,7 +180,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
                 STEP 3
               </span>
               <h3 className="text-base font-bold text-slate-900 mt-1">
-                สตอรี่ & คอนเนกชันแบบ Instagram
+                สตอรี่ & กิจกรรมอัปเดตเรียลไทม์
               </h3>
               <p className="text-xs text-slate-500 mt-2 leading-relaxed">
                 แชร์ช่วงเวลาสำคัญ 24 ชม. ด้วยสตอรี่ ตอบกลับในแชทได้ทันที พร้อม QR Code เพิ่มเพื่อน
@@ -200,7 +200,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
               S
             </div>
             <p className="text-sm sm:text-base font-medium text-slate-200 leading-relaxed max-w-xl italic">
-              “ระบบ Ticketapp ออกแบบมาได้มืออาชีพ สวยงาม และใช้งานง่ายมาก ระบบ LiveKit
+              “ระบบ Ticketapp ออกแบบมาได้มืออาชีพ สวยงาม และใช้งานง่ายมาก ระบบสื่อสารสายสด
               และแชททำงานเรียลไทม์ได้เร็วและเสถียรที่สุด”
             </p>
             <div className="mt-3">
@@ -218,7 +218,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
             <Command className="w-4 h-4 text-slate-900" />
             <span className="font-bold text-slate-900">Ticketapp Realtime Platform</span>
           </div>
-          <p>© 2026 Ticketapp. Built with Next.js 14, LiveKit Cloud & Supabase Engine.</p>
+          <p>© 2026 Ticketapp Platform. All rights reserved.</p>
         </div>
       </footer>
     </div>

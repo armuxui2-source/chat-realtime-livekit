@@ -108,7 +108,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
           onClick={() => onStartCall("video")}
           data-testid="chat-header-video-call-btn"
           className="p-2.5 rounded-2xl emerald-button-gradient text-white shadow-md transition-all active:scale-95"
-          title="วิดีโอคอล LiveKit"
+          title="วิดีโอคอล (Video Call)"
         >
           <Video className="w-4 h-4" strokeWidth={1.8} />
         </button>

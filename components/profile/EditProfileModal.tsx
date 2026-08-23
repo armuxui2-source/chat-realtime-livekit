@@ -260,7 +260,7 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 </div>
                 <div>
                   <h4 className="text-xs font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
-                    ความปลอดภัย & LiveKit
+                    ความปลอดภัย & ระบบเครือข่าย
                   </h4>
                   <p className="text-[11px] text-slate-400 mt-0.5">WebRTC Cloud, เข้ารหัสสนทนา</p>
                 </div>
@@ -426,13 +426,13 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
               </div>
             )}
 
-            {/* View 4: Security & LiveKit */}
+            {/* View 4: Security & Network Infrastructure */}
             {activeDrawer === "security" && (
               <div className="space-y-3.5 max-w-md mx-auto">
                 <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-start gap-3">
                   <ShieldCheck className="w-5 h-5 text-emerald-600 mt-0.5 shrink-0" />
                   <div>
-                    <p className="text-xs font-bold text-emerald-900">LiveKit Cloud WebRTC SFU</p>
+                    <p className="text-xs font-bold text-emerald-900">ระบบเครือข่ายสื่อสารความเร็วสูง (High-Speed Realtime Media)</p>
                     <p className="text-[11px] text-emerald-700 mt-0.5 leading-relaxed">
                       การโทรและวิดีโอคอลทั้งหมดเชื่อมต่อไปยังเซิร์ฟเวอร์คลาวด์ พร้อมระบบเข้ารหัสข้อมูลเสียงและภาพแบบ End-to-End
                     </p>

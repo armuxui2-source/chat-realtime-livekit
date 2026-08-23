@@ -134,7 +134,7 @@ export const CallModal: React.FC<CallModalProps> = ({
         {loading ? (
           <div className="flex flex-col items-center gap-4 text-center">
             <div className="w-12 h-12 rounded-full border-4 border-emerald-500/30 border-t-emerald-400 animate-spin" />
-            <p className="text-sm text-slate-300">กำลังเชื่อมต่อสัญญาณ WebRTC ผ่าน LiveKit Cloud...</p>
+            <p className="text-sm text-slate-300">กำลังเชื่อมต่อสัญญาณเสียงและวิดีโอระดับ HD...</p>
           </div>
         ) : isConfigured && token && wsUrl ? (
           <LiveKitRoom

@@ -212,7 +212,7 @@ export const LiveKitMeetRoom: React.FC<LiveKitMeetRoomProps> = ({
           <div className="flex flex-col items-center gap-3 text-center z-10 p-4">
             <Loader2 className="w-8 h-8 text-emerald-400 animate-spin" />
             <p className="text-xs text-slate-300 font-medium">
-              กำลังเชื่อมต่อสัญญาณ WebRTC SFU Cloud...
+              กำลังเชื่อมต่อสัญญาณเรียลไทม์ความเร็วสูง...
             </p>
           </div>
         ) : connectionDetails?.participantToken ? (
@@ -245,7 +245,7 @@ export const LiveKitMeetRoom: React.FC<LiveKitMeetRoomProps> = ({
 
             <div className="text-center">
               <h2 className="text-lg font-bold text-white">{calleeDisplayName}</h2>
-              <p className="text-xs text-emerald-400 font-medium mt-1">กำลังโทรออก LiveKit Audio...</p>
+              <p className="text-xs text-emerald-400 font-medium mt-1">กำลังโทรออกสายเสียงสด...</p>
             </div>
           </div>
         )}

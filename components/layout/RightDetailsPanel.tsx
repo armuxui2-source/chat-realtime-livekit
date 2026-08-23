@@ -158,7 +158,7 @@ export const RightDetailsPanel: React.FC<RightDetailsPanelProps> = ({
     {
       id: "n3",
       title: "ระบบอัปเดตเวอร์ชัน 2.0",
-      body: "รองรับ Supercar Dark Mode และ LiveKit PiP Mode เรียบร้อย",
+      body: "รองรับ Supercar Dark Mode และหน้าต่างลอย PiP Mode เรียบร้อย",
       time: "1 วันที่แล้ว",
       unread: false,
     },

@@ -1,4 +1,7 @@
-# 🎯 Master Partnership, Quality & Architecture Rules (กฎเหล็กประจำตัวถาวร)
+const fs = require("fs");
+const path = require("path");
+
+const masterRules = `# 🎯 Master Partnership, Quality & Architecture Rules (กฎเหล็กประจำตัวถาวร)
 
 เอกสารนี้คือกฎเหล็กสูงสุดในการพัฒนาซอฟต์แวร์และร่วมงานกับ Developer ที่ต้อง **ยึดถือและบังคับใช้กับทุกโปรเจกต์ 100% (Global Mandatory Invariants)**:
 
@@ -22,8 +25,8 @@
 * **ห้ามใช้อีโมจิ (Emoji) แทนไอคอนในปุ่มหรือเมนูระบบ (No Emojis as UI Icons):**
   * ปุ่ม แอ็กชัน เมนู และแถบนำทาง ต้องใช้ **Lucide SVG Icons เส้นบาง คมชัด เรียบหรู** เท่านั้น
 * **ห้ามตัวหนังสือตกบรรทัดหรือล้นกรอบ (Zero Awkward Line Wrapping):**
-  * ควบคุมการแสดงผลด้วย `truncate`, `whitespace-nowrap`, `leading-tight`, และ Padding สัดส่วนที่พอดี
-* **ฟอนต์หลักทุกโปรเจกต์:** **`Prompt` (Google Font ภาษาไทย + อังกฤษ)** เสมอ
+  * ควบคุมการแสดงผลด้วย \`truncate\`, \`whitespace-nowrap\`, \`leading-tight\`, และ Padding สัดส่วนที่พอดี
+* **ฟอนต์หลักทุกโปรเจกต์:** **\`Prompt\` (Google Font ภาษาไทย + อังกฤษ)** เสมอ
 
 ---
 
@@ -38,4 +41,27 @@
 ## 5. สัดส่วนและโทนสีมาตรฐาน (Figma Frosted Glass & Dark Gunmetal)
 * **PC / Desktop (≥1024px):** 3-Column Tri-Pane เต็มจอ ไร้ขอบดำ
 * **Mobile (<768px):** Single-Column Stack พร้อม Floating Capsule Bar
-* **ชุดสี:** Dark Gunmetal (`#0F1216`, `#161A22`), Frosted Glass (`backdrop-blur-xl bg-white/[0.06]`), และ Emerald Gradient Accent (`#4ADE80` ➔ `#22C55E` ➔ `#16A34A`)
+* **ชุดสี:** Dark Gunmetal (\`#0F1216\`, \`#161A22\`), Frosted Glass (\`backdrop-blur-xl bg-white/[0.06]\`), และ Emerald Gradient Accent (\`#4ADE80\` ➔ \`#22C55E\` ➔ \`#16A34A\`)
+`;
+
+// Save to Global Config
+const globalRulesDir = "C:\\\\Users\\\\armyn\\\\.gemini\\\\config\\\\rules";
+fs.mkdirSync(globalRulesDir, { recursive: true });
+fs.writeFileSync(path.join(globalRulesDir, "working-principles.md"), masterRules, "utf8");
+
+const globalSkillDir = "C:\\\\Users\\\\armyn\\\\.gemini\\\\config\\\\skills\\\\premium-ui-ux-design-standards";
+fs.mkdirSync(globalSkillDir, { recursive: true });
+fs.writeFileSync(path.join(globalSkillDir, "SKILL.md"), masterRules, "utf8");
+
+const globalConfigDir = "C:\\\\Users\\\\armyn\\\\.gemini\\\\config";
+fs.writeFileSync(path.join(globalConfigDir, "GEMINI.md"), masterRules, "utf8");
+
+// Save to Workspace Local Config
+const localRulesDir = path.join(__dirname, "..", ".agents", "rules");
+fs.mkdirSync(localRulesDir, { recursive: true });
+fs.writeFileSync(path.join(localRulesDir, "working-principles.md"), masterRules, "utf8");
+
+const localAgentsMd = path.join(__dirname, "..", "AGENTS.md");
+fs.writeFileSync(localAgentsMd, masterRules, "utf8");
+
+console.log("MASTER_RULES_UPDATED_ACROSS_ALL_SYSTEMS");
