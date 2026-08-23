@@ -407,33 +407,46 @@ export default function Home() {
           <button
             type="button"
             onClick={() => setMobileView("sidebar")}
-            className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all ${
+            className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all relative ${
               mobileView === "sidebar" ? "text-emerald-400 font-bold" : "text-slate-400"
             }`}
           >
-            <MessageSquare className="w-5 h-5" />
+            <div className="relative">
+              <MessageSquare className="w-5 h-5" />
+              <span className="absolute -top-1 -right-2 min-w-[16px] h-[16px] px-1 rounded-full bg-rose-500 text-[9px] font-black text-white flex items-center justify-center ring-2 ring-[#161A22] animate-pulse">
+                2
+              </span>
+            </div>
             <span className="text-[10px]">แชท</span>
           </button>
 
           <button
             type="button"
             onClick={() => setIsAddFriendOpen(true)}
-            className="flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-slate-400 hover:text-emerald-400 transition-all"
+            className="flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-slate-400 hover:text-emerald-400 transition-all relative"
           >
-            <UserPlus className="w-5 h-5" />
+            <div className="relative">
+              <UserPlus className="w-5 h-5" />
+              <span className="absolute -top-1 -right-2 min-w-[16px] h-[16px] px-1 rounded-full bg-rose-500 text-[9px] font-black text-white flex items-center justify-center ring-2 ring-[#161A22]">
+                1
+              </span>
+            </div>
             <span className="text-[10px]">เพิ่มเพื่อน</span>
           </button>
 
           <button
             type="button"
             onClick={() => handleOpenPanelMode("call_history")}
-            className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all ${
+            className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all relative ${
               rightPanelMode === "call_history" && mobileView === "details"
                 ? "text-emerald-400 font-bold"
                 : "text-slate-400"
             }`}
           >
-            <PhoneCall className="w-5 h-5" />
+            <div className="relative">
+              <PhoneCall className="w-5 h-5" />
+              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-[#161A22]" />
+            </div>
             <span className="text-[10px]">การโทร</span>
           </button>
 

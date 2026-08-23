@@ -240,9 +240,16 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
                         9:24
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-400 truncate mt-0.5">
-                      ข้อความสนทนาล่าสุด...
-                    </p>
+                    <div className="flex items-center justify-between mt-0.5">
+                      <p className="text-[11px] text-slate-400 truncate">
+                        ข้อความสนทนาล่าสุด...
+                      </p>
+                      {user.username === "sarah" && (
+                        <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-rose-500 text-[10px] font-black text-white flex items-center justify-center ring-2 ring-[#161A22] shrink-0 ml-1.5 animate-pulse">
+                          2
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </button>
               );

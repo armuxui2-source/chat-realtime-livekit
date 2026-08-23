@@ -16,6 +16,8 @@ import { getAvatarColor } from "@/lib/utils";
 interface LeftSlimNavProps {
   currentUser: UserProfile;
   unreadCount?: number;
+  friendRequestsCount?: number;
+  missedCallsCount?: number;
   bookmarkedCount?: number;
   onOpenEditProfile?: () => void;
   onOpenBookmarks?: () => void;
@@ -27,6 +29,8 @@ interface LeftSlimNavProps {
 export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
   currentUser,
   unreadCount = 2,
+  friendRequestsCount = 1,
+  missedCallsCount = 1,
   bookmarkedCount = 0,
   onOpenEditProfile,
   onOpenBookmarks,
@@ -51,7 +55,8 @@ export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
         <div className="w-8 border-t border-white/[0.08] my-1" />
 
         {/* Nav Items */}
-        <div className="flex flex-col items-center gap-2 w-full">
+        <div className="flex flex-col items-center gap-2.5 w-full">
+          {/* Chat Messages */}
           <button
             type="button"
             data-testid="nav-messages"
@@ -60,49 +65,66 @@ export const LeftSlimNav: React.FC<LeftSlimNavProps> = ({
           >
             <MessageSquare className="w-5 h-5" strokeWidth={2} />
             {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-[#0F1216] animate-pulse" />
+              <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-rose-500 text-[10px] font-black text-white flex items-center justify-center ring-2 ring-[#0F1216] shadow-sm animate-pulse">
+                {unreadCount}
+              </span>
             )}
           </button>
 
+          {/* Add Friends / Discovery */}
           {onOpenAddFriends && (
             <button
               type="button"
               data-testid="open-add-friends-btn"
               onClick={onOpenAddFriends}
-              className="w-10 h-10 rounded-2xl text-slate-400 hover:text-white hover:bg-white/[0.06] flex items-center justify-center transition-all"
-              title="เพิ่มเพื่อน & ค้นหา"
+              className="w-10 h-10 rounded-2xl text-slate-400 hover:text-white hover:bg-white/[0.06] flex items-center justify-center transition-all relative group"
+              title="เพิ่มเพื่อน & คำขอเป็นเพื่อน"
             >
               <UserPlus className="w-5 h-5" strokeWidth={1.8} />
+              {friendRequestsCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-rose-500 text-[10px] font-black text-white flex items-center justify-center ring-2 ring-[#0F1216] shadow-sm">
+                  {friendRequestsCount}
+                </span>
+              )}
             </button>
           )}
 
+          {/* Call Logs & WebRTC */}
           {onOpenCallHistory && (
             <button
               type="button"
               data-testid="open-call-history-btn"
               onClick={onOpenCallHistory}
-              className="w-10 h-10 rounded-2xl text-slate-400 hover:text-white hover:bg-white/[0.06] flex items-center justify-center transition-all"
-              title="ประวัติการโทร & WebRTC"
+              className="w-10 h-10 rounded-2xl text-slate-400 hover:text-white hover:bg-white/[0.06] flex items-center justify-center transition-all relative group"
+              title="ประวัติการโทร & สายที่ไม่ได้รับ"
             >
               <PhoneCall className="w-5 h-5" strokeWidth={1.8} />
+              {missedCallsCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-rose-500 ring-2 ring-[#0F1216] animate-ping" />
+              )}
+              {missedCallsCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-rose-500 ring-2 ring-[#0F1216]" />
+              )}
             </button>
           )}
 
+          {/* Bookmarks */}
           {onOpenBookmarks && (
             <button
               type="button"
               data-testid="open-bookmarks-btn"
               onClick={onOpenBookmarks}
-              className="w-10 h-10 rounded-2xl text-slate-400 hover:text-white hover:bg-white/[0.06] flex items-center justify-center transition-all relative"
+              className="w-10 h-10 rounded-2xl text-slate-400 hover:text-white hover:bg-white/[0.06] flex items-center justify-center transition-all relative group"
               title="ข้อความที่บันทึก"
             >
               <Bookmark className="w-5 h-5" strokeWidth={1.8} />
               {bookmarkedCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-[#0F1216]" />
+                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-[#0F1216]" />
               )}
             </button>
           )}
 
+          {/* Settings / Profile */}
           {onOpenEditProfile && (
             <button
               type="button"
