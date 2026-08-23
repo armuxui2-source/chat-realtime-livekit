@@ -12,19 +12,13 @@ export function useTheme() {
     if (mode === "light") return "light";
     if (mode === "dark") return "dark";
 
-    // Auto Mode: 1. Check OS media query
+    // Auto Mode: Real-world Time Clock (06:00 - 18:00 = กลางวัน/Light Mode ☀️, 18:00 - 06:00 = กลางคืน/Dark Mode 🌙)
     if (typeof window !== "undefined") {
-      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-      if (mediaQuery.media !== "not all") {
-        return mediaQuery.matches ? "dark" : "light";
-      }
-      
-      // Auto Mode: 2. Fallback to Local Time Clock (6 AM - 6 PM = Day/Light, 6 PM - 6 AM = Night/Dark)
       const currentHour = new Date().getHours();
       return currentHour >= 6 && currentHour < 18 ? "light" : "dark";
     }
 
-    return "dark";
+    return "light";
   }, []);
 
   const applyThemeToDOM = useCallback((active: "light" | "dark") => {
