@@ -165,56 +165,60 @@ export const MessageInput: React.FC<MessageInputProps> = ({
         className="hidden"
       />
 
-      {/* Floating Plus Quick Actions Popover Menu */}
+      {/* Floating Plus Quick Actions Popover Menu (Strict Monochrome Glassmorphism - Zero Rainbow Badges) */}
       {showAttachMenu && (
         <div
           ref={attachMenuRef}
           data-testid="attach-actions-menu"
-          className="absolute bottom-full left-4 mb-3 w-56 p-2 rounded-2xl bg-[#161A22]/98 border border-white/[0.08] shadow-2xl backdrop-blur-2xl animate-scale-up z-50 space-y-1 text-white"
+          className="absolute bottom-full left-4 mb-3 w-60 p-1.5 rounded-2xl bg-[#161A22]/98 border border-white/[0.08] shadow-2xl backdrop-blur-2xl animate-scale-up z-50 space-y-0.5 text-white"
         >
-          <p className="px-3 py-1 text-[10px] uppercase font-bold text-slate-400 tracking-wider border-b border-white/[0.06]">
+          <div className="px-3 py-1.5 text-[10px] uppercase font-bold text-slate-400 tracking-wider border-b border-white/[0.06] mb-1">
             แนบไฟล์ & กิจกรรม
-          </p>
+          </div>
 
+          {/* Item 1: Photos & Videos */}
           <button
             type="button"
             onClick={() => {
               imageInputRef.current?.click();
               setShowAttachMenu(false);
             }}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/[0.06] text-slate-200 hover:text-white transition-colors text-left text-xs font-semibold group"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/[0.06] text-slate-300 hover:text-white transition-all text-left text-xs group"
           >
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
-              <ImageIcon className="w-4 h-4" />
+            <div className="w-8 h-8 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-slate-300 group-hover:text-emerald-400 group-hover:bg-emerald-500/10 group-hover:border-emerald-500/30 transition-all">
+              <ImageIcon className="w-4 h-4" strokeWidth={1.8} />
             </div>
-            <span>รูปภาพ & วิดีโอ</span>
+            <span className="font-medium">รูปภาพ & วิดีโอ</span>
           </button>
 
+          {/* Item 2: Documents & Files */}
           <button
             type="button"
             onClick={() => {
               fileInputRef.current?.click();
               setShowAttachMenu(false);
             }}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/[0.06] text-slate-200 hover:text-white transition-colors text-left text-xs font-semibold group"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/[0.06] text-slate-300 hover:text-white transition-all text-left text-xs group"
           >
-            <div className="w-8 h-8 rounded-lg bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
-              <FileText className="w-4 h-4" />
+            <div className="w-8 h-8 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-slate-300 group-hover:text-emerald-400 group-hover:bg-emerald-500/10 group-hover:border-emerald-500/30 transition-all">
+              <FileText className="w-4 h-4" strokeWidth={1.8} />
             </div>
-            <span>เอกสาร & ไฟล์</span>
+            <span className="font-medium">เอกสาร & ไฟล์</span>
           </button>
 
+          {/* Item 3: Share Location */}
           <button
             type="button"
             onClick={handleShareLocation}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/[0.06] text-slate-200 hover:text-white transition-colors text-left text-xs font-semibold group"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/[0.06] text-slate-300 hover:text-white transition-all text-left text-xs group"
           >
-            <div className="w-8 h-8 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform">
-              <MapPin className="w-4 h-4" />
+            <div className="w-8 h-8 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-slate-300 group-hover:text-emerald-400 group-hover:bg-emerald-500/10 group-hover:border-emerald-500/30 transition-all">
+              <MapPin className="w-4 h-4" strokeWidth={1.8} />
             </div>
-            <span>แชร์ตำแหน่งที่ตั้ง</span>
+            <span className="font-medium">แชร์ตำแหน่งที่ตั้ง</span>
           </button>
 
+          {/* Item 4: Mention @ */}
           <button
             type="button"
             onClick={() => {
@@ -223,23 +227,24 @@ export const MessageInput: React.FC<MessageInputProps> = ({
               setShowMentionPopover(true);
               textareaRef.current?.focus();
             }}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/[0.06] text-slate-200 hover:text-white transition-colors text-left text-xs font-semibold group"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/[0.06] text-slate-300 hover:text-white transition-all text-left text-xs group"
           >
-            <div className="w-8 h-8 rounded-lg bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
-              <AtSign className="w-4 h-4" />
+            <div className="w-8 h-8 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-slate-300 group-hover:text-emerald-400 group-hover:bg-emerald-500/10 group-hover:border-emerald-500/30 transition-all">
+              <AtSign className="w-4 h-4" strokeWidth={1.8} />
             </div>
-            <span>กล่าวถึงสมาชิก (@)</span>
+            <span className="font-medium">กล่าวถึงสมาชิก (@)</span>
           </button>
 
+          {/* Item 5: Code Snippet */}
           <button
             type="button"
             onClick={handleInsertCodeBlock}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/[0.06] text-slate-200 hover:text-white transition-colors text-left text-xs font-semibold group"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/[0.06] text-slate-300 hover:text-white transition-all text-left text-xs group"
           >
-            <div className="w-8 h-8 rounded-lg bg-teal-500/15 border border-teal-500/30 flex items-center justify-center text-teal-400 group-hover:scale-105 transition-transform">
-              <Code2 className="w-4 h-4" />
+            <div className="w-8 h-8 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-slate-300 group-hover:text-emerald-400 group-hover:bg-emerald-500/10 group-hover:border-emerald-500/30 transition-all">
+              <Code2 className="w-4 h-4" strokeWidth={1.8} />
             </div>
-            <span>บล็อกโค้ดคำสั่ง</span>
+            <span className="font-medium">บล็อกโค้ดคำสั่ง</span>
           </button>
         </div>
       )}
