@@ -2,27 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #F8F9FA;
-  --foreground: #0F172A;
-  --surface: #FFFFFF;
+@layer base {
+  :root {
+    --background: 11 13 17;
+    --foreground: 248 250 252;
+    --card: 18 22 31;
+    --card-foreground: 248 250 252;
+    --popover: 18 22 31;
+    --popover-foreground: 248 250 252;
+    --primary: 22 163 74;
+    --primary-foreground: 255 255 255;
+    --secondary: 29 36 51;
+    --secondary-foreground: 248 250 252;
+    --muted: 29 36 51;
+    --muted-foreground: 148 163 184;
+    --accent: 22 163 74;
+    --accent-foreground: 255 255 255;
+    --destructive: 239 68 68;
+    --destructive-foreground: 255 255 255;
+    --border: 255 255 255 / 0.1;
+    --input: 255 255 255 / 0.1;
+    --ring: 22 163 74;
+    --radius: 1rem;
+  }
 }
 
 body {
-  color: #0F172A;
-  background-color: #F8F9FA;
-  background-image: radial-gradient(#E2E8F0 0.75px, transparent 0.75px);
-  background-size: 24px 24px;
-  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  overflow: hidden;
-  min-height: 100vh;
-  letter-spacing: -0.015em;
+  background-color: #0B0D11;
+  color: #F8FAFC;
+  font-family: var(--font-prompt), sans-serif;
+  overflow-x: hidden;
+  letter-spacing: -0.01em;
 }
 
-/* Custom minimal scrollbar */
+/* Supercar Glossy Container Shell */
+.supercar-dashboard-shell {
+  background: radial-gradient(circle at 50% 0%, rgba(22, 163, 74, 0.05) 0%, transparent 60%),
+              linear-gradient(180deg, #12161F 0%, #0B0D11 100%);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Glassmorphic Panel Styles */
+.glass-panel-dark {
+  background: rgba(18, 22, 31, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Sleek Dark Custom Scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -30,35 +61,24 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 9999px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: rgba(255, 255, 255, 0.3);
 }
 
-/* Modern Bento Card Shell */
-.floating-app-shell {
-  background: #FFFFFF;
-  box-shadow: 0 20px 50px -12px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(226, 232, 240, 0.8);
+/* LiveKit Video Styles Overrides for Dark Mode */
+.lk-video-conference {
+  background-color: transparent !important;
 }
 
-.bento-pill-green {
-  background: #E6F4EA;
-  color: #0D652D;
-  border: 1px solid #CEEAD6;
+.lk-chat {
+  display: none !important;
 }
 
-.bento-card {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 1.25rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.bento-card:hover {
-  border-color: #CBD5E1;
-  box-shadow: 0 8px 25px -4px rgba(0, 0, 0, 0.05);
+/* Safe area insets for mobile PWA bottom navigation */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 16px);
 }

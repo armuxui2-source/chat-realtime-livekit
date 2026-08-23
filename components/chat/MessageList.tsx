@@ -114,7 +114,7 @@ export const MessageList: React.FC<MessageListProps> = ({
   return (
     <div
       data-testid="message-list-container"
-      className="flex-1 overflow-y-auto p-4 md:p-6 space-y-3 custom-scrollbar select-none bg-[#FAFAFA]"
+      className="flex-1 overflow-y-auto p-4 md:p-6 space-y-3.5 custom-scrollbar select-none bg-[#0B0D11]"
     >
       {/* Messages Feed */}
       {filteredMessages.map((msg) => {
@@ -137,23 +137,23 @@ export const MessageList: React.FC<MessageListProps> = ({
             {/* Avatar for Incoming Messages */}
             {!isMe && (
               <div
-                className={`w-7 h-7 rounded-full bg-gradient-to-tr ${getAvatarColor(
+                className={`w-8 h-8 rounded-full bg-gradient-to-tr ${getAvatarColor(
                   selectedUser.username
-                )} flex items-center justify-center text-white text-[10px] font-bold shrink-0 mb-0.5 shadow-sm`}
+                )} flex items-center justify-center text-white text-xs font-bold shrink-0 mb-0.5 shadow-sm ring-1 ring-white/20`}
               >
                 {selectedUser.display_name.charAt(0).toUpperCase()}
               </div>
             )}
 
-            <div className={`flex flex-col max-w-[80%] md:max-w-[65%] ${isMe ? "items-end" : "items-start"}`}>
+            <div className={`flex flex-col max-w-[85%] md:max-w-[70%] ${isMe ? "items-end" : "items-start"}`}>
               {/* Message Bubble */}
               <div
                 className={`px-4 py-2.5 rounded-2xl text-[13px] leading-relaxed relative ${
                   msg.is_deleted
-                    ? "bg-slate-100 text-slate-400 italic"
+                    ? "bg-white/5 text-slate-500 italic border border-white/5"
                     : isMe
-                    ? "bg-slate-900 text-white rounded-br-xs shadow-sm"
-                    : "bg-white border border-slate-200/80 text-slate-900 rounded-bl-xs shadow-sm"
+                    ? "bg-emerald-600 text-white rounded-br-xs shadow-lg shadow-emerald-950/40"
+                    : "bg-[#1D2433] border border-white/10 text-white rounded-bl-xs shadow-md"
                 }`}
               >
                 {/* Quoted Reply */}

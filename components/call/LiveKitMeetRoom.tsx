@@ -1,30 +1,37 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import "@livekit/components-styles";
 import {
   LiveKitRoom,
   VideoConference,
   RoomAudioRenderer,
   ConnectionStateToast,
 } from "@livekit/components-react";
-import { ConnectionDetails } from "@/app/api/connection-details/route";
+import "@livekit/components-styles";
+
+export interface ConnectionDetails {
+  serverUrl: string;
+  roomName: string;
+  participantToken: string;
+  participantName: string;
+}
 import {
   PhoneOff,
-  Maximize2,
-  Minimize2,
-  Video,
-  VideoOff,
   Mic,
   MicOff,
-  Share2,
+  Video,
+  VideoOff,
+  Maximize2,
+  Minimize2,
   Volume2,
-  Loader2,
+  VolumeX,
   Clock,
-  Sparkles,
+  Loader2,
+  Radio,
+  ExternalLink,
 } from "lucide-react";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase/client";
 import { getAvatarColor } from "@/lib/utils";
+import { supabase, isSupabaseConfigured } from "@/lib/supabase/client";
 
 interface LiveKitMeetRoomProps {
   roomName: string;
@@ -44,6 +51,7 @@ export const LiveKitMeetRoom: React.FC<LiveKitMeetRoomProps> = ({
   const [connectionDetails, setConnectionDetails] = useState<ConnectionDetails | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [isPiP, setIsPiP] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [elapsedSeconds, setElapsedSeconds] = useState<number>(0);
   const [isMuted, setIsMuted] = useState<boolean>(false);
@@ -126,36 +134,38 @@ export const LiveKitMeetRoom: React.FC<LiveKitMeetRoomProps> = ({
     <div
       data-testid="livekit-meeting-container"
       className={`fixed z-50 transition-all duration-300 select-none font-prompt ${
-        isFullscreen
-          ? "inset-0 bg-slate-950"
-          : "inset-2 md:inset-6 rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-slate-950"
+        isPiP
+          ? "bottom-4 right-4 w-72 sm:w-80 h-48 rounded-2xl shadow-2xl border border-emerald-500/40 bg-[#0B0D11] overflow-hidden"
+          : isFullscreen
+          ? "inset-0 bg-[#0B0D11]"
+          : "inset-2 md:inset-6 rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#0B0D11]"
       } flex flex-col text-white`}
     >
-      {/* Top Floating Glass Header (Instagram / Messenger Header Style) */}
-      <div className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between p-4 md:p-6 bg-gradient-to-b from-black/80 via-black/40 to-transparent">
-        <div className="flex items-center gap-3">
+      {/* Top Floating Glass Header */}
+      <div className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between p-3 sm:p-5 bg-gradient-to-b from-black/90 via-black/50 to-transparent">
+        <div className="flex items-center gap-2.5">
           <div className="relative">
             <div
-              className={`w-11 h-11 rounded-full bg-gradient-to-tr ${getAvatarColor(
+              className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-tr ${getAvatarColor(
                 calleeDisplayName
-              )} flex items-center justify-center text-white font-bold text-sm shadow-md ring-2 ring-white/20`}
+              )} flex items-center justify-center text-white font-bold text-xs shadow-md ring-2 ring-white/20`}
             >
               {calleeDisplayName.replace("#", "").charAt(0).toUpperCase()}
             </div>
-            <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 ring-2 ring-slate-950 animate-pulse" />
+            <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-[#0B0D11] animate-pulse" />
           </div>
 
           <div>
-            <h3 className="text-sm md:text-base font-bold text-white leading-tight drop-shadow-sm flex items-center gap-2">
-              <span>{calleeDisplayName}</span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-medium">
-                LiveKit WebRTC
+            <h3 className="text-xs sm:text-sm font-bold text-white leading-tight drop-shadow-sm flex items-center gap-2">
+              <span className="truncate max-w-[120px] sm:max-w-none">{calleeDisplayName}</span>
+              <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-medium">
+                LiveKit
               </span>
             </h3>
             {/* Call Duration Timer */}
             <div
               data-testid="call-duration-timer"
-              className="flex items-center gap-1.5 text-xs text-white/80 font-mono mt-0.5"
+              className="flex items-center gap-1 text-[11px] text-white/80 font-mono mt-0.5"
             >
               <Clock className="w-3 h-3 text-emerald-400" />
               <span>{formatTimer(elapsedSeconds)}</span>
@@ -163,28 +173,49 @@ export const LiveKitMeetRoom: React.FC<LiveKitMeetRoomProps> = ({
           </div>
         </div>
 
-        {/* Fullscreen Toggle */}
-        <button
-          onClick={() => setIsFullscreen(!isFullscreen)}
-          className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md text-white transition-all active:scale-95"
-          title={isFullscreen ? "ย่อหน้าต่าง" : "ขยายเต็มจอ"}
-        >
-          {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-        </button>
+        {/* Header Action Toggles (PiP / Fullscreen / Hangup) */}
+        <div className="flex items-center gap-1.5">
+          {/* PiP Minimize Toggle */}
+          <button
+            onClick={() => setIsPiP(!isPiP)}
+            className="p-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md text-white transition-all"
+            title={isPiP ? "ขยายเต็มหน้าจอ" : "ย่อเป็น PiP หน้าต่างลอย"}
+          >
+            {isPiP ? <Maximize2 className="w-3.5 h-3.5" /> : <Minimize2 className="w-3.5 h-3.5" />}
+          </button>
+
+          {!isPiP && (
+            <button
+              onClick={() => setIsFullscreen(!isFullscreen)}
+              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md text-white transition-all"
+              title={isFullscreen ? "ขนาดปกติ" : "เต็มจอ"}
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+            </button>
+          )}
+
+          {isPiP && (
+            <button
+              onClick={handleHangup}
+              className="p-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white shadow-md"
+              title="วางสาย"
+            >
+              <PhoneOff className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* Main Center Video / Calling Screen (IG/Messenger Immersive View) */}
-      <div className="flex-1 relative overflow-hidden flex items-center justify-center bg-slate-950">
-        
+      {/* Main Center Video / Calling Screen */}
+      <div className="flex-1 relative overflow-hidden flex items-center justify-center bg-[#0B0D11]">
         {loading ? (
-          <div className="flex flex-col items-center gap-4 text-center z-10">
-            <Loader2 className="w-10 h-10 text-emerald-400 animate-spin" />
-            <p className="text-sm text-slate-300 font-medium">
+          <div className="flex flex-col items-center gap-3 text-center z-10 p-4">
+            <Loader2 className="w-8 h-8 text-emerald-400 animate-spin" />
+            <p className="text-xs text-slate-300 font-medium">
               กำลังเชื่อมต่อสัญญาณ WebRTC SFU Cloud...
             </p>
           </div>
         ) : connectionDetails?.participantToken ? (
-          // Production LiveKit SFU Video Conference
           <LiveKitRoom
             video={!isVideoMuted}
             audio={!isMuted}
@@ -200,125 +231,81 @@ export const LiveKitMeetRoom: React.FC<LiveKitMeetRoomProps> = ({
             <ConnectionStateToast />
           </LiveKitRoom>
         ) : (
-          // Instagram / Messenger Calling Screen with Pulse Rings
-          <div className="flex flex-col items-center justify-center p-6 text-center z-10">
-            {/* Animated Pulse Rings */}
-            <div className="relative mb-6 flex items-center justify-center">
-              <div className="absolute w-44 h-44 rounded-full bg-emerald-500/10 animate-ping opacity-75" />
-              <div className="absolute w-36 h-36 rounded-full bg-emerald-500/20 animate-pulse" />
-              
+          <div className="flex flex-col items-center justify-center gap-4 z-10">
+            <div className="relative">
+              <div className="w-24 h-24 rounded-full bg-emerald-500/10 border border-emerald-500/30 animate-pulse absolute -inset-4" />
               <div
-                className={`relative w-28 h-28 rounded-full bg-gradient-to-tr ${getAvatarColor(
+                className={`w-24 h-24 rounded-full bg-gradient-to-tr ${getAvatarColor(
                   calleeDisplayName
-                )} flex items-center justify-center text-white text-4xl font-extrabold shadow-2xl ring-4 ring-white/30`}
+                )} flex items-center justify-center text-white text-3xl font-bold shadow-2xl ring-4 ring-white/10 relative z-10`}
               >
                 {calleeDisplayName.replace("#", "").charAt(0).toUpperCase()}
               </div>
             </div>
 
-            <h4 className="text-xl font-extrabold text-white mb-1">{calleeDisplayName}</h4>
-            <p className="text-xs text-emerald-400 font-medium flex items-center gap-1.5 justify-center mb-2">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>การสนทนาเสียงคุณภาพสูง (Opus Audio 48kHz)</span>
-            </p>
-            <p className="text-xs text-slate-400">ห้อง: {roomName}</p>
-          </div>
-        )}
-
-        {/* Floating Self-Camera PIP Card (มุมขวาบนเหมือน Instagram/FaceTime) */}
-        {!loading && (
-          <div
-            className="absolute top-20 right-4 md:right-6 w-24 sm:w-32 aspect-3/4 rounded-2xl bg-slate-900/90 border border-white/20 shadow-2xl overflow-hidden z-20 flex flex-col items-center justify-center backdrop-blur-md"
-            title="กล้องของคุณ (Self View)"
-          >
-            {isVideoMuted ? (
-              <div className="flex flex-col items-center gap-1 text-slate-400">
-                <div
-                  className={`w-9 h-9 rounded-full bg-gradient-to-tr ${getAvatarColor(
-                    participantName
-                  )} flex items-center justify-center text-white text-xs font-bold`}
-                >
-                  {participantName.charAt(0).toUpperCase()}
-                </div>
-                <span className="text-[10px] text-slate-400">ปิดกล้อง</span>
-              </div>
-            ) : (
-              <div className="w-full h-full bg-slate-800 flex items-center justify-center text-xs text-emerald-400">
-                <span>Self Camera</span>
-              </div>
-            )}
-            <span className="absolute bottom-1.5 left-2 text-[9px] font-bold text-white/80">
-              คุณ
-            </span>
+            <div className="text-center">
+              <h2 className="text-lg font-bold text-white">{calleeDisplayName}</h2>
+              <p className="text-xs text-emerald-400 font-medium mt-1">กำลังโทรออก LiveKit Audio...</p>
+            </div>
           </div>
         )}
       </div>
 
-      {/* Floating Bottom Control Capsule (Instagram / Messenger / FaceTime Pill Bar) */}
-      <div className="absolute bottom-6 left-0 right-0 z-30 flex items-center justify-center px-4">
-        <div className="flex items-center gap-3 md:gap-4 px-5 py-3 rounded-full bg-slate-900/80 backdrop-blur-2xl border border-white/10 shadow-2xl">
-          
-          {/* Mute Mic Toggle */}
-          <button
-            onClick={() => setIsMuted(!isMuted)}
-            data-testid="call-toggle-mic"
-            className={`p-3 rounded-full transition-all active:scale-95 ${
-              isMuted
-                ? "bg-rose-500/20 text-rose-400 border border-rose-500/40"
-                : "bg-white/10 hover:bg-white/20 text-white"
-            }`}
-            title={isMuted ? "เปิดไมค์" : "ปิดไมค์"}
-          >
-            {isMuted ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
-          </button>
+      {/* Bottom Floating Control Capsule (Hidden in PiP mode) */}
+      {!isPiP && (
+        <div className="absolute bottom-6 left-0 right-0 z-30 flex items-center justify-center px-4">
+          <div className="flex items-center gap-3 px-5 py-3 rounded-full bg-[#12161F]/90 backdrop-blur-2xl border border-white/10 shadow-2xl">
+            {/* Mic Toggle */}
+            <button
+              onClick={() => setIsMuted(!isMuted)}
+              className={`w-11 h-11 rounded-full flex items-center justify-center transition-all ${
+                isMuted
+                  ? "bg-rose-500/20 text-rose-400 border border-rose-500/40"
+                  : "bg-white/10 hover:bg-white/20 text-white"
+              }`}
+              title={isMuted ? "เปิดไมค์" : "ปิดไมค์"}
+            >
+              {isMuted ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+            </button>
 
-          {/* Video On/Off Toggle */}
-          <button
-            onClick={() => setIsVideoMuted(!isVideoMuted)}
-            data-testid="call-toggle-video"
-            className={`p-3 rounded-full transition-all active:scale-95 ${
-              isVideoMuted
-                ? "bg-rose-500/20 text-rose-400 border border-rose-500/40"
-                : "bg-white/10 hover:bg-white/20 text-white"
-            }`}
-            title={isVideoMuted ? "เปิดกล้อง" : "ปิดกล้อง"}
-          >
-            {isVideoMuted ? <VideoOff className="w-5 h-5" /> : <Video className="w-5 h-5" />}
-          </button>
+            {/* Video Toggle */}
+            <button
+              onClick={() => setIsVideoMuted(!isVideoMuted)}
+              className={`w-11 h-11 rounded-full flex items-center justify-center transition-all ${
+                isVideoMuted
+                  ? "bg-rose-500/20 text-rose-400 border border-rose-500/40"
+                  : "bg-white/10 hover:bg-white/20 text-white"
+              }`}
+              title={isVideoMuted ? "เปิดกล้อง" : "ปิดกล้อง"}
+            >
+              {isVideoMuted ? <VideoOff className="w-4 h-4" /> : <Video className="w-4 h-4" />}
+            </button>
 
-          {/* Speaker Toggle */}
-          <button
-            onClick={() => setIsSpeakerOn(!isSpeakerOn)}
-            className={`p-3 rounded-full transition-all active:scale-95 ${
-              isSpeakerOn
-                ? "bg-white/10 hover:bg-white/20 text-white"
-                : "bg-rose-500/20 text-rose-400 border border-rose-500/40"
-            }`}
-            title={isSpeakerOn ? "ลำโพงเปิดอยู่" : "ปิดเสียงลำโพง"}
-          >
-            <Volume2 className="w-5 h-5" />
-          </button>
+            {/* Speaker Toggle */}
+            <button
+              onClick={() => setIsSpeakerOn(!isSpeakerOn)}
+              className={`w-11 h-11 rounded-full flex items-center justify-center transition-all ${
+                !isSpeakerOn
+                  ? "bg-rose-500/20 text-rose-400 border border-rose-500/40"
+                  : "bg-white/10 hover:bg-white/20 text-white"
+              }`}
+              title={isSpeakerOn ? "ปิดเสียงลำโพง" : "เปิดลำโพง"}
+            >
+              {isSpeakerOn ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+            </button>
 
-          {/* Screen Share */}
-          <button
-            onClick={() => alert("ระบบรองรับการแชร์หน้าจอผ่าน LiveKit Conference")}
-            className="p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all active:scale-95"
-            title="แชร์หน้าจอ"
-          >
-            <Share2 className="w-5 h-5" />
-          </button>
-
-          {/* Hangup Red Circle Button (เหมือนปุ่มสีแดงใน IG/Messenger/FaceTime) */}
-          <button
-            onClick={handleHangup}
-            data-testid="hangup-call-btn"
-            className="p-3.5 rounded-full bg-rose-600 hover:bg-rose-700 text-white shadow-lg shadow-rose-600/40 transition-all active:scale-90 flex items-center justify-center ml-2"
-            title="วางสาย"
-          >
-            <PhoneOff className="w-6 h-6" />
-          </button>
+            {/* Hangup Red Circle Button */}
+            <button
+              onClick={handleHangup}
+              data-testid="hangup-call-btn"
+              className="w-12 h-12 rounded-full bg-rose-600 hover:bg-rose-700 text-white flex items-center justify-center shadow-lg shadow-rose-600/40 transition-all active:scale-95 ml-1"
+              title="วางสาย"
+            >
+              <PhoneOff className="w-5 h-5" />
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
